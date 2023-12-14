@@ -132,7 +132,7 @@
         document.getElementById('fileInput').addEventListener('change', handleFile);
 
         function handleFile() {
-    fetch('jugadoressporting.json') // Asegúrate de que la ruta al archivo JSON sea correcta
+fetch('https://VictorZandalinas79.github.io/AppdatospartidoSporting/jugadoressporting.json')
         .then(response => response.json())
         .then(players => {
             limpiarTabla(); // Limpia la tabla antes de añadir nuevos datos
