@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPORTING DE CASTELLO - Fundado en 1970</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url('https://sportingdecastellocom.files.wordpress.com/2023/10/whatsapp-image-2023-10-04-at-22.53.28-1.jpeg?w=NaN&h=');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: blanchedalmond;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        
+        #logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 150px;
+            z-index: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 150px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            position: relative;
+            z-index: 0;
+        }
+
+        #formularioExportarPartido {
+            margin-top: 20px;
+        }
+
+        #registro-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #2196F3; /* Cambia el color de fondo del título */
+    color: white;
+    position: relative;
+    z-index: 0;
+}
+
+#registro-table th, #registro-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#registro-table th {
+    background-color: #2196F3; /* Cambia el color de fondo del encabezado */
+    color: white;
+}
+
+#registro-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #cronometro {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+        }
+
+        #play, #stop, #reset {
+            margin-right: 10px;
+            font-size: 1.5em;
+            color: white;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #tiempo {
+            font-size: 2em;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .negro {
+            color: black;
+        }
+
+        .titular {
+            color: #2196F3;
+        }
+
+        .suplente {
+            color: #4CAF50;
+        }
+
+        .botonSuplenteTitular {
+            position: relative;
+            z-index: 2;
+        }
+
+        .botonera {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .botonera button {
+            margin-bottom: 5px;
+        }
+        .numero-span {
+    margin: 0 5px; /* Ajusta el espacio entre el número y los botones según tus preferencias */
+}
+        .cronometro-fila {
+    display: flex;
+    align-items: center;
+}
+
+.cronometro-fila span {
+    font-family: monospace;
+    padding: 5px;
+    background-color: white;
+    color: black;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+        .cronometro-fila button {
+            font-size: 1em;
+            color: white;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .fondo-verde {
+            background-color: green;
+            color: white;
+        }
+
+        .fondo-rojo {
+            background-color: red;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <img id="logo" src="https://sportingdecastellocom.files.wordpress.com/2023/09/logo.png?w=202&amp;h=129" alt="Logo">
+
+    <h2 style="font-size: 30px; background-color: #af4c4c; color: white; padding: 10px;">SPORTING DE CASTELLÓ - Fundado en 1970</h2>
+
+
+    <div class="botonera" id="botonera"></div>
+    
+    
+    <div id="formularioExportarPartido" style="display: inline-block;">
+        <h2 style="display:inline-block;">Datos Partido</h2>
+        <label for="jornada" style="display:inline-block; margin-right: 10px;">Jornada:</label>
+        <input type="text" id="jornada" placeholder="Ingrese la jornada" style="display:inline-block; margin-right: 10px;">
+
+        <label for="fecha" style="display:inline-block; margin-right: 10px;">Fecha:</label>
+        <input type="date" id="fecha" placeholder="Seleccione la fecha" style="display:inline-block; margin-right: 10px;">
+
+        <label for="equipo" style="display:inline-block; margin-right: 10px;">Equipo:</label>
+        <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="display:inline-block; margin-right: 10px;">
+
+        <label for="rival" style="display:inline-block; margin-right: 10px;">Rival:</label>
+        <input type="text" id="rival" placeholder="Ingrese el rival" style="display:inline-block; margin-right: 10px;">
+
+        <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
+        <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
+
+    </div>
+
+    
+
+    <table id="jugadores-table">
+        <thead>
+            <tr>
+                <th>Dorsal</th>
+                <th>Jugador</th>
+                <th>Equipo</th>
+                <th>Cronómetro</th>
+                <th>Titular/Suplente</th>
+                <th>Goles a favor</th>
+                <th>Goles en contra</th>
+                <th>Asistencia</th>
+                <th>T. Amarilla</th>
+                <th>T. Roja</th>
+
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <label for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
+
+ 
+    <div id="cronometro">
+        <button id="play" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
+        <button id="stop" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
+        <button id="reset" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
+        <span id="tiempo">00:00:00.000</span>
+    </div>
+
+    <button onclick="limpiarTabla()">Limpiar Tabla</button>
+    <button onclick="exportarPartido()">Exportar Partido</button>
+
+    <table id="registro-table">
+        <caption>Registros por tiempos</caption>
+        <thead>
+            <tr>
+                <th>Tiempo</th>
+                <th>Dorsal</th>
+                <th>Nombre</th>
+                <th>Evento</th>
+
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        let cronometro;
+        let milisegundos = 0;
+        let segundos = 0;
+        let minutos = 0;
+        let horas = 0;
+        let cronometroActivo = false;
+
+        function iniciarCronometro() {
+            if (!cronometroActivo) {
+                cronometro = setInterval(actualizarCronometro, 10);
+                cronometroActivo = true;
+                iniciarCronometrosFilas();
+            }
+        }
+
+
+        function detenerCronometro() {
+            clearInterval(cronometro);
+            cronometroActivo = false;
+            detenerCronometrosFilas();
+        }
+
+        function resetearCronometroGeneral() {
+    milisegundos = 0;
+    segundos = 0;
+    minutos = 0;
+    horas = 0;
+    actualizarTiempo();
+    cronometroActivo = false;
+}
+
+        function actualizarCronometro() {
+            milisegundos += 10;
+            if (milisegundos === 1000) {
+                milisegundos = 0;
+                segundos++;
+                if (segundos === 60) {
+                    segundos = 0;
+                    minutos++;
+                    if (minutos === 60) {
+                        minutos = 0;
+                        horas++;
+                    }
+                }
+            }
+            actualizarTiempo();
+        }
+
+        function actualizarTiempo() {
+            const tiempo = `${formatoDosDigitos(horas)}:${formatoDosDigitos(minutos)}:${formatoDosDigitos(segundos)}.${formatoTresDigitos(milisegundos)}`;
+            document.getElementById('tiempo').textContent = tiempo;
+            actualizarCronometrosFilas();
+        }
+
+        function formatoDosDigitos(valor) {
+            return valor < 10 ? `0${valor}` : valor;
+        }
+
+        function formatoTresDigitos(valor) {
+            if (valor < 10) {
+                return `00${valor}`;
+            } else if (valor < 100) {
+                return `0${valor}`;
+            } else {
+                return valor;
+            }
+        }
+
+        
+
+        function abrirVentanaPop() {
+    // Abre la ventana emergente con el HTML anterior
+    const nuevaVentana = window.open('jugadoressporting.html', 'VentanaFlotante', 'width=800, height=600');
+    nuevaVentana.onload = () => {
+        nuevaVentana.actualizarTablaPrincipal = () => {
+            location.reload();
+        };
+    };
+}
+
+
+        function cargarJugadoresSeleccionados(jugadoresSeleccionados) {
+    console.log('Cargando jugadores seleccionados en la ventana principal:', jugadoresSeleccionados);
+
+    // Código para agregar los jugadores seleccionados a la tabla en la ventana principal
+    jugadoresSeleccionados.forEach((jugador) => {
+        agregarJugadorATabla(document.getElementById('jugadores-table'), jugador);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Se carga la información al cargar la página
+    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+    if (jugadoresSeleccionadosStorage) {
+        const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+        cargarJugadoresSeleccionados(jugadoresSeleccionados);
+    }
+
+    // Agregar el listener para el evento personalizado
+    document.addEventListener('actualizarTablaPrincipal', () => {
+        // Realiza la actualización de la tabla de jugadores o cualquier otra acción necesaria
+        location.reload();
+    });
+});
+
+
+function exportarSeleccionados() {
+        // Obtener jugadores seleccionados y cargarlos en la tabla
+        const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+        if (jugadoresSeleccionadosStorage) {
+            const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+            cargarJugadoresSeleccionados(jugadoresSeleccionados);
+        }
+
+        // Resto de la lógica de exportación
+        const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
+        console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
+        // Aquí puedes implementar la lógica para exportar los jugadores seleccionados
+
+        // Emitir evento personalizado para actualizar la página principal
+        const actualizarTablaEvent = new Event('actualizarTablaPrincipal');
+        document.dispatchEvent(actualizarTablaEvent);
+    }
+
+    document.addEventListener('actualizarTablaPrincipal', () => {
+    // Actualiza la tabla de jugadores o realiza cualquier otra acción necesaria
+    actualizarTabla();
+});
+
+function actualizarTabla() {
+    // Lógica para cargar la tabla principal
+    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+    if (jugadoresSeleccionadosStorage) {
+      const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+      cargarJugadoresSeleccionados(jugadoresSeleccionados);
+    }
+  }
+
+  // Agrega un escuchador de eventos para actualizar la tabla
+  document.addEventListener('actualizarTablaPrincipal', actualizarTabla);
+
+    function agregarJugadorATabla(tabla, jugador) {
+        // Código para agregar un jugador a la tabla específica
+        const tbody = tabla.querySelector('tbody');
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${jugador.Dorsal}</td>
+            <td>${jugador.Jugador}</td>
+            <td>${jugador.Equipo}</td>
+        `;
+        tbody.appendChild(fila);
+        // Agregar celda de cronómetro
+    const celdaCronometro = document.createElement('td');
+    const cronometroFila = document.createElement('div');
+    cronometroFila.classList.add('cronometro-fila');
+    cronometroFila.innerHTML = '<span>00:00:00.000</span>';
+    celdaCronometro.appendChild(cronometroFila);
+    fila.appendChild(celdaCronometro);
+
+    // Agregar celda de botón Titular/Suplente
+    const celdaBotonera = document.createElement('td');
+    const botonera = document.createElement('div');
+    botonera.classList.add('botonera');
+    botonera.innerHTML = `<button onclick="cambiarEstadoSuplenteTitular(this)" class="botonSuplenteTitular fondo-rojo">Suplente</button>`;
+    celdaBotonera.appendChild(botonera);
+    fila.appendChild(celdaBotonera);
+
+      // Agregar celda de botones táctiles
+    for (let i = 0; i < 5; i++) {
+        const celdaBotonesTactiles = document.createElement('td');
+        const botonRestar = document.createElement('button');
+        const spanNumero = document.createElement('span');
+        const botonSumar = document.createElement('button');
+
+        botonRestar.classList.add('tactile-button');
+        spanNumero.classList.add('numero-span');
+        botonSumar.classList.add('tactile-button');
+
+        botonRestar.textContent = '-';
+        spanNumero.textContent = '0';
+        botonSumar.textContent = '+';
+
+        botonRestar.addEventListener('click', () => restarValor(spanNumero));
+        botonSumar.addEventListener('click', () => sumarValor(spanNumero));
+
+        celdaBotonesTactiles.appendChild(botonRestar);
+        celdaBotonesTactiles.appendChild(spanNumero);
+        celdaBotonesTactiles.appendChild(botonSumar);
+        fila.appendChild(celdaBotonesTactiles);
+    }
+}
+
+    function obtenerDatosTabla() {
+    const filas = document.querySelectorAll('#jugadores-table tbody tr');
+    const datos = [];
+
+    filas.forEach((fila) => {
+        const jugador = {
+            Dorsal: fila.cells[0].textContent,
+            Jugador: fila.cells[1].textContent,
+            Equipo: fila.cells[2].textContent,  // Agrega esta línea para incluir la columna de Equipo
+        };
+
+        datos.push(jugador);
+    });
+
+    return datos;
+}
+const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
+jugadoresSeleccionados.forEach(jugador => {
+    agregarFilaTabla(jugador);
+});
+
+function obtenerJugadoresSeleccionados() {
+    const checkboxes = document.querySelectorAll('#jugadores-table tbody input[name="seleccionar"]');
+    const jugadoresSeleccionados = [];
+
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            const fila = checkbox.closest('tr');
+            const dorsal = fila.querySelector('td:nth-child(1)').textContent;
+            const jugador = fila.querySelector('td:nth-child(2)').textContent;
+            const equipo = fila.querySelector('td:nth-child(3)').textContent;
+            const cronometro = fila.querySelector('.cronometro-fila span').textContent;
+            const estado = fila.querySelector('.botonSuplenteTitular').textContent;
+
+            jugadoresSeleccionados.push({
+                Dorsal: dorsal,
+                Jugador: jugador,
+                Equipo: equipo,
+                Cronometro: cronometro,
+                Estado: estado,
+            });
+        }
+    });
+
+    return jugadoresSeleccionados;
+}
+
+function restarValor(spanNumero) {
+    let valorActual = parseInt(spanNumero.textContent) || 0;
+
+    if (spanNumero.parentElement.cellIndex === 5) {
+        // Permitir números negativos en la sexta columna
+        valorActual--;
+    } else {
+        // Restringir a valores no negativos en las demás columnas
+        valorActual = Math.max(0, valorActual - 1);
+    }
+
+    spanNumero.textContent = valorActual;
+}
+
+function sumarValor(spanNumero) {
+    let valorActual = parseInt(spanNumero.textContent) || 0;
+
+    if (spanNumero.parentElement.cellIndex === 7) {
+        // Limitar la octava columna a un máximo de 2
+        valorActual = Math.min(2, valorActual + 1);
+    } else if (spanNumero.parentElement.cellIndex === 8) {
+        // Limitar la novena columna a un máximo de 1
+        valorActual = Math.min(1, valorActual + 1);
+    } else {
+        valorActual++; // Para las demás columnas
+    }
+
+    spanNumero.textContent = valorActual;
+}
+
+function agregarFilaTabla(jugador) {
+    console.log('Agregando fila para el jugador:', jugador);
+
+    const tabla = document.querySelector('#jugadores-table');
+    const tbody = tabla.querySelector('tbody');
+    const fila = document.createElement('tr');
+
+    for (const propiedad in jugador) {
+        const celda = document.createElement('td');
+        celda.textContent = jugador[propiedad];
+        if (propiedad === 'Dorsal' || propiedad === 'Jugador' || propiedad === 'Equipo') {
+            // Aplicar estilos específicos para las celdas de Dorsal, Jugador y Equipo
+            celda.classList.add('negro');
+        }
+        fila.appendChild(celda);
+    }
+
+    // Agregar celda de cronómetro
+    const celdaCronometro = document.createElement('td');
+    const cronometroFila = document.createElement('div');
+    cronometroFila.classList.add('cronometro-fila');
+    cronometroFila.innerHTML = '<span>00:00:00</span>';
+    celdaCronometro.appendChild(cronometroFila);
+    fila.appendChild(celdaCronometro);
+
+    // Agregar celda de botón Titular/Suplente
+    const celdaBotonera = document.createElement('td');
+    const botonera = document.createElement('div');
+    botonera.classList.add('botonera');
+    botonera.innerHTML = `<button onclick="cambiarEstadoSuplenteTitular(this)" class="botonSuplenteTitular fondo-rojo">Suplente</button>`;
+    celdaBotonera.appendChild(botonera);
+    fila.appendChild(celdaBotonera);
+
+    console.log('Fila agregada:', fila);
+
+    tbody.appendChild(fila);
+}
+        function crearBotonera() {
+            const tabla = document.querySelector('#jugadores-table');
+            const botonera = document.getElementById('botonera');
+            botonera.innerHTML = '';
+            const filas = tabla.querySelectorAll('tbody tr');
+
+            filas.forEach((fila, index) => {
+            });
+        }
+        let parte = 1; // Variable para almacenar el número de parte
+
+function detenerCronometro() {
+    clearInterval(cronometro);
+    cronometroActivo = false;
+    detenerCronometrosFilas();
+
+    // Cambiar de 1ª parte a 2ª parte y viceversa
+    parte = parte === 1 ? 2 : 1;
+    document.getElementById('parte').textContent = `${parte}ª parte`;
+}
+function cambiarEstadoSuplenteTitular(boton) {
+    const fila = boton.closest('tr');
+    const estadoActual = fila.querySelector('.botonSuplenteTitular').textContent;
+
+    if (estadoActual === 'Titular') {
+        detenerCronometroFila(fila);
+        acumularTiempoFila(fila);
+    } else {
+        reiniciarCronometroFila(fila);
+    }
+
+    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
+    fila.querySelector('.botonSuplenteTitular').textContent = nuevoEstado;
+    const fondo = nuevoEstado === 'Titular' ? 'fondo-verde' : 'fondo-rojo';
+    fila.querySelector('.botonSuplenteTitular').classList.remove('fondo-verde', 'fondo-rojo');
+    fila.querySelector('.botonSuplenteTitular').classList.add(fondo);
+
+    // Reorganizar las filas en la tabla
+    const dorsal = parseInt(fila.cells[0].textContent);
+    const tbody = fila.closest('tbody');
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+
+    filas.sort((filaA, filaB) => {
+        // Primero ordenar por estado (Titular primero)
+        const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
+        const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
+
+        if (estadoA !== estadoB) {
+            return estadoB.localeCompare(estadoA); // Ordenar Titular antes que Suplente
+        }
+
+        // Luego, dentro de Titular, dar prioridad a los dorsales 1, 13, 25
+        if (estadoA === 'Titular') {
+            const dorsalA = parseInt(filaA.cells[0].textContent);
+            const dorsalB = parseInt(filaB.cells[0].textContent);
+
+            if ([1, 13, 25].includes(dorsalA) && ![1, 13, 25].includes(dorsalB)) {
+                return -1;
+            } else if (![1, 13, 25].includes(dorsalA) && [1, 13, 25].includes(dorsalB)) {
+                return 1;
+            } else {
+                return dorsalA - dorsalB;
+            }
+        }
+
+        return 0; // Si ambos son Suplentes, no cambiar el orden
+    });
+
+    // Limpiar y reinsertar las filas ordenadas
+    filas.forEach(fila => {
+        tbody.appendChild(fila);
+    });
+}
+
+
+
+function obtenerEstado(fila) {
+    // Obtener el valor de Titular o Suplente en la celda correspondiente
+    return fila.cells[3].textContent.trim();
+}
+
+function obtenerOrdenDorsal(dorsal) {
+    // Definir el orden deseado para los dorsales 1, 13 y 25
+    switch (dorsal) {
+        case 1:
+            return 0;
+        case 13:
+            return 1;
+        case 25:
+            return 2;
+        default:
+            return 3;
+    }
+}
+        function acumularTiempoFila(fila) {
+            const celdaCronometro = fila.querySelector('.cronometro-fila span');
+            const tiempoActual = obtenerTiempoFila(fila);
+            const tiempoAcumulado = fila.dataset.tiempoAcumulado || '00:00:00.000';
+
+            const [minActual, secActual, milisecActual] = tiempoActual.split(/[:.]+/).map(Number);
+            const [minAcumulado, secAcumulado, milisecAcumulado] = tiempoAcumulado.split(/[:.]+/).map(Number);
+
+            const minTotal = minActual + minAcumulado;
+            const secTotal = secActual + secAcumulado;
+            const milisecTotal = milisecActual + milisecAcumulado;
+
+            fila.dataset.tiempoAcumulado = `${formatoDosDigitos(minTotal)}:${formatoDosDigitos(secTotal)}.${formatoTresDigitos(milisecTotal)}`;
+        }
+
+        function detenerCronometroFila(fila) {
+            const celdaCronometro = fila.querySelector('.cronometro-fila span');
+            const cronometroId = fila.dataset.cronometroId;
+
+            if (cronometroId) {
+                clearInterval(cronometroId);
+                fila.removeAttribute('data-cronometro-id');
+            }
+        }
+
+        function reiniciarCronometroFila(fila) {
+            const celdaCronometro = fila.querySelector('.cronometro-fila span');
+            detenerCronometroFila(fila);
+
+            const tiempoAcumulado = fila.dataset.tiempoAcumulado || '00:00:00.000';
+            celdaCronometro.textContent = tiempoAcumulado;
+            iniciarCronometroFila(fila);
+        }
+
+        function obtenerTiempoFila(fila) {
+            const celdaCronometro = fila.querySelector('.cronometro-fila span');
+            const tiempoFila = celdaCronometro.textContent;
+            return tiempoFila;
+        }
+
+        function iniciarCronometroFila(fila) {
+            const celdaCronometro = fila.querySelector('.cronometro-fila span');
+
+            let tiempoActual = fila.dataset.tiempoActual || '00:00:00.000';
+
+            let [minutosFila, segundosFila, milisegundosFila] = tiempoActual.split(/[:.]+/).map(Number);
+
+            const cronometroFila = setInterval(() => {
+                if (cronometroActivo && fila.querySelector('.botonSuplenteTitular').textContent === 'Titular') {
+                    let milisegundos = milisegundosFila + 100;
+                    let segundos = segundosFila;
+                    let minutos = minutosFila;
+
+                    if (milisegundos >= 1000) {
+                        milisegundos = 0;
+                        segundos++;
+                    }
+
+                    if (segundos >= 60) {
+                        segundos = 0;
+                        minutos++;
+                    }
+
+                    tiempoActual = `${formatoDosDigitos(minutos)}:${formatoDosDigitos(segundos)}.${formatoTresDigitos(milisegundos)}`;
+                    celdaCronometro.textContent = tiempoActual;
+
+                    fila.dataset.tiempoActual = tiempoActual;
+                    milisegundosFila = milisegundos;
+                    segundosFila = segundos;
+                    minutosFila = minutos;
+                }
+            }, 100);
+
+            fila.dataset.cronometroId = cronometroFila;
+        }
+     function exportarModelo() {
+  const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
+  console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
+
+  // Almacenar los jugadores seleccionados en localStorage
+  localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+
+  // Cerrar la ventana actual
+  window.close();
+
+  // Actualizar la página principal en el HTML 1
+  window.opener.location.reload();
+}
+
+
+document.addEventListener('actualizarTablaPrincipal', () => {
+    // Actualiza la tabla de jugadores o realiza cualquier otra acción necesaria
+    cargarTablaPrincipal();
+});
+
+function cargarTablaPrincipal() {
+    // Lógica para cargar la tabla principal
+    // ...
+
+    // Por ejemplo, puedes llamar a tu función cargarJugadoresSeleccionados
+    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+    if (jugadoresSeleccionadosStorage) {
+        const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+        cargarJugadoresSeleccionados(jugadoresSeleccionados);
+    }
+}
+
+function limpiarTabla() {
+    // Mostrar cuadro de diálogo de confirmación
+    const confirmacion = confirm('¿Está seguro de que desea limpiar la tabla?');
+
+    // Si el usuario confirma, limpiar la tabla
+    if (confirmacion) {
+        const tablaJugadores = document.getElementById('jugadores-table');
+        const tbodyJugadores = tablaJugadores.querySelector('tbody');
+        tbodyJugadores.innerHTML = ''; // Limpiar el contenido del cuerpo de la tabla de jugadores
+
+        const tablaRegistros = document.getElementById('registro-table');
+        const tbodyRegistros = tablaRegistros.querySelector('tbody');
+        tbodyRegistros.innerHTML = ''; // Limpiar el contenido del cuerpo de la tabla de registros
+
+        // También puedes reiniciar cualquier otra lógica o datos relacionados con las tablas
+    }
+}
+let idRegistro = 0; // Variable para asignar identificadores únicos
+
+function registrarEvento(tiempo, columna, nombre, dorsal) {
+    const registroTable = document.getElementById('registro-table');
+    const tbody = registroTable.querySelector('tbody');
+    const fila = document.createElement('tr');
+
+    // Asignar un identificador único a la fila
+    const idFila = 'registro_' + idRegistro++;
+    fila.id = idFila;
+
+    fila.innerHTML = `
+        <td>${tiempo}</td>
+        <td>${dorsal}</td>
+        <td>${nombre}</td>
+        <td>${columna}</td>
+        <td>
+            <button onclick="eliminarFila('${idFila}')">-</button>
+        </td>
+    `;
+
+    tbody.appendChild(fila);
+}
+
+function eliminarFila(idFila) {
+    const fila = document.getElementById(idFila);
+    if (fila) {
+        const confirmacion = confirm('¿Estás seguro de que deseas eliminar esta fila?');
+
+        if (confirmacion) {
+            fila.remove();
+        }
+    }
+}
+
+function eliminarRegistro(idFila) {
+    const fila = document.getElementById(idFila);
+    if (fila) {
+        fila.remove();
+    }
+}
+
+function registrarEventoTecla(tiempo, columna, jugador, dorsal) {
+    const nombreColumna = obtenerNombreColumna(columna);
+    const nombreJugador = jugador.Jugador;
+    registrarEvento(tiempo, nombreColumna, nombreJugador, dorsal);
+}
+
+function obtenerNombreColumna(columna) {
+    switch (columna) {
+        case 5:
+            return 'Gol a favor';
+        case 6:
+            return 'Gol en contra';
+        case 7:
+            return 'Asistencia';
+        case 8:
+            return 'Tarjeta Amarilla';
+        case 9:
+            return 'Tarjeta Roja';
+        default:
+            return 'Otra Columna';
+    }
+}
+
+
+function ordenarTablaPorTitularSuplente() {
+    const tabla = document.getElementById('jugadores-table');
+    const tbody = tabla.querySelector('tbody');
+    
+    // Obtener todas las filas del tbody
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+
+    // Ordenar las filas en función de la quinta columna (Titular/Suplente)
+    filas.sort((filaA, filaB) => {
+        const columnaTitularSuplenteA = filaA.cells[4].textContent.toLowerCase();
+        const columnaTitularSuplenteB = filaB.cells[4].textContent.toLowerCase();
+
+        if (columnaTitularSuplenteA < columnaTitularSuplenteB) {
+            return -1;
+        }
+        if (columnaTitularSuplenteA > columnaTitularSuplenteB) {
+            return 1;
+        }
+        return 0;
+    });
+
+    // Limpiar el tbody
+    tbody.innerHTML = '';
+
+    // Agregar las filas ordenadas al tbody
+    filas.forEach((fila) => {
+        tbody.appendChild(fila);
+    });
+}
+
+
+// Actualiza la función existente restarValor y sumarValor para incluir el registro de eventos
+function restarValor(spanNumero) {
+    let valorActual = parseInt(spanNumero.textContent) || 0;
+    const columna = spanNumero.parentElement.cellIndex;
+
+    if (columna === 5) {
+        // Permitir números negativos en la sexta columna
+        valorActual--;
+    } else {
+        // Restringir a valores no negativos en las demás columnas
+        valorActual = Math.max(0, valorActual - 1);
+    }
+
+    const tiempo = obtenerTiempoGeneral();
+    const jugador = obtenerJugador(spanNumero);
+    registrarEventoTecla(tiempo, columna, jugador, jugador.Dorsal);
+
+    spanNumero.textContent = valorActual;
+}
+
+function sumarValor(spanNumero) {
+    let valorActual = parseInt(spanNumero.textContent) || 0;
+    const columna = spanNumero.parentElement.cellIndex;
+
+    if (columna === 7) {
+        // Limitar la octava columna a un máximo de 2
+        valorActual = Math.min(2, valorActual + 1);
+    } else if (columna === 8) {
+        // Limitar la novena columna a un máximo de 1
+        valorActual = Math.min(1, valorActual + 1);
+    } else {
+        valorActual++; // Para las demás columnas
+    }
+
+    const tiempo = obtenerTiempoGeneral();
+    const jugador = obtenerJugador(spanNumero);
+    registrarEventoTecla(tiempo, columna, jugador, jugador.Dorsal);
+
+    spanNumero.textContent = valorActual;
+}
+
+
+function obtenerTiempoGeneral() {
+    const tiempoGeneral = document.getElementById('tiempo').textContent;
+    return tiempoGeneral;
+}
+
+function obtenerJugador(spanNumero) {
+    const fila = spanNumero.closest('tr');
+    const jugador = {
+        Dorsal: fila.cells[0].textContent,
+        Jugador: fila.cells[1].textContent,
+        Equipo: fila.cells[2].textContent,
+    };
+    return jugador;
+}
+
+
+
+
+function exportarPartido() {
+    // Obtén el nombre del archivo del formulario
+    var nombreArchivo = document.getElementById('jornada').value + '.' +
+                        document.getElementById('equipo').value + '.' +
+                       document.getElementById('rival').value + '.' +
+                       document.getElementById('fecha').value;
+
+    // Crear el contenido del archivo Excel
+    var workbook = XLSX.utils.book_new();
+
+    // Agregar una hoja para los datos del formulario
+    exportarFormulario(workbook);
+
+    // Exportar la primera tabla ("jugadores-table")
+    exportarTabla("jugadores-table", "Jugadores", workbook);
+
+    // Exportar la segunda tabla ("registro-table")
+    exportarTabla("registro-table", "Registro", workbook);
+
+    // Generar el archivo Excel
+    XLSX.writeFile(workbook, nombreArchivo + '.xlsx');
+}
+
+function exportarFormulario(workbook) {
+    // Obtener la información del formulario
+    var jornada = document.getElementById('jornada').value;
+    var fecha = document.getElementById('fecha').value;
+    var equipo = document.getElementById('equipo').value;
+    var rival = document.getElementById('rival').value;
+    var resultado = document.getElementById('resultado').value;
+
+    // Crear una hoja de cálculo para los datos del formulario
+    var worksheet = XLSX.utils.json_to_sheet([
+        { 'Jornada': jornada, 'Fecha': fecha, 'Equipo': equipo, 'Rival': rival, 'Resultado': resultado }
+    ]);
+
+    // Añadir la hoja al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Formulario');
+}
+
+function exportarTabla(idTabla, nombreHoja, workbook) {
+    // Obtener la referencia de la tabla
+    var table = document.getElementById(idTabla);
+
+    // Convertir la tabla a formato de hoja de cálculo
+    var worksheet = XLSX.utils.table_to_sheet(table);
+
+    // Añadir la hoja al libro
+    XLSX.utils.book_append_sheet(workbook, worksheet, nombreHoja);
+}
+
+     
+
+
+ // Función para recargar la página principal
+ function ejecutarRecargaPaginaPrincipal() {
+    // Recargar la página principal después de un breve retraso (1000 milisegundos = 1 segundo)
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
+  }
+
+  // Escuchar mensajes del HTML secundario (html2)
+window.addEventListener('message', (event) => {
+  if (event.data.actualizar) {
+    // Realizar la actualización de la página principal
+    location.reload();
+  }
+});
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
