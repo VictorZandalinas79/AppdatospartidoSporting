@@ -83,9 +83,6 @@
         <button id="exportarSeleccionadosBtn" onclick="exportarModelo()">Exportar Seleccionados</button>
     </table>
 
-    <input type="file" id="fileInput" style="display: none" accept=".xlsx, .xls">
-    <button id="importarBtn" onclick="document.getElementById('fileInput').click()">Cargar Jugadores del Club</button>
-
     <button onclick="limpiarTabla()">Limpiar Tabla</button>
 
     
@@ -134,34 +131,21 @@
 
         document.getElementById('fileInput').addEventListener('change', handleFile);
 
-        function handleFile(event) {
-            const fileList = event.target.files;
-            if (fileList.length > 0) {
-                const file = fileList[0];
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const sheet = workbook.Sheets[sheetName];
-                    const players = XLSX.utils.sheet_to_json(sheet, { header: ['Dorsal', 'Jugador', 'Equipo'], range: 1 });
-
-                    limpiarTabla();
-
-                    players.forEach(player => {
-                        agregarJugadorATabla(player);
-                    });
-
-                    const autoguardadoCheckbox = document.getElementById('autoguardado');
-                    if (autoguardadoCheckbox.checked) {
-                        localStorage.setItem('jugadores', JSON.stringify(players));
-                    }
-                };
-
-                reader.readAsArrayBuffer(file);
+        function handleFile() {
+    fetch('r/Users/imac/Downloads/jugadoressporting.json')
+        .then(response => response.json())
+        .then(players => {
+            limpiarTabla();
+            players.forEach(player => {
+                agregarJugadorATabla(player);
+            });
+            const autoguardadoCheckbox = document.getElementById('autoguardado');
+            if (autoguardadoCheckbox.checked) {
+                localStorage.setItem('jugadores', JSON.stringify(players));
             }
-        }
+        })
+        .catch(error => console.log(error));
+}
 
         function importarJugadores() {
             const jugadoresDesdeArchivo = [
