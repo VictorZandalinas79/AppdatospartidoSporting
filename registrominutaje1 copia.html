@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPORTING DE CASTELLO - Fundado en 1970</title>
@@ -203,6 +201,17 @@
 
     <div class="botonera" id="botonera"></div>
     
+    <div id="modalEmail" style="display:none;">
+        <input type="email" id="emailUsuario" placeholder="Ingrese su email">
+        <button onclick="exportarYEnviarPartido()">Enviar</button>
+    </div>
+    
+    <script>
+    function abrirFormularioEmail() {
+        document.getElementById('modalEmail').style.display = 'block';
+    }
+    </script>
+    
     
     <div id="formularioExportarPartido" style="display: inline-block;">
         <h2 style="display:inline-block;">Datos Partido</h2>
@@ -255,7 +264,7 @@
     </div>
 
     <button onclick="limpiarTabla()">Limpiar Tabla</button>
-    <button onclick="exportarPartido()">Exportar Partido</button>
+    <button onclick="abrirFormularioEmail()">Exportar Partido</button>
 
     <table id="registro-table">
         <caption>Registros por tiempos</caption>
@@ -672,6 +681,19 @@ function obtenerOrdenDorsal(dorsal) {
             return 3;
     }
 }
+function exportarYEnviarPartido() {
+    const email = document.getElementById('emailUsuario').value;
+    // Aquí llamas a tu función para exportar los datos a Excel y PDF
+    // Luego envías una solicitud al servidor con el email y los archivos
+    fetch('URL_DEL_SERVIDOR', {
+        method: 'POST',
+        body: JSON.stringify({ email: email, datosPartido: datosExportados })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
+
         function acumularTiempoFila(fila) {
             const celdaCronometro = fila.querySelector('.cronometro-fila span');
             const tiempoActual = obtenerTiempoFila(fila);
@@ -1024,9 +1046,21 @@ window.addEventListener('message', (event) => {
 });
     </script>
 
-</body>
-</html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
 
 
 
