@@ -562,9 +562,7 @@ function cambiarEstadoSuplenteTitular(boton) {
         tbody.appendChild(fila);
     });
 }
-// Llamar a la función después de cambiar el estado
-    actualizarContadorTitulares();
-}
+
 
 
 function obtenerEstado(fila) {
@@ -691,8 +689,7 @@ function cargarTablaPrincipal() {
         cargarJugadoresSeleccionados(jugadoresSeleccionados);
     }
 }
-actualizarContadorTitulares(); // Actualiza el contador
-}
+
 function limpiarTabla() {
     // Mostrar cuadro de diálogo de confirmación
     const confirmacion = confirm('¿Está seguro de que desea limpiar la tabla?');
@@ -936,26 +933,11 @@ window.addEventListener('message', (event) => {
     location.reload();
   }
 });
-        
-function actualizarContadorTitulares() {
-    var contador = 0;
-    var filas = document.querySelectorAll('#jugadores-table tbody tr');
-
-    filas.forEach(function(fila) {
-        var celdaTitular = fila.querySelector('td.clase-o-id-de-la-celda-titular'); // Ajusta esto según tu HTML
-        if (celdaTitular && celdaTitular.textContent === 'Titular') {
-            contador++;
-        }
-    });
-
-    document.getElementById('numero-titulares').textContent = contador;
-}
-
-
     </script>
 
 </body>
 </html>
+
 
 
 
