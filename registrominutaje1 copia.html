@@ -908,12 +908,24 @@ function exportarTabla(idTabla, nombreHoja, workbook) {
     // Obtener la referencia de la tabla
     var table = document.getElementById(idTabla);
 
-    // Convertir la tabla a formato de hoja de cálculo
-    var worksheet = XLSX.utils.table_to_sheet(table);
+    // Clonar la tabla para modificarla
+    var clonedTable = table.cloneNode(true);
+
+    // Eliminar o modificar celdas con botones "+/-"
+    var botones = clonedTable.querySelectorAll('.tactile-button'); // Asegúrate de que esta clase coincida con tus botones
+    botones.forEach(function(btn) {
+        btn.parentNode.removeChild(btn); // Elimina los botones
+        // Alternativamente, puedes reemplazar el contenido de la celda
+        // btn.parentElement.textContent = btn.nextElementSibling.textContent;
+    });
+
+    // Convertir la tabla clonada a formato de hoja de cálculo
+    var worksheet = XLSX.utils.table_to_sheet(clonedTable);
 
     // Añadir la hoja al libro
     XLSX.utils.book_append_sheet(workbook, worksheet, nombreHoja);
 }
+
 
      
 
