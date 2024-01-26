@@ -134,7 +134,8 @@
 
         <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
         <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
-
+        
+    <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
     </div>
     <table id="jugadores-table">
         <thead>
@@ -690,7 +691,8 @@ function cargarTablaPrincipal() {
         cargarJugadoresSeleccionados(jugadoresSeleccionados);
     }
 }
-
+actualizarContadorTitulares(); // Actualiza el contador
+}
 function limpiarTabla() {
     // Mostrar cuadro de diálogo de confirmación
     const confirmacion = confirm('¿Está seguro de que desea limpiar la tabla?');
