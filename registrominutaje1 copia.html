@@ -166,7 +166,20 @@
 
         <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
         <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
-        
+    
+        <div id="cronometro">
+    <button id="play" onclick="iniciarCronometro()">
+        <i class="fas fa-play"></i>
+    </button>
+    <button id="stop" onclick="detenerCronometro()">
+        <i class="fas fa-stop"></i>
+    </button>
+    <button id="reset" onclick="resetearCronometroGeneral()">
+        <i class="fas fa-redo"></i>
+    </button>
+    <span id="tiempo">00:00:00.000</span>
+</div>
+   
     <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
     </div>
     <table id="jugadores-table">
@@ -190,19 +203,7 @@
 
     <label class="boton" for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
 
-    <div id="cronometro">
-    <button id="play" onclick="iniciarCronometro()">
-        <i class="fas fa-play"></i>
-    </button>
-    <button id="stop" onclick="detenerCronometro()">
-        <i class="fas fa-stop"></i>
-    </button>
-    <button id="reset" onclick="resetearCronometroGeneral()">
-        <i class="fas fa-redo"></i>
-    </button>
-    <span id="tiempo">00:00:00.000</span>
-</div>
-
+   
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
     <button class="boton" onclick="exportarPartido()">Exportar Partido</button>
