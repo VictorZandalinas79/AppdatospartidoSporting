@@ -323,7 +323,8 @@ function actualizarTabla() {
 
   // Agrega un escuchador de eventos para actualizar la tabla
   document.addEventListener('actualizarTablaPrincipal', actualizarTabla);
-
+// Lugar donde se carga o actualiza la tabla
+actualizarContadorTitulares();
     function agregarJugadorATabla(tabla, jugador) {
         // Código para agregar un jugador a la tabla específica
         const tbody = tabla.querySelector('tbody');
@@ -561,6 +562,19 @@ function cambiarEstadoSuplenteTitular(boton) {
     filas.forEach(fila => {
         tbody.appendChild(fila);
     });
+}
+function actualizarContadorTitulares() {
+    var contador = 0;
+    var filas = document.querySelectorAll('#jugadores-table tbody tr');
+
+    filas.forEach(function(fila) {
+        var celdaTitular = fila.querySelector('td.clase-o-id-de-la-celda-titular'); // Ajusta esto según tu HTML
+        if (celdaTitular && celdaTitular.textContent === 'Titular') {
+            contador++;
+        }
+    });
+
+    document.getElementById('numero-titulares').textContent = contador;
 }
 
 
