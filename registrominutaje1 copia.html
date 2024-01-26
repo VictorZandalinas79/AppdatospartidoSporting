@@ -136,7 +136,6 @@
         <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
 
     </div>
-actualizarContadorTitulares();
     <table id="jugadores-table">
         <thead>
             <tr>
@@ -562,7 +561,9 @@ function cambiarEstadoSuplenteTitular(boton) {
         tbody.appendChild(fila);
     });
 }
-
+// Llamar a la función después de cambiar el estado
+    actualizarContadorTitulares();
+}
 
 
 function obtenerEstado(fila) {
