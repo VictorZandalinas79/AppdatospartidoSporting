@@ -91,7 +91,18 @@
     font-weight: bold; /* Hace que el texto sea en negrita */
     font-family: 'Roboto', sans-serif; /* Usa la fuente Roboto o cualquier otra de tu preferencia */
 }
+/* Si cada columna tiene una clase específica */
+.columna-dorsal, .columna-jugador, .columna-equipo, .columna-cronometro {
+    color: black;
+}
 
+/* Si prefieres aplicar el estilo basado en el índice de la columna */
+#jugadores-table th:nth-child(1), /* Dorsal */
+#jugadores-table th:nth-child(2), /* Jugador */
+#jugadores-table th:nth-child(3), /* Equipo */
+#jugadores-table th:nth-child(4) { /* Cronómetro */
+    color: black;
+}
     </style>
 </head>
 <body>
