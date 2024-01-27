@@ -298,22 +298,7 @@ function resetearCronometroGeneral() {
     // Resto del código de reseteo
 }
 
-        function actualizarCronometro() {
-            milisegundos += 10;
-            if (milisegundos === 1000) {
-                milisegundos = 0;
-                segundos++;
-                if (segundos === 60) {
-                    segundos = 0;
-                    minutos++;
-                    if (minutos === 60) {
-                        minutos = 0;
-                        horas++;
-                    }
-                }
-            }
-            actualizarTiempo();
-        }
+    
 
         function actualizarTiempo() {
             const tiempo = `${formatoDosDigitos(horas)}:${formatoDosDigitos(minutos)}:${formatoDosDigitos(segundos)}.${formatoTresDigitos(milisegundos)}`;
