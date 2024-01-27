@@ -19,7 +19,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            color: black;
+            color: blanchedalmond;
             position: relative;
             height: 100vh;
         }
@@ -28,7 +28,7 @@
         .boton {
             background-color: #4CAF50; /* Verde */
             border: none;
-            color: black;
+            color: rgb(15, 7, 7);
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -42,7 +42,7 @@
         }
 
         .boton:hover {
-            background-color: white;
+            background-color: rgb(12, 10, 10);
             color: black;
             border: 2px solid #4CAF50;
         }
@@ -60,62 +60,33 @@
 
         /* Estilos para tablas */
         table {
-          width: 80%; /* Ajustar el ancho total de la tabla */
-        max-width: 1000px; /* Establecer un ancho máximo para la tabla */
-        margin: 20px auto; /* Centrar la tabla y agregar margen */
-        border-collapse: collapse;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        background-color: #D3D3D3;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-       th, td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        width: auto; /* Ajustar el ancho de las celdas */
-    }
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background-color: #4CAF50;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
         th {
             background-color: #4CAF50;
-            color: black;
+            color: white;
         }
 
         tr:hover {
-            background-color: #f5f5f5;
+            background-color: #191616;
         }
-   
-        /* Estilos generales para los botones del cronómetro */
-#cronometro button {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin bordes */
-    padding: 15px 20px; /* Espaciado interno */
-    font-size: 20px; /* Tamaño de la fuente */
-    border-radius: 10px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor en forma de mano */
-    margin: 5px; /* Margen entre botones */
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.3); /* Sombra para un efecto 3D */
-    transition: all 0.3s ease; /* Transición suave para efectos hover y focus */
-}
-
-/* Cambios en el color de fondo al pasar el cursor */
-#cronometro button:hover {
-    background-color: #369457; /* Color ligeramente más oscuro al hacer hover */
-}
-
-/* Cambios al hacer clic en el botón */
-#cronometro button:active {
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.3); /* Sombra más pequeña para efecto de pulsación */
-    transform: translateY(2px); /* Ligeramente desplazado hacia abajo */
-}
-
-/* Estilo para el área que muestra el tiempo */
-#tiempo {
-    font-size: 2em; /* Tamaño más grande para el cronómetro */
-    color: black; /* Color del texto */
-    margin-left: 10px; /* Margen a la izquierda */
-    font-weight: bold; /* Texto en negrita */
+        #contador-titulares {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    /* Añade aquí más estilos si lo deseas */
 }
 
       #tiempo {
@@ -137,38 +108,6 @@
 #jugadores-table th:nth-child(4) { /* Cronómetro */
     color: black;
 }
-        /* Estilos para botones de Titular y Suplente */
-    .botonSuplenteTitular {
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        background-size: 20px 20px;
-        background-position: 10px center;
-        background-repeat: no-repeat;
-    }
-
-    .botonTitular {
-        background-color: #4CAF50; /* Verde */
-    }
-
-    .botonSuplente {
-        background-color: #f44336; /* Rojo */
-    }
-
-    /* Ajuste para el cambio de estado */
-    .fondo-verde {
-        background-color: #4CAF50; /* Verde */
-    }
-
-    .fondo-rojo {
-        background-color: #f44336; /* Rojo */
-    }
     </style>
 </head>
 <body>
@@ -195,20 +134,8 @@
 
         <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
         <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
-    
-        <div id="cronometro">
-    <button id="play" onclick="iniciarCronometro()">
-        <i class="fas fa-play"></i>
-    </button>
-    <button id="stop" onclick="detenerCronometro()">
-        <i class="fas fa-stop"></i>
-    </button>
-    <button id="reset" onclick="resetearCronometroGeneral()">
-        <i class="fas fa-redo"></i>
-    </button>
-    <span id="tiempo">00:00:00.000</span>
-</div>
-   
+        
+    <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
     </div>
     <table id="jugadores-table">
         <thead>
@@ -231,7 +158,12 @@
 
     <label class="boton" for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
 
-   
+    <div id="cronometro">
+        <button id="play" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
+        <button id="stop" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
+        <button id="reset" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
+        <span id="tiempo">00:00:00.000</span>
+    </div>
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
     <button class="boton" onclick="exportarPartido()">Exportar Partido</button>
@@ -251,7 +183,6 @@
     </table>
     <script>
 
-   <script>
     let cronometro;
         let milisegundos = 0;
         let segundos = 0;
@@ -1006,6 +937,7 @@ window.addEventListener('message', (event) => {
 
 </body>
 </html>
+
 
 
 
