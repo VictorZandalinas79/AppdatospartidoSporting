@@ -57,44 +57,93 @@
                 font-size: 16px;
             }
         }
+        .boton-cronometro {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
 
+.boton-cronometro i {
+    font-size: 20px; /* Tamaño de los íconos */
+}
+
+.boton-cronometro:hover {
+    background-color: #367c39; /* Color más oscuro al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.boton-cronometro:active {
+    transform: scale(0.95); /* Efecto de presionado */
+}
         /* Estilos para tablas */
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background-color: #4CAF50;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    width: 60%; /* Ajusta el ancho de la tabla según tus necesidades */
+    margin-left: auto; /* Centrar la tabla horizontalmente */
+    margin-right: auto;
+    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(230, 230, 0, 0.75); /* Efecto de brillo para simular LED */
+    background-color: #000000; /* Fondo negro para mayor contraste */
+    color: #e6e600; /* Color de texto brillante */
+    font-family: 'Digital-7', sans-serif; /* Fuente con estilo digital */
+}
 
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+th, td {
+    padding: 10px 15px; /* Ajusta el relleno para hacer las celdas más estrechas */
+    text-align: center; /* Alinea el texto al centro */
+    border: 1px solid #e6e600; /* Bordes de celdas con color brillante */
+    text-shadow: 0 0 5px rgba(230, 230, 0, 0.75); /* Efecto de brillo en el texto */
+}
 
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
+th {
+    background-color: #222; /* Fondo oscuro para las cabeceras */
+    color: white;
+}
 
-        tr:hover {
-            background-color: #191616;
-        }
+tr:hover {
+    background-color: #333333; /* Cambio de color al pasar el mouse */
+}
+
+@font-face {
+    font-family: 'Digital-7';
+    src: url('digital-7.ttf') format('truetype'); /* Asegúrate de tener la fuente digital-7 o una similar */
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        width: 100%; /* Ajusta el ancho de la tabla para dispositivos móviles */
+    }
+}
+
         #contador-titulares {
     font-size: 1.2em;
     margin-bottom: 10px;
     /* Añade aquí más estilos si lo deseas */
 }
 
-      #tiempo {
-    font-size: 3em; /* Ajusta el tamaño de la fuente */
-    color: #4CAF50; /* Color del texto */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para mejorar la legibilidad */
-    font-weight: bold; /* Hace que el texto sea en negrita */
-    font-family: 'Roboto', sans-serif; /* Usa la fuente Roboto o cualquier otra de tu preferencia */
+#tiempo {
+    font-size: 48px; /* Tamaño grande para simular un videomarcador */
+    color: #e6e600; /* Color brillante para el texto */
+    text-shadow: 0px 0px 10px rgba(230, 230, 0, 0.75); /* Efecto de brillo para simular LED */
+    font-family: 'Digital-7', sans-serif; /* Fuente con estilo digital */
+    background-color: #000000; /* Fondo negro para mayor contraste */
+    border: 2px solid #ffffff; /* Borde para simular el videomarcador */
+    padding: 10px;
+    border-radius: 10px; /* Bordes redondeados */
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+/* Importante: Debes importar una fuente digital para que se vea como un videomarcador */
+@font-face {
+    font-family: 'Digital-7';
+    src: url('digital-7.ttf') format('truetype'); /* Asegúrate de tener la fuente digital-7 o una similar */
 }
 /* Si cada columna tiene una clase específica */
 .columna-dorsal, .columna-jugador, .columna-equipo, .columna-cronometro {
@@ -135,7 +184,11 @@
         <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
         <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
         
-    <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
+     <div id="cronometro">
+        <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
+<button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
+<button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
+        <span id="tiempo">00:00:00.000</span>
     </div>
     <table id="jugadores-table">
         <thead>
@@ -158,11 +211,7 @@
 
     <label class="boton" for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
 
-    <div id="cronometro">
-        <button id="play" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
-        <button id="stop" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
-        <button id="reset" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
-        <span id="tiempo">00:00:00.000</span>
+   
     </div>
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
@@ -937,6 +986,7 @@ window.addEventListener('message', (event) => {
 
 </body>
 </html>
+
 
 
 
