@@ -141,6 +141,40 @@
 #jugadores-table th:nth-child(4) { /* Cronómetro */
     color: black;
 }
+        /* Estilos para botones de Titular y Suplente */
+    .botonSuplenteTitular {
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-size: 20px 20px;
+        background-position: 10px center;
+        background-repeat: no-repeat;
+    }
+
+    .botonTitular {
+        background-color: #4CAF50; /* Verde */
+        background-image: url('icono-jugador-titular.png'); /* Icono de jugador en juego */
+    }
+
+    .botonSuplente {
+        background-color: #f44336; /* Rojo */
+        background-image: url('icono-jugador-suplente.png'); /* Icono de jugador en el banquillo */
+    }
+
+    /* Ajuste para el cambio de estado */
+    .fondo-verde {
+        background-color: #4CAF50; /* Verde */
+    }
+
+    .fondo-rojo {
+        background-color: #f44336; /* Rojo */
+    }
     </style>
 </head>
 <body>
@@ -564,9 +598,10 @@ function cambiarEstadoSuplenteTitular(boton) {
 
     const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
     fila.querySelector('.botonSuplenteTitular').textContent = nuevoEstado;
-    const fondo = nuevoEstado === 'Titular' ? 'fondo-verde' : 'fondo-rojo';
-    fila.querySelector('.botonSuplenteTitular').classList.remove('fondo-verde', 'fondo-rojo');
-    fila.querySelector('.botonSuplenteTitular').classList.add(fondo);
+
+    // Cambiar clases para estilos modernos
+    boton.classList.toggle('botonTitular');
+    boton.classList.toggle('botonSuplente');
 
     // Reorganizar las filas en la tabla
     const dorsal = parseInt(fila.cells[0].textContent);
@@ -574,15 +609,13 @@ function cambiarEstadoSuplenteTitular(boton) {
     const filas = Array.from(tbody.querySelectorAll('tr'));
 
     filas.sort((filaA, filaB) => {
-        // Primero ordenar por estado (Titular primero)
         const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
         const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
 
         if (estadoA !== estadoB) {
-            return estadoB.localeCompare(estadoA); // Ordenar Titular antes que Suplente
+            return estadoB.localeCompare(estadoA);
         }
 
-        // Luego, dentro de Titular, dar prioridad a los dorsales 1, 13, 25
         if (estadoA === 'Titular') {
             const dorsalA = parseInt(filaA.cells[0].textContent);
             const dorsalB = parseInt(filaB.cells[0].textContent);
@@ -596,14 +629,12 @@ function cambiarEstadoSuplenteTitular(boton) {
             }
         }
 
-        return 0; // Si ambos son Suplentes, no cambiar el orden
+        return 0;
     });
 
-    // Limpiar y reinsertar las filas ordenadas
-    filas.forEach(fila => {
-        tbody.appendChild(fila);
-    });
+    filas.forEach(fila => tbody.appendChild(fila));
 }
+
 function actualizarContadorTitulares() {
     var contador = 0;
     var filas = document.querySelectorAll('#jugadores-table tbody tr');
