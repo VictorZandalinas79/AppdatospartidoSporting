@@ -660,6 +660,42 @@ function obtenerOrdenDorsal(dorsal) {
             return 3;
     }
 }
+        // Guardar el estado de todos los cronómetros de las filas
+function guardarEstadoCronometros() {
+    const filas = document.querySelectorAll('#jugadores-table tbody tr');
+    const estadosCronometros = Array.from(filas).map(fila => {
+        return {
+            dorsal: fila.cells[0].textContent,
+            tiempo: fila.querySelector('.cronometro-fila span').textContent,
+            tiempoAcumulado: fila.dataset.tiempoAcumulado || '00:00:00.000'
+        };
+    });
+    localStorage.setItem('estadosCronometros', JSON.stringify(estadosCronometros));
+}
+
+// Cargar el estado de los cronómetros de las filas
+function cargarEstadoCronometros() {
+    const estadosCronometros = JSON.parse(localStorage.getItem('estadosCronometros'));
+    if (estadosCronometros) {
+        const filas = document.querySelectorAll('#jugadores-table tbody tr');
+        estadosCronometros.forEach(estado => {
+            filas.forEach(fila => {
+                if (fila.cells[0].textContent === estado.dorsal) {
+                    const celdaCronometro = fila.querySelector('.cronometro-fila span');
+                    celdaCronometro.textContent = estado.tiempo;
+                    fila.dataset.tiempoAcumulado = estado.tiempoAcumulado;
+                }
+            });
+        });
+    }
+}
+
+// Evento para guardar el estado al salir de la página
+window.addEventListener('beforeunload', guardarEstadoCronometros);
+
+// Cargar el estado al entrar a la página
+document.addEventListener('DOMContentLoaded', cargarEstadoCronometros);
+
         function acumularTiempoFila(fila) {
             const celdaCronometro = fila.querySelector('.cronometro-fila span');
             const tiempoActual = obtenerTiempoFila(fila);
@@ -673,6 +709,7 @@ function obtenerOrdenDorsal(dorsal) {
             const milisecTotal = milisecActual + milisecAcumulado;
 
             fila.dataset.tiempoAcumulado = `${formatoDosDigitos(minTotal)}:${formatoDosDigitos(secTotal)}.${formatoTresDigitos(milisecTotal)}`;
+        guardarEstadoCronometros();
         }
 
         function detenerCronometroFila(fila) {
@@ -682,8 +719,9 @@ function obtenerOrdenDorsal(dorsal) {
             if (cronometroId) {
                 clearInterval(cronometroId);
                 fila.removeAttribute('data-cronometro-id');
+                guardarEstadoCronometros();
             }
-        }
+        
 
         function reiniciarCronometroFila(fila) {
             const celdaCronometro = fila.querySelector('.cronometro-fila span');
