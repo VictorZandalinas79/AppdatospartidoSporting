@@ -587,49 +587,39 @@ function detenerCronometro() {
 }
 function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
-    const estadoActual = fila.querySelector('.botonSuplenteTitular').textContent;
+    const estadoActual = boton.textContent;
 
-    // Cambia el texto y las clases del botón según el estado actual
     if (estadoActual === 'Titular') {
+        // Cambiar a Suplente
         detenerCronometroFila(fila);
         acumularTiempoFila(fila);
         boton.textContent = 'Suplente';
         boton.classList.remove('botonTitular');
-        boton.classList.add('botonSuplente');
+        boton.classList.add('botonSuplente', 'fondo-rojo');
+        boton.classList.remove('fondo-verde');
     } else {
+        // Cambiar a Titular
         reiniciarCronometroFila(fila);
         boton.textContent = 'Titular';
         boton.classList.remove('botonSuplente');
-        boton.classList.add('botonTitular');
+        boton.classList.add('botonTitular', 'fondo-verde');
+        boton.classList.remove('fondo-rojo');
     }
 
-    // Reorganizar las filas en la tabla según el estado
+    // Reorganizar las filas en la tabla
     const dorsal = parseInt(fila.cells[0].textContent);
     const tbody = fila.closest('tbody');
     const filas = Array.from(tbody.querySelectorAll('tr'));
 
     filas.sort((filaA, filaB) => {
+        // Ordena primero por estado (Titular primero), luego por dorsal
         const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
         const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
 
         if (estadoA !== estadoB) {
             return estadoB.localeCompare(estadoA);
         }
-
-        if (estadoA === 'Titular') {
-            const dorsalA = parseInt(filaA.cells[0].textContent);
-            const dorsalB = parseInt(filaB.cells[0].textContent);
-
-            if ([1, 13, 25].includes(dorsalA) && ![1, 13, 25].includes(dorsalB)) {
-                return -1;
-            } else if (![1, 13, 25].includes(dorsalA) && [1, 13, 25].includes(dorsalB)) {
-                return 1;
-            } else {
-                return dorsalA - dorsalB;
-            }
-        }
-
-        return 0;
+        return parseInt(filaA.cells[0].textContent) - parseInt(filaB.cells[0].textContent);
     });
 
     filas.forEach(fila => tbody.appendChild(fila));
