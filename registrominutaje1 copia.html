@@ -589,21 +589,21 @@ function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
     const estadoActual = fila.querySelector('.botonSuplenteTitular').textContent;
 
+    // Cambia el texto y las clases del botón según el estado actual
     if (estadoActual === 'Titular') {
         detenerCronometroFila(fila);
         acumularTiempoFila(fila);
+        boton.textContent = 'Suplente';
+        boton.classList.remove('botonTitular');
+        boton.classList.add('botonSuplente');
     } else {
         reiniciarCronometroFila(fila);
+        boton.textContent = 'Titular';
+        boton.classList.remove('botonSuplente');
+        boton.classList.add('botonTitular');
     }
 
-    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
-    fila.querySelector('.botonSuplenteTitular').textContent = nuevoEstado;
-
-    // Cambiar clases para estilos modernos
-    boton.classList.toggle('botonTitular');
-    boton.classList.toggle('botonSuplente');
-
-    // Reorganizar las filas en la tabla
+    // Reorganizar las filas en la tabla según el estado
     const dorsal = parseInt(fila.cells[0].textContent);
     const tbody = fila.closest('tbody');
     const filas = Array.from(tbody.querySelectorAll('tr'));
@@ -634,6 +634,7 @@ function cambiarEstadoSuplenteTitular(boton) {
 
     filas.forEach(fila => tbody.appendChild(fila));
 }
+
 
 function actualizarContadorTitulares() {
     var contador = 0;
