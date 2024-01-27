@@ -279,9 +279,15 @@ function actualizarCronometro() {
     const ahora = new Date();
     const tiempoTranscurrido = duracionGuardada + (ahora - inicioCronometro);
 
-    // Actualiza el cronómetro usando tiempoTranscurrido
-    // Convierte tiempoTranscurrido (milisegundos) en horas, minutos, segundos y milisegundos
-    // y actualiza la interfaz de usuario
+    horas = Math.floor(tiempoTranscurrido / 3600000);
+    minutos = Math.floor((tiempoTranscurrido % 3600000) / 60000);
+    segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
+    milisegundos = tiempoTranscurrido % 1000;
+
+    const tiempo = `${formatoDosDigitos(horas)}:${formatoDosDigitos(minutos)}:${formatoDosDigitos(segundos)}.${formatoTresDigitos(milisegundos)}`;
+    document.getElementById('tiempo').textContent = tiempo;
+    // Elimina o actualiza esta línea según tu lógica de negocio
+    // actualizarCronometrosFilas();
 }
 
 function detenerCronometro() {
