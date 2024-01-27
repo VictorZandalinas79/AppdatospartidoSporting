@@ -477,29 +477,6 @@ function restarValor(spanNumero) {
     spanNumero.textContent = valorActual;
 }
 
-    let cronometroWorker;
-
-    if (window.Worker) {
-        // Utiliza una ruta relativa al archivo JavaScript
-        cronometroWorker = new Worker('scripts/cronometroWorker.js');
-
-        cronometroWorker.onmessage = function(e) {
-            // Manejar los mensajes del Worker
-        };
-
-        // Funciones para iniciar y detener el cronómetro
-        function iniciarCronometro() {
-            cronometroWorker.postMessage('start');
-        }
-
-        function detenerCronometro() {
-            cronometroWorker.postMessage('stop');
-        }
-    } else {
-        console.log('Tu navegador no soporta Web Workers.');
-    }
-
-
 function sumarValor(spanNumero) {
     let valorActual = parseInt(spanNumero.textContent) || 0;
 
