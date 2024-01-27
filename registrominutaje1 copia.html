@@ -12,17 +12,18 @@
     <style>
         /* Estilos generales */
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('https://sportingdecastellocom.files.wordpress.com/2023/10/whatsapp-image-2023-10-04-at-22.53.28-1.jpeg?w=NaN&h=');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: blanchedalmond;
-            position: relative;
-            height: 100vh;
-        }
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)), url('https://sportingdecastellocom.files.wordpress.com/2023/10/whatsapp-image-2023-10-04-at-22.53.28-1.jpeg?w=NaN&h=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: blanchedalmond;
+    position: relative;
+    height: 100vh;
+    text-shadow: 1px 1px 2px black;
+}
 
         /* Estilos para los botones */
         .boton {
@@ -167,28 +168,39 @@ tr:hover {
 
     <div class="botonera" id="botonera"></div>
     
-    <div id="formularioExportarPartido" style="display: inline-block;">
-        <h2 style="display:inline-block;">Datos Partido</h2>
-        <label for="jornada" style="display:inline-block; margin-right: 10px;">Jornada:</label>
-        <input type="text" id="jornada" placeholder="Ingrese la jornada" style="display:inline-block; margin-right: 10px;">
-
-        <label for="fecha" style="display:inline-block; margin-right: 10px;">Fecha:</label>
-        <input type="date" id="fecha" placeholder="Seleccione la fecha" style="display:inline-block; margin-right: 10px;">
-
-        <label for="equipo" style="display:inline-block; margin-right: 10px;">Equipo:</label>
-        <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="display:inline-block; margin-right: 10px;">
-
-        <label for="rival" style="display:inline-block; margin-right: 10px;">Rival:</label>
-        <input type="text" id="rival" placeholder="Ingrese el rival" style="display:inline-block; margin-right: 10px;">
-
-        <label for="resultado" style="display:inline-block; margin-right: 10px;">Resultado:</label>
-        <input type="text" id="resultado" placeholder="Ingrese el resultado" style="display:inline-block; margin-right: 10px;">
+    <div id="formularioExportarPartido" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); max-width: 600px; margin: auto;">
+        <h2 style="color: #000; text-align: center; font-family: 'Roboto', sans-serif;">Datos Partido</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="jornada" style="color: #000; margin-right: 10px;">Jornada:</label>
+                <input type="text" id="jornada" placeholder="Ingrese la jornada" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="fecha" style="color: #000; margin-right: 10px;">Fecha:</label>
+                <input type="date" id="fecha" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="equipo" style="color: #000; margin-right: 10px;">Equipo:</label>
+                <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="rival" style="color: #000; margin-right: 10px;">Rival:</label>
+                <input type="text" id="rival" placeholder="Ingrese el rival" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="resultado" style="color: #000; margin-right: 10px;">Resultado:</label>
+                <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+        </div>
+    </div>
+    
+    
         
-     <div id="cronometro">
-        <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
-<button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
-<button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
-        <span id="tiempo">00:00:00.000</span>
+    <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
     </div>
     <table id="jugadores-table">
         <thead>
@@ -211,7 +223,11 @@ tr:hover {
 
     <label class="boton" for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
 
-   
+    <div id="cronometro">
+        <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
+<button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
+<button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
+        <span id="tiempo">00:00:00.000</span>
     </div>
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
@@ -986,6 +1002,7 @@ window.addEventListener('message', (event) => {
 
 </body>
 </html>
+
 
 
 
