@@ -263,28 +263,39 @@
         let horas = 0;
         let cronometroActivo = false;
 
-        function iniciarCronometro() {
-            if (!cronometroActivo) {
-                cronometro = setInterval(actualizarCronometro, 10);
-                cronometroActivo = true;
-                iniciarCronometrosFilas();
-            }
-        }
+       let inicioCronometro;
+let duracionGuardada = 0;
 
+function iniciarCronometro() {
+    if (!cronometroActivo) {
+        inicioCronometro = new Date(); // Guarda la hora actual
+        cronometro = setInterval(actualizarCronometro, 10);
+        cronometroActivo = true;
+        // Otras acciones de inicio
+    }
+}
 
-        function detenerCronometro() {
-            clearInterval(cronometro);
-            cronometroActivo = false;
-            detenerCronometrosFilas();
-        }
+function actualizarCronometro() {
+    const ahora = new Date();
+    const tiempoTranscurrido = duracionGuardada + (ahora - inicioCronometro);
 
-        function resetearCronometroGeneral() {
-    milisegundos = 0;
-    segundos = 0;
-    minutos = 0;
-    horas = 0;
-    actualizarTiempo();
+    // Actualiza el cronómetro usando tiempoTranscurrido
+    // Convierte tiempoTranscurrido (milisegundos) en horas, minutos, segundos y milisegundos
+    // y actualiza la interfaz de usuario
+}
+
+function detenerCronometro() {
+    const ahora = new Date();
+    duracionGuardada += (ahora - inicioCronometro);
+
+    clearInterval(cronometro);
     cronometroActivo = false;
+    // Otras acciones al detener
+}
+
+function resetearCronometroGeneral() {
+    duracionGuardada = 0;
+    // Resto del código de reseteo
 }
 
         function actualizarCronometro() {
