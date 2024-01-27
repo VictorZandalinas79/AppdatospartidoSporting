@@ -197,7 +197,12 @@ tr:hover {
             </div>
         </div>
     </div>
-    
+     <div id="cronometro">
+        <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
+<button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
+<button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
+        <span id="tiempo">00:00:00.000</span>
+    </div>
     
         
     <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
@@ -222,13 +227,6 @@ tr:hover {
     </table>
 
     <label class="boton" for="file-input" onclick="abrirVentanaPop()">Cargar Jugadores</label>
-
-    <div id="cronometro">
-        <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
-<button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
-<button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
-        <span id="tiempo">00:00:00.000</span>
-    </div>
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
     <button class="boton" onclick="exportarPartido()">Exportar Partido</button>
