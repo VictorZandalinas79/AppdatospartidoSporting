@@ -300,8 +300,13 @@ function detenerCronometro() {
 }
 
 function resetearCronometroGeneral() {
+    if (cronometroActivo) {
+        clearInterval(cronometro);
+        cronometroActivo = false;
+    }
     duracionGuardada = 0;
-    // Resto del código de reseteo
+    inicioCronometro = new Date(); // Reiniciar inicioCronometro para evitar cálculos incorrectos en iniciarCronometro
+    document.getElementById('tiempo').textContent = '00:00:00.000';
 }
 
     
