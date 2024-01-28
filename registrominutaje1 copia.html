@@ -297,6 +297,20 @@ tr:hover {
             }
             actualizarTiempo();
         }
+        function actualizarCronometrosFilas() {
+    // Obtener todas las filas con cronómetros
+    const filasConCronometro = document.querySelectorAll('.cronometro-fila');
+
+    filasConCronometro.forEach(fila => {
+        // Actualizar el cronómetro de cada fila
+        // Por ejemplo, puedes necesitar actualizar el tiempo mostrado
+        // Esto es solo un ejemplo genérico
+        const cronometro = fila.querySelector('span');
+        // Suponiendo que tienes una función para obtener el tiempo actualizado
+        cronometro.textContent = obtenerTiempoActualizado();
+    });
+}
+
 
         function actualizarTiempo() {
             const tiempo = `${formatoDosDigitos(horas)}:${formatoDosDigitos(minutos)}:${formatoDosDigitos(segundos)}.${formatoTresDigitos(milisegundos)}`;
@@ -329,6 +343,7 @@ tr:hover {
         };
     };
 }
+
 
 
         function cargarJugadoresSeleccionados(jugadoresSeleccionados) {
