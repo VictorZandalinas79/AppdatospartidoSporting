@@ -991,17 +991,16 @@ function exportarTabla(idTabla, nombreHoja, workbook) {
     }, 1000);
   }
 
- if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    // Registro exitoso
-                    console.log('ServiceWorker registrado correctamente con el scope: ', registration.scope);
-                }, function(err) {
-                    // Registro fallido :(
-                    console.log('ServiceWorker registro fallido: ', err);
-                });
-            });
-        }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+  .then(function(registration) {
+    // Registro exitoso
+    console.log('Service Worker registrado con scope:', registration.scope);
+  }).catch(function(err) {
+    // Registro fallido
+    console.log('Service Worker registro fallido:', err);
+  });
+}
 // En tu archivo HTML principal
 var worker = new Worker('cronometroWorker.js');
 
