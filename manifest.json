@@ -1,24 +1,32 @@
 {
-  "name": "ZandaApp",
-  "short_name": "AppWeb",
+  "name": "ZandaSoccer",
+  "short_name": "ZandaSoccer",
   "start_url": "/registrominutaje1%20copia.html",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "icono-192x192.png",
+      "src": "iconofutbol.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icono-512x512.png",
+      "src": "iconofutbol.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "iconofutbol.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "iconofutbol.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-    // Puedes añadir más tamaños aquí
   ],
   "orientation": "portrait",
-  "description": "Descripción de Mi Aplicación Web",
-  "lang": "es"
+  "lang": "es-ES"
 }
