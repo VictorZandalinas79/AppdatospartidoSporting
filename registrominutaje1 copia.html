@@ -1002,7 +1002,25 @@ function exportarTabla(idTabla, nombreHoja, workbook) {
                 });
             });
         }
+// En tu archivo HTML principal
+var worker = new Worker('cronometroWorker.js');
 
+worker.onmessage = function(event) {
+    document.getElementById('cronometro').textContent = event.data;
+};
+
+worker.postMessage({ start: true });
+
+// En tu cronometroWorker.js
+let tiempo = 0;
+self.onmessage = function(event) {
+    if (event.data.start) {
+        setInterval(function() {
+            tiempo++;
+            self.postMessage(tiempo);
+        }, 1000);
+    }
+};
   // Escuchar mensajes del HTML secundario (html2)
 window.addEventListener('message', (event) => {
   if (event.data.actualizar) {
