@@ -1094,7 +1094,13 @@ function actualizarContadorTitulares() {
     document.getElementById('numero-titulares-moderno').textContent = contadorTitulares;
 }
 
-// Asegúrate de llamar a actualizarContadorTitulares() después de cambiar el estado de un jugador.
+function actualizarTablaDesdeSecundaria() {
+    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+    if (jugadoresSeleccionadosStorage) {
+        const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+        cargarJugadoresSeleccionados(jugadoresSeleccionados);
+    }
+}
 
     </script>
 
