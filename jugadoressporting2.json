@@ -1,1552 +1,1552 @@
 [
   {
-    "Dorsal": "",
-    "Jugador": "Marc",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Oscar",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Andres",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Batiste",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Sergio",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Eneko",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Asier",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Raul",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Armando",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Marcos",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Irene",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Diego",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Erik Ricardo",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "David",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Nicholas",
-    "Equipo": "BENJAMIN A"
-  },
-  {
     "Dorsal": 3,
-    "Jugador": "Nicson",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "MartÌn",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Gonzalo",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Lucas",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Pablo",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Agustin",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Alvaro",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 13,
-    "Jugador": "Iker",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Robert Andrei",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Adri·n",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Izan",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Iker",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Jonathan",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Aritz",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Diego",
-    "Equipo": "ALEVIN A"
+    "Nombre": "Tony Nicolas",
+    "Equipo": "INFANTIL A"
   },
   {
     "Dorsal": 24,
-    "Jugador": "Lucas Ioan",
-    "Equipo": "INFANTIL B"
+    "Nombre": "Muhammad Aayan",
+    "Equipo": "ALEVIN A"
   },
   {
-    "Dorsal": 13,
-    "Jugador": "Patrick Gabriel",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Pau",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Yago",
+    "Dorsal": 18,
+    "Nombre": "Abigail",
     "Equipo": "BENJAMIN A"
   },
   {
-    "Dorsal": 14,
-    "Jugador": "Daniel",
-    "Equipo": "CADETE A"
-  },
-  {
     "Dorsal": 7,
-    "Jugador": "Pablo",
-    "Equipo": "PREBENJAMIN A"
+    "Nombre": "Adrian",
+    "Equipo": "AMATEUR"
   },
   {
     "Dorsal": 8,
-    "Jugador": "Eduard",
-    "Equipo": "PREBENJAMIN A"
+    "Nombre": "Adrian",
+    "Equipo": "ALEVIN B"
   },
   {
-    "Dorsal": 14,
-    "Jugador": "Enzo",
-    "Equipo": "PREBENJAMIN A"
+    "Dorsal": 5,
+    "Nombre": "Adrian",
+    "Equipo": "BENJAMIN A"
   },
   {
-    "Dorsal": 6,
-    "Jugador": "Jaume",
-    "Equipo": "ALEVIN C"
+    "Dorsal": 15,
+    "Nombre": "Adri�n",
+    "Equipo": "JUVENIL A"
   },
   {
-    "Dorsal": 2,
-    "Jugador": "Arnau",
-    "Equipo": "ALEVIN C"
+    "Dorsal": 12,
+    "Nombre": "Adrian",
+    "Equipo": "JUVENIL C"
   },
   {
     "Dorsal": 1,
-    "Jugador": "Sergio",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Christian",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Alex",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Ivan",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "VÌctor",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Alejandro",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "RubÈn",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Marc",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Roman",
+    "Nombre": "Adri�n",
     "Equipo": "CADETE B"
   },
   {
     "Dorsal": 22,
-    "Jugador": "Guillermo",
-    "Equipo": "JUVENIL C"
+    "Nombre": "Adri�n",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Cristian Adrian",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Adri�n",
+    "Equipo": "BENJAMIN B"
   },
   {
     "Dorsal": 7,
-    "Jugador": "Carlos",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Victor",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Pau",
+    "Nombre": "Agustin",
     "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Dylan",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Martin",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "MarÌa",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Nicolas",
-    "Equipo": "JUVENIL C"
   },
   {
     "Dorsal": 17,
-    "Jugador": "Pablo",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Izan",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Hugo",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Gabriel",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "”scar",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 13,
-    "Jugador": "Sergio",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Thiago Alejandro",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Marco",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Annas",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "David Andrei",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 22,
-    "Jugador": "Monsef",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Sergio",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Andres Gabriel",
+    "Nombre": "Sergio",
     "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Juan Pablo",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Ryan Eduard",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Emilio",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 12,
-    "Jugador": "Zian Alexandru",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "David",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Daniel",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Mario",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 23,
-    "Jugador": "Xavier",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Xavier",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 22,
-    "Jugador": "Ricardo",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Giovanni Alberto",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 12,
-    "Jugador": "Marcos",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Eloy",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 22,
-    "Jugador": "Adri·n",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Daniel",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Enzo",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Mario",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Gabriel Valentin",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Alejandro",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 12,
-    "Jugador": "Cesar",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Pablo",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Jack",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Lucas Mihai",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Mateo",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Mohamed",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Neymar",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Asier",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 24,
-    "Jugador": "Jes˙s Adri·n",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Yassine",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Yago",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Mario",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Santiago",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 13,
-    "Jugador": "Juli·n",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "David",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Aritz",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "MatÌas",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Leo",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Daniel",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Javier",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Marcos",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Alvaro",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Hugo",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Marc",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "MartÌn",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Alvaro",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "David",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Adri·n",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "¡lvaro",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Asier",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Arkaitz",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Lorenzo",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Miguel",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Adrian",
-    "Equipo": "ALEVIN B"
   },
   {
     "Dorsal": 16,
-    "Jugador": "Hugo",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Daniel",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 12,
-    "Jugador": "Alberto",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Angel",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Marcos",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Alejandro",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Alvaro",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Ali",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Yasser",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Muhammad Ali",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Muhammad Aayan",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Miguel",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Cristian Adrian",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Carlos Blidari",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Lucas",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Ilias",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Bruno",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Ahmed",
+    "Nombre": "Ahmed",
     "Equipo": "CADETE B"
   },
   {
     "Dorsal": 23,
-    "Jugador": "Pau",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Diego",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Rodney",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Adrian",
+    "Nombre": "Aitor",
     "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Luis Miguel",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Sergi",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Mateo",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Liam",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Thiago",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "¡lvaro",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Giampaolo",
-    "Equipo": "PREBENJAMIN B"
   },
   {
     "Dorsal": 22,
-    "Jugador": "Xavier",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Karim",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Omar",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Aleix",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Luis Eduard",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Juan Manuel",
+    "Nombre": "Aitor",
     "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Guillem",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Arnau",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Carles",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "RamÛn",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Ricardo",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Oscar",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 25,
-    "Jugador": "Eric",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Marc",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Luca",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Victor",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Iker",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Santi",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Ferran",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Juan Pablo",
-    "Equipo": "JUVENIL B"
   },
   {
     "Dorsal": 12,
-    "Jugador": "Adrian",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 12,
-    "Jugador": "Dilan",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Eric Gabriel",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 25,
-    "Jugador": "Juan Diego",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Carlos",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Jon",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Victor",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Alejandro",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Iker",
-    "Equipo": "JUVENIL B"
+    "Nombre": "Alberto",
+    "Equipo": "ALEVIN A"
   },
   {
     "Dorsal": 22,
-    "Jugador": "Alejandro",
+    "Nombre": "Alejandro",
     "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Juan Manuel",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Manuel",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "RamÛn",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Marwin Santiago",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 16,
-    "Jugador": "Antonio",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Mario",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 22,
-    "Jugador": "Matteo",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Michele",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Alvaro",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Mateo",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Joshua",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Iv·n",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 15,
-    "Jugador": "Jose Daniel",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Daniel",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Tony Nicolas",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Roberto Andrei",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Andreas Nicolas",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "David",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Yago",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Efren",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Raul",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Dylan",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Ian",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Ivan",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Iannis",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 23,
-    "Jugador": "Javier",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Manuel",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Juan",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Hugo",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Edgar",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Marcos Antonio",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Ivan",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Hugo",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Daniel",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Julia",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Valentino Joaquin",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Fernando",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Mario",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Cristian",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Ferran",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Guillermo",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Ismael",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Eric",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Marc",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Mario",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Jose",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Biel",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Teo",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Sam",
-    "Equipo": "ALEVIN A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Javier",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Cristian",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Ruben Mihail",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Guillem",
-    "Equipo": "ALEVIN A"
   },
   {
     "Dorsal": 6,
-    "Jugador": "Hugo",
-    "Equipo": "CADETE B"
+    "Nombre": "Aleix",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Jhon Alejandro",
+    "Equipo": "ALEVIN C"
   },
   {
     "Dorsal": 26,
-    "Jugador": "Alejandro",
+    "Nombre": "Alejandro",
     "Equipo": "JUVENIL A"
   },
   {
-    "Dorsal": "",
-    "Jugador": "Patrick Andrei",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Edgar",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 7,
-    "Jugador": "Hugo",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 22,
-    "Jugador": "Reda",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 19,
-    "Jugador": "Juan Miguel",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Mario",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Geronimo",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Thiago",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 18,
-    "Jugador": "Alvaro",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 23,
-    "Jugador": "Carlos",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 10,
-    "Jugador": "Yerai",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 14,
-    "Jugador": "Noa",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Sergio",
+    "Dorsal": 4,
+    "Nombre": "Alejandro",
     "Equipo": "ALEVIN C"
   },
   {
     "Dorsal": 5,
-    "Jugador": "Josep",
-    "Equipo": "INFANTIL B"
+    "Nombre": "Alejandro Ionut",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Alejandro",
+    "Equipo": "PREBENJAMIN A"
   },
   {
     "Dorsal": 7,
-    "Jugador": "Arick",
+    "Nombre": "Alejandro",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Alejandro",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Ali",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Muhammad Ali",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "�lvaro",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Alvaro",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Alvaro",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Alvaro",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Alvaro",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Alvaro",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Alvaro",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Alvaro",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Andres",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Andres Felipe",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Andres Gabriel",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Angel",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Annas",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Antonio",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Arick",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Aritz",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Aritz",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Arkaitz",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Armando",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Arnau",
     "Equipo": "ALEVIN C"
   },
   {
     "Dorsal": 2,
-    "Jugador": "Jose",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Ismael",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 6,
-    "Jugador": "Nicol·s",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Hugo",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 21,
-    "Jugador": "Marc",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Derek Giovanny",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Victor",
+    "Nombre": "Arnau",
     "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Sergio",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Ra˙l",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 11,
-    "Jugador": "Adri·n",
-    "Equipo": "BENJAMIN B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Mateo",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Rodrigo",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": 4,
-    "Jugador": "Guillermo",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Ulises",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 1,
-    "Jugador": "Izan",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Victor",
-    "Equipo": "ALEVIN B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Bryan Alexander",
-    "Equipo": "PREBENJAMIN B"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Alejandro",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Luca AgustÌn",
-    "Equipo": "ESCOLETA B"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Oliver",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": "",
-    "Jugador": "Axel",
-    "Equipo": "ESCOLETA A"
-  },
-  {
-    "Dorsal": 13,
-    "Jugador": "Xavi",
-    "Equipo": "CADETE B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Broklyn Florin",
-    "Equipo": "CADETE A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Adrian",
-    "Equipo": "BENJAMIN A"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "David",
-    "Equipo": "PREBENJAMIN A"
-  },
-  {
-    "Dorsal": 17,
-    "Jugador": "Bruno",
-    "Equipo": "ALEVIN B"
   },
   {
     "Dorsal": 18,
-    "Jugador": "Abigail",
-    "Equipo": "BENJAMIN A"
+    "Nombre": "Asier",
+    "Equipo": "CADETE B"
   },
   {
-    "Dorsal": 12,
-    "Jugador": "Hugo",
-    "Equipo": "JUVENIL A"
+    "Dorsal": "",
+    "Nombre": "Asier",
+    "Equipo": "ESCOLETA A"
   },
   {
-    "Dorsal": 22,
-    "Jugador": "Rafael",
-    "Equipo": "INFANTIL A"
+    "Dorsal": 4,
+    "Nombre": "Asier",
+    "Equipo": "BENJAMIN B"
   },
   {
-    "Dorsal": 3,
-    "Jugador": "Andres Felipe",
+    "Dorsal": "",
+    "Nombre": "Axel",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Batiste",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Biel",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Sergio",
     "Equipo": "AMATEUR"
   },
   {
-    "Dorsal": 5,
-    "Jugador": "Francisco",
+    "Dorsal": 16,
+    "Nombre": "Alex",
     "Equipo": "AMATEUR"
   },
   {
-    "Dorsal": 14,
-    "Jugador": "Jordi",
-    "Equipo": "JUVENIL A"
+    "Dorsal": 8,
+    "Nombre": "Broklyn Florin",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Bruno",
+    "Equipo": "CADETE A"
   },
   {
     "Dorsal": 17,
-    "Jugador": "Silviu",
+    "Nombre": "Bruno",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Bryan Alexander",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Ivan",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Carlos",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Carles",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Carlos",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Carlos Blidari",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Cesar",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Christian",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Cristian",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Cristian",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Daniel",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Jose Daniel",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Daniel",
     "Equipo": "ALEVIN A"
   },
   {
     "Dorsal": "",
-    "Jugador": "Ra˙l",
-    "Equipo": "AMATEUR"
-  },
-  {
-    "Dorsal": 5,
-    "Jugador": "Alejandro Ionut",
-    "Equipo": "JUVENIL C"
-  },
-  {
-    "Dorsal": 20,
-    "Jugador": "Joel",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 25,
-    "Jugador": "Marc Oriol",
-    "Equipo": "JUVENIL A"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Joan",
-    "Equipo": "INFANTIL B"
-  },
-  {
-    "Dorsal": 8,
-    "Jugador": "Fernando",
-    "Equipo": "INFANTIL A"
-  },
-  {
-    "Dorsal": 2,
-    "Jugador": "Luis Fabian Estefan",
-    "Equipo": "JUVENIL B"
-  },
-  {
-    "Dorsal": 3,
-    "Jugador": "Xavi",
-    "Equipo": "ALEVIN C"
-  },
-  {
-    "Dorsal": 9,
-    "Jugador": "Stanley Osazowangie",
-    "Equipo": "CADETE B"
+    "Nombre": "Daniel",
+    "Equipo": "ESCOLETA A"
   },
   {
     "Dorsal": 18,
-    "Jugador": "Daniel",
+    "Nombre": "Daniel",
     "Equipo": "AMATEUR"
   },
   {
     "Dorsal": 4,
-    "Jugador": "Francisco Javier",
-    "Equipo": "JUVENIL A"
+    "Nombre": "Daniel",
+    "Equipo": "INFANTIL B"
   },
   {
-    "Dorsal": 23,
-    "Jugador": "Javier",
+    "Dorsal": 4,
+    "Nombre": "Daniel",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Daniel",
     "Equipo": "CADETE A"
   },
   {
-    "Dorsal": 23,
-    "Jugador": "Aitor",
-    "Equipo": "AMATEUR"
+    "Dorsal": 8,
+    "Nombre": "Daniel",
+    "Equipo": "ALEVIN C"
   },
   {
-    "Dorsal": 25,
-    "Jugador": "Elias",
-    "Equipo": "JUVENIL B"
+    "Dorsal": 5,
+    "Nombre": "David",
+    "Equipo": "PREBENJAMIN A"
   },
   {
     "Dorsal": 17,
-    "Jugador": "Jacobo",
-    "Equipo": "CADETE B"
+    "Nombre": "David",
+    "Equipo": "BENJAMIN A"
   },
   {
-    "Dorsal": 12,
-    "Jugador": "JerÛnimo",
+    "Dorsal": 21,
+    "Nombre": "David",
     "Equipo": "JUVENIL B"
   },
   {
     "Dorsal": "",
-    "Jugador": "Alvaro",
+    "Nombre": "David Andrei",
     "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "David",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "David",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "David",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Derek Giovanny",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Diego",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Diego",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Diego",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Dilan",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Dylan",
+    "Equipo": "INFANTIL B"
   },
   {
     "Dorsal": "",
-    "Jugador": "Vincenth Elian",
+    "Nombre": "Dylan",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Edgar",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Edgar",
     "Equipo": "ESCOLETA A"
   },
   {
-    "Dorsal": 19,
-    "Jugador": "JoaquÌn",
+    "Dorsal": 17,
+    "Nombre": "Ryan Eduard",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Eduard",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Efren",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 25,
+    "Nombre": "Elias",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Eloy",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Emilio",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Eneko",
     "Equipo": "INFANTIL A"
   },
   {
     "Dorsal": 1,
-    "Jugador": "Enzo",
+    "Nombre": "Enzo",
     "Equipo": "PREBENJAMIN B"
   },
   {
+    "Dorsal": 14,
+    "Nombre": "Enzo",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Enzo",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 25,
+    "Nombre": "Eric",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Eric",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Eric Gabriel",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Luis Fabian Estefan",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Fernando",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Ferran",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Ferran",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Francisco Javier",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Gabriel",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Gabriel Valentin",
+    "Equipo": "ESCOLETA B"
+  },
+  {
     "Dorsal": 1,
-    "Jugador": "Hugo",
+    "Nombre": "Geronimo",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Giampaolo",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "�lvaro",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Giovanni Alberto",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Gonzalo",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Guillermo",
     "Equipo": "JUVENIL C"
   },
   {
     "Dorsal": 1,
-    "Jugador": "Christian Lucas",
-    "Equipo": "PREBENJAMIN A"
+    "Nombre": "Guillem",
+    "Equipo": "ALEVIN A"
   },
   {
-    "Dorsal": 5,
-    "Jugador": "Jhon Alejandro",
-    "Equipo": "ALEVIN C"
+    "Dorsal": 1,
+    "Nombre": "Guillem",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Guillermo",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Guillermo",
+    "Equipo": "AMATEUR"
   },
   {
     "Dorsal": 3,
-    "Jugador": "Hector",
+    "Nombre": "Hector",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Hugo",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Hugo",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Hugo",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Hugo",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Hugo",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Hugo",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Hugo",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Hugo",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Hugo",
     "Equipo": "INFANTIL B"
   },
   {
     "Dorsal": 11,
-    "Jugador": "Jorge",
+    "Nombre": "Ian",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Iannis",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Iker",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Iker",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Iker",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Iker",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Ilias",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Irene",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Ismael",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Ismael",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Ivan",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Ivan",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Izan",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Izan",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Izan",
     "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Jack",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Jacobo",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Jaume",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Javier",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 23,
+    "Nombre": "Javier",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 23,
+    "Nombre": "Javier",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Javier",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Jer�nimo",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 24,
+    "Nombre": "Jes�s Adri�n",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Joan",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Joaqu�n",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Joel",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Jon",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Jonathan",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Jordi",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Jose",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Josep",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Joshua",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Jose",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 25,
+    "Nombre": "Juan Diego",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Juan",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Juan Pablo",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Juan Pablo",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Juan Manuel",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Juan Miguel",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Julia",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Juli�n",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Karim",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Jorge",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Leo",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Liam",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Lorenzo",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Luca",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Luca Agust�n",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Christian Lucas",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Lucas",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Lucas",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Lucas Mihai",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 24,
+    "Nombre": "Lucas Ioan",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Luis Eduard",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Luis Miguel",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Manuel",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Manuel",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Juan Manuel",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Marc",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Marc",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Marc",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Marc",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Marc",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Marc",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 25,
+    "Nombre": "Marc Oriol",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Marco",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Marcos Antonio",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Marcos",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Marcos",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Marcos",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Marcos",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Mar�a",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Mario",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Mario",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Mario",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Mario",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Mario",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Mario",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Mario",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Mart�n",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Mart�n",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Martin",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Marwin Santiago",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Mateo",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Mateo",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Mateo",
+    "Equipo": "ESCOLETA B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Mateo",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 4,
+    "Nombre": "Mat�as",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Matteo",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Michele",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Miguel",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Miguel",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Mohamed",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Monsef",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Iv�n",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Fernando",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Neymar",
+    "Equipo": "PREBENJAMIN B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Nicholas",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Nicol�s",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Andreas Nicolas",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 18,
+    "Nombre": "Nicolas",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Nicson",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "Noa",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Oliver",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Omar",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Oscar",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 14,
+    "Nombre": "�scar",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "�scar",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Pablo",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Pablo",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Pablo",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 21,
+    "Nombre": "Pablo",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Francisco",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Patrick Gabriel",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Patrick Andrei",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Pau",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 23,
+    "Nombre": "Pau",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Pau",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Rafael",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Ram�n",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 16,
+    "Nombre": "Ram�n",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Hugo",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Raul",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Ra�l",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Raul",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Ra�l",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Reda",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 6,
+    "Nombre": "Erik Ricardo",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Ricardo",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Ricardo",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 1,
+    "Nombre": "Robert Andrei",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Roberto Andrei",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 23,
+    "Nombre": "Carlos",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Rodney",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Rodrigo",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Roman",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Rub�n",
+    "Equipo": "PREBENJAMIN A"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Ruben Mihail",
+    "Equipo": "JUVENIL C"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Sam",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Santi",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Santiago",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Alejandro",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 8,
+    "Nombre": "Sergi",
+    "Equipo": "AMATEUR"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Sergio",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Sergio",
+    "Equipo": "JUVENIL A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Sergio",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Sergio",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 17,
+    "Nombre": "Silviu",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Stanley Osazowangie",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Teo",
+    "Equipo": "ALEVIN A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Thiago",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "Thiago",
+    "Equipo": "BENJAMIN B"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Thiago Alejandro",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Ulises",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Victor",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 20,
+    "Nombre": "Victor",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 2,
+    "Nombre": "V�ctor",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 7,
+    "Nombre": "Victor",
+    "Equipo": "CADETE A"
+  },
+  {
+    "Dorsal": 9,
+    "Nombre": "Victor",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": 5,
+    "Nombre": "Victor",
+    "Equipo": "INFANTIL A"
+  },
+  {
+    "Dorsal": "",
+    "Nombre": "Vincenth Elian",
+    "Equipo": "ESCOLETA A"
+  },
+  {
+    "Dorsal": 3,
+    "Nombre": "Xavi",
+    "Equipo": "ALEVIN C"
+  },
+  {
+    "Dorsal": 15,
+    "Nombre": "Xavier",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 13,
+    "Nombre": "Xavi",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 22,
+    "Nombre": "Xavier",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 23,
+    "Nombre": "Xavier",
+    "Equipo": "CADETE B"
+  },
+  {
+    "Dorsal": 19,
+    "Nombre": "Yago",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Yago",
+    "Equipo": "BENJAMIN A"
+  },
+  {
+    "Dorsal": 11,
+    "Nombre": "Yago",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Yasser",
+    "Equipo": "INFANTIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Yassine",
+    "Equipo": "JUVENIL B"
+  },
+  {
+    "Dorsal": 10,
+    "Nombre": "Yerai",
+    "Equipo": "ALEVIN B"
+  },
+  {
+    "Dorsal": 12,
+    "Nombre": "Zian Alexandru",
+    "Equipo": "PREBENJAMIN A"
   }
 ]
