@@ -170,6 +170,84 @@ function filtrarTabla() {
         }
     });
 }
+function exportarModelo() {
+    const jugadoresSeleccionados = [];
+    document.querySelectorAll('#jugadores-table tbody tr').forEach(tr => {
+        const checkbox = tr.querySelector('input[type="checkbox"]');
+        if (checkbox && checkbox.checked) {
+            const dorsal = tr.cells[0].textContent;
+            const jugador = tr.cells[1].textContent;
+            const equipo = tr.cells[2].textContent;
+            jugadoresSeleccionados.push({ dorsal, jugador, equipo });
+        }
+    });
+
+    localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+    alert('Jugadores seleccionados exportados con éxito.');
+}
+document.addEventListener('DOMContentLoaded', () => {
+    cargarJugadoresSeleccionados();
+    // Otros inicializadores aquí...
+});
+function obtenerJugadoresSeleccionados() {
+    const checkboxes = document.querySelectorAll('#jugadores-table tbody input[type="checkbox"]:checked');
+    const jugadoresSeleccionados = Array.from(checkboxes).map(checkbox => {
+        const fila = checkbox.closest('tr');
+        return {
+            Dorsal: fila.cells[0].textContent.trim(),
+            Jugador: fila.cells[1].textContent.trim(),
+            Equipo: fila.cells[2].textContent.trim(),
+            // Asegúrate de incluir datos para Cronometro y Estado si es necesario
+            // Por ejemplo, estos valores pueden ser estáticos o recuperados de algún elemento de la fila
+            Cronometro: "00:00:00", // Asumiendo un valor por defecto o encuentra una forma de obtenerlo
+            Estado: "Titular" // O "Suplente", según corresponda
+        };
+    });
+    return jugadoresSeleccionados;
+}
+
+function exportarSeleccionados() {
+    const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
+    localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+    window.close(); // Cierra la ventana secundaria después de exportar
+}
+
+
+function cargarJugadoresSeleccionados() {
+    const jugadores = JSON.parse(localStorage.getItem('jugadoresSeleccionados')) || [];
+    const tbody = document.querySelector('#tablaPrincipal tbody'); // Asegúrate de tener esta tabla en tu HTML principal
+    jugadores.forEach(jugador => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${jugador.dorsal}</td><td>${jugador.jugador}</td><td>${jugador.equipo}</td>`;
+        tbody.appendChild(tr);
+    });
+
+    // Opcional: Limpiar los jugadores seleccionados de localStorage si no necesitas mantener los datos después de cargarlos
+    localStorage.removeItem('jugadoresSeleccionados');
+}
+
+
+function exportarModelo() {
+    const filasSeleccionadas = document.querySelectorAll('#jugadores-table tbody tr input[type="checkbox"]:checked');
+    const jugadoresSeleccionados = Array.from(filasSeleccionadas).map(input => {
+        const fila = input.closest('tr');
+        return {
+            dorsal: fila.children[0].textContent,
+            jugador: fila.children[1].textContent,
+            equipo: fila.children[2].textContent
+        };
+    });
+
+    // Almacenar los jugadores seleccionados en localStorage
+    localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+
+    // Si se necesita notificar a la ventana principal para cargar los jugadores seleccionados
+    window.opener.postMessage({ actualizar: true }, '*');
+
+    // Cerrar la ventana actual después de exportar
+    window.close();
+}
+
     </script>
     
 
