@@ -631,36 +631,26 @@ function detenerCronometro() {
         
 function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
-    const estadoActual = boton.textContent; // Usar directamente buttonTextContent
+    const estadoActual = boton.textContent;
 
     // Cambiar el estado y actualizar los estilos según corresponda
-    const nuevoEstado = boton.textContent === 'Suplente' ? 'Titular' : 'Suplente';
+    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
     boton.textContent = nuevoEstado;
+    boton.classList.toggle('fondo-verde', nuevoEstado === 'Titular');
+    boton.classList.toggle('fondo-rojo', nuevoEstado === 'Suplente');
 
+    // Decidir si iniciar, detener o reiniciar el cronómetro basado en el nuevo estado
     if (nuevoEstado === 'Titular') {
-        boton.classList.remove('fondo-rojo');
-        boton.classList.add('fondo-verde');
+        reiniciarCronometroFila(fila); // Esta función ya debería detener y luego reiniciar el cronómetro
     } else {
-        boton.classList.remove('fondo-verde');
-        boton.classList.add('fondo-rojo');
+        detenerCronometroFila(fila); // Asegúrate de detener el cronómetro si el jugador es ahora suplente
     }
 
-    // Actualizar el contador de titulares
+    // Actualizar el contador de titulares y reorganizar las filas si es necesario
     actualizarContadorTitulares();
-
-    // Reorganizar las filas en la tabla
-    reorganizarFilas();
-}
-// Funciones para iniciar y detener el cronómetro de la fila
-function iniciarCronometroFila(fila) {
-    // Aquí debes implementar la lógica para iniciar el cronómetro de esta fila específica
-    // Esto podría implicar establecer un nuevo intervalo y actualizar el texto del cronómetro en la fila
+    reorganizarFilasSiEsNecesario(); // Asumiendo que tienes una función para esto
 }
 
-function detenerCronometroFila(fila) {
-    // Aquí debes implementar la lógica para detener el cronómetro de esta fila específica
-    // Esto podría implicar limpiar el intervalo establecido para esta fila
-}
 
 
 function reorganizarFilas() {
