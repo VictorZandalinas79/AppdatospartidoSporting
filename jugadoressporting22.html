@@ -73,7 +73,11 @@
             <tr>
                 <th>Dorsal <input type="text" id="filtroDorsal"></th>
                 <th>Jugador <input type="text" id="filtroJugador"></th>
-                <th>Equipo <input type="text" id="filtroEquipo"></th>
+                <th>Equipo 
+                <select id="filtroEquipo">
+                <option value="">Todos</option>
+        <!-- Las opciones se llenarán dinámicamente -->
+    </select>
                 <th style="display: none;">Selecciona</th>
             </tr>
         </thead>
@@ -124,11 +128,30 @@
             filtroJugador.addEventListener('input', () => {
                 filtrarTabla('Jugador', filtroJugador.value);
             });
+            const filtroEquipo = document.getElementById('filtroEquipo');
+           filtroEquipo.addEventListener('change', () => {
+           filtrarTabla('Equipo', filtroEquipo.value);
+           });
 
-            filtroEquipo.addEventListener('input', () => {
-                filtrarTabla('Equipo', filtroEquipo.value);
-            });
         });
+        // Llama a llenarFiltroEquipo después de cargar/agregar todos los jugadores
+    llenarFiltroEquipo();
+});
+
+function llenarFiltroEquipo() {
+    const equipos = new Set();
+    document.querySelectorAll('#jugadores-table tbody tr').forEach(fila => {
+        equipos.add(fila.cells[2].textContent); // Asumiendo que Equipo es la tercera columna
+    });
+
+    const filtroEquipo = document.getElementById('filtroEquipo');
+    equipos.forEach(equipo => {
+        if (equipo) { // Evitar agregar opciones vacías
+            const opcion = new Option(equipo, equipo);
+            filtroEquipo.add(opcion);
+        }
+    });
+}
 
         
 
