@@ -69,19 +69,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
-
-.boton-cronometro i {
-    font-size: 20px; /* Tamaño de los íconos */
-}
-#contador-moderno-titulares {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color de texto */
-    padding: 10px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.3); /* Sombra para darle profundidad */
-    display: inline-block; /* Para que adopte el tamaño de su contenido */
-    margin-top: 10px; /* Espacio arriba */
-}
 .botonSuplenteTitular {
     padding: 10px 15px;
     border: none;
@@ -106,6 +93,18 @@
 
 .fondo-rojo:hover {
     box-shadow: 0 2px 4px 0 rgba(255, 0, 0, 0.24), 0 0 8px 0 rgba(255, 0, 0, 0.12);
+}
+.boton-cronometro i {
+    font-size: 20px; /* Tamaño de los íconos */
+}
+#contador-moderno-titulares {
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color de texto */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3); /* Sombra para darle profundidad */
+    display: inline-block; /* Para que adopte el tamaño de su contenido */
+    margin-top: 10px; /* Espacio arriba */
 }
 
 #contador-moderno-titulares span {
@@ -209,6 +208,36 @@ tr:hover {
     <h2 style="font-size: 30px; background-color: #af4c4c; color: white; padding: 10px;">SPORTING DE CASTELLÓ - Fundado en 1970</h2>
 
     <div class="botonera" id="botonera"></div>
+    
+    <div id="formularioExportarPartido" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); max-width: 600px; margin: auto;">
+        <h2 style="color: #000; text-align: center; font-family: 'Roboto', sans-serif;">Datos Partido</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="jornada" style="color: #000; margin-right: 10px;">Jornada:</label>
+                <input type="text" id="jornada" placeholder="Ingrese la jornada" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="fecha" style="color: #000; margin-right: 10px;">Fecha:</label>
+                <input type="date" id="fecha" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="equipo" style="color: #000; margin-right: 10px;">Equipo:</label>
+                <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="rival" style="color: #000; margin-right: 10px;">Rival:</label>
+                <input type="text" id="rival" placeholder="Ingrese el rival" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="resultado" style="color: #000; margin-right: 10px;">Resultado:</label>
+                <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+        </div>
+
     </div>
      <div id="cronometro">
         <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
@@ -242,34 +271,7 @@ tr:hover {
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
     <button class="boton" onclick="exportarPartido()">Exportar Partido</button>
-<div id="formularioExportarPartido" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); max-width: 600px; margin: auto;">
-        <h2 style="color: #000; text-align: center; font-family: 'Roboto', sans-serif;">Datos Partido</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="jornada" style="color: #000; margin-right: 10px;">Jornada:</label>
-                <input type="text" id="jornada" placeholder="Ingrese la jornada" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="fecha" style="color: #000; margin-right: 10px;">Fecha:</label>
-                <input type="date" id="fecha" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="equipo" style="color: #000; margin-right: 10px;">Equipo:</label>
-                <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="rival" style="color: #000; margin-right: 10px;">Rival:</label>
-                <input type="text" id="rival" placeholder="Ingrese el rival" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="resultado" style="color: #000; margin-right: 10px;">Resultado:</label>
-                <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-        </div>
+
     <table id="registro-table">
         <caption>Registros por tiempos</caption>
         <thead>
@@ -371,7 +373,7 @@ tr:hover {
 
         function abrirVentanaPop() {
     // Abre la ventana emergente con el HTML anterior
-    const nuevaVentana = window.open('jugadoressporting22.html', 'VentanaFlotante', 'width=800, height=600');
+    const nuevaVentana = window.open('tablajugadores.html', 'VentanaFlotante', 'width=800, height=600');
     nuevaVentana.onload = () => {
         nuevaVentana.actualizarTablaPrincipal = () => {
             location.reload();
@@ -406,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function exportarSeleccionados() {
+unction exportarSeleccionados() {
         // Obtener jugadores seleccionados y cargarlos en la tabla
         const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
         if (jugadoresSeleccionadosStorage) {
@@ -441,7 +443,7 @@ function actualizarTabla() {
   // Agrega un escuchador de eventos para actualizar la tabla
   document.addEventListener('actualizarTablaPrincipal', actualizarTabla);
 
-    function agregarJugadorATabla(tabla, jugador) {
+  function agregarJugadorATabla(tabla, jugador) {
         // Código para agregar un jugador a la tabla específica
         const tbody = tabla.querySelector('tbody');
         const fila = document.createElement('tr');
@@ -492,7 +494,7 @@ function actualizarTabla() {
     }
 }
 
-    function obtenerDatosTabla() {
+function obtenerDatosTabla() {
     const filas = document.querySelectorAll('#jugadores-table tbody tr');
     const datos = [];
 
@@ -508,8 +510,6 @@ function actualizarTabla() {
 
     return datos;
 }
-
-
 const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
 jugadoresSeleccionados.forEach(jugador => {
     agregarFilaTabla(jugador);
@@ -628,7 +628,6 @@ function detenerCronometro() {
     parte = parte === 1 ? 2 : 1;
     document.getElementById('parte').textContent = `${parte}ª parte`;
 }
-        
 function cambiarEstadoSuplenteTitular(boton) {
       const fila = boton.closest('tr');
     const estadoActual = boton.textContent;
@@ -683,61 +682,6 @@ function cambiarEstadoSuplenteTitular(boton) {
     });
     actualizarContadorTitulares();
 }
-
-function reorganizarFilas() {
-    const tbody = document.querySelector('#jugadores-table tbody');
-    const filas = Array.from(tbody.querySelectorAll('tr'));
-
-    filas.sort((filaA, filaB) => {
-        // Extraer los estados y dorsales para la comparación
-        const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
-        const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
-        const dorsalA = parseInt(filaA.cells[0].textContent, 10);
-        const dorsalB = parseInt(filaB.cells[0].textContent, 10);
-        const especiales = [1, 13, 25];
-
-        if (estadoA !== estadoB) {
-            return estadoA === 'Titular' ? -1 : 1;
-        }
-
-        // Priorizar dorsales específicos entre los titulares
-        if (estadoA === 'Titular' && (especiales.includes(dorsalA) || especiales.includes(dorsalB))) {
-            if (especiales.includes(dorsalA) && !especiales.includes(dorsalB)) return -1;
-            if (!especiales.includes(dorsalA) && especiales.includes(dorsalB)) return 1;
-        }
-
-        return dorsalA - dorsalB; // Orden natural por dorsal si ambos son titulares sin dorsales especiales
-    });
-
-    // Limpiar y reinsertar las filas ordenadas
-    filas.forEach(fila => tbody.appendChild(fila));
-}
-
-function actualizarContadorTitulares() {
-    // Implementación de la actualización del contador de titulares...
-}
-
-
-function actualizarContadorTitulares() {
-    // Contar cuántos jugadores están marcados como Titular
-    const botonesTitular = document.querySelectorAll('.botonSuplenteTitular');
-    let contadorTitulares = 0;
-
-    botonesTitular.forEach(boton => {
-        if (boton.textContent === 'Titular') {
-            contadorTitulares++;
-        }
-    });
-
-    // Actualizar el contador en el HTML
-    document.getElementById('numero-titulares-moderno').textContent = contadorTitulares;
-}
-
-// Asegúrate de llamar a actualizarContadorTitulares() al cargar la página para inicializar el contador
-document.addEventListener('DOMContentLoaded', () => {
-    actualizarContadorTitulares();
-});
-
 
 
 
@@ -1130,12 +1074,16 @@ self.onmessage = function(event) {
     }
 };
   // Escuchar mensajes del HTML secundario (html2)
-window.addEventListener('message', (event) => {
-  if (event.data.actualizar) {
-    // Realizar la actualización de la página principal
-    location.reload();
-  }
+  window.addEventListener('message', (event) => {
+    if (event.data.actualizar) {
+        const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+        if (jugadoresSeleccionadosStorage) {
+            const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+            cargarJugadoresSeleccionados(jugadoresSeleccionados);
+        }
+    }
 });
+
 function actualizarContadorTitulares() {
     // Contar cuántos jugadores están marcados como Titular
     const botonesTitular = document.querySelectorAll('.botonSuplenteTitular');
