@@ -608,57 +608,44 @@ function detenerCronometro() {
 }
 function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
-    const estadoActual = fila.querySelector('.botonSuplenteTitular').textContent;
+    const estadoActual = boton.textContent; // Usar directamente buttonTextContent
 
-    if (estadoActual === 'Titular') {
-        detenerCronometroFila(fila);
-        acumularTiempoFila(fila);
+    // Cambiar el estado y actualizar los estilos y el cronómetro según corresponda
+    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
+    boton.textContent = nuevoEstado;
+    boton.classList.toggle('fondo-verde', nuevoEstado === 'Titular');
+    boton.classList.toggle('fondo-rojo', nuevoEstado === 'Suplente');
+
+    if (nuevoEstado === 'Titular') {
+        // Lógica para cuando un jugador cambia a Titular, si es necesario
     } else {
-        reiniciarCronometroFila(fila);
+        // Lógica para cuando un jugador cambia a Suplente, si es necesario
     }
 
-    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
-    fila.querySelector('.botonSuplenteTitular').textContent = nuevoEstado;
-    const fondo = nuevoEstado === 'Titular' ? 'fondo-verde' : 'fondo-rojo';
-    fila.querySelector('.botonSuplenteTitular').classList.remove('fondo-verde', 'fondo-rojo');
-    fila.querySelector('.botonSuplenteTitular').classList.add(fondo);
-
-    // Reorganizar las filas en la tabla
-    const dorsal = parseInt(fila.cells[0].textContent);
-    const tbody = fila.closest('tbody');
-    const filas = Array.from(tbody.querySelectorAll('tr'));
-
-    filas.sort((filaA, filaB) => {
-        // Primero ordenar por estado (Titular primero)
-        const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
-        const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
-
-        if (estadoA !== estadoB) {
-            return estadoB.localeCompare(estadoA); // Ordenar Titular antes que Suplente
-        }
-
-        // Luego, dentro de Titular, dar prioridad a los dorsales 1, 13, 25
-        if (estadoA === 'Titular') {
-            const dorsalA = parseInt(filaA.cells[0].textContent);
-            const dorsalB = parseInt(filaB.cells[0].textContent);
-
-            if ([1, 13, 25].includes(dorsalA) && ![1, 13, 25].includes(dorsalB)) {
-                return -1;
-            } else if (![1, 13, 25].includes(dorsalA) && [1, 13, 25].includes(dorsalB)) {
-                return 1;
-            } else {
-                return dorsalA - dorsalB;
-            }
-        }
-
-        return 0; // Si ambos son Suplentes, no cambiar el orden
-    });
-
-    // Limpiar y reinsertar las filas ordenadas
-    filas.forEach(fila => {
-        tbody.appendChild(fila);
-    });
+    // Actualiza el contador de titulares
+    actualizarContadorTitulares();
 }
+
+function actualizarContadorTitulares() {
+    // Contar cuántos jugadores están marcados como Titular
+    const botonesTitular = document.querySelectorAll('.botonSuplenteTitular');
+    let contadorTitulares = 0;
+
+    botonesTitular.forEach(boton => {
+        if (boton.textContent === 'Titular') {
+            contadorTitulares++;
+        }
+    });
+
+    // Actualizar el contador en el HTML
+    document.getElementById('numero-titulares-moderno').textContent = contadorTitulares;
+}
+
+// Asegúrate de llamar a actualizarContadorTitulares() al cargar la página para inicializar el contador
+document.addEventListener('DOMContentLoaded', () => {
+    actualizarContadorTitulares();
+});
+
 
 
 
