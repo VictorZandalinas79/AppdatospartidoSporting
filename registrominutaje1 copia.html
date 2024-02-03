@@ -393,18 +393,13 @@ tr:hover {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Se carga la información al cargar la página
     const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
     if (jugadoresSeleccionadosStorage) {
         const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
         cargarJugadoresSeleccionados(jugadoresSeleccionados);
+        // Actualizar localStorage con la lista actual de jugadores
+        localStorage.setItem('jugadoresActuales', JSON.stringify(jugadoresSeleccionados));
     }
-
-    // Agregar el listener para el evento personalizado
-    document.addEventListener('actualizarTablaPrincipal', () => {
-        // Realiza la actualización de la tabla de jugadores o cualquier otra acción necesaria
-        location.reload();
-    });
 });
 
 
