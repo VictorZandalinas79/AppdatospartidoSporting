@@ -82,6 +82,31 @@
     display: inline-block; /* Para que adopte el tamaño de su contenido */
     margin-top: 10px; /* Espacio arriba */
 }
+.botonSuplenteTitular {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.fondo-verde {
+    background-color: #4CAF50; /* Verde */
+}
+
+.fondo-verde:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 128, 0, 0.24), 0 0 8px 0 rgba(0, 128, 0, 0.12);
+}
+
+.fondo-rojo {
+    background-color: #f44336; /* Rojo */
+}
+
+.fondo-rojo:hover {
+    box-shadow: 0 2px 4px 0 rgba(255, 0, 0, 0.24), 0 0 8px 0 rgba(255, 0, 0, 0.12);
+}
 
 #contador-moderno-titulares span {
     font-weight: bold; /* Texto en negrita */
@@ -609,16 +634,15 @@ function cambiarEstadoSuplenteTitular(boton) {
     const estadoActual = boton.textContent; // Usar directamente buttonTextContent
 
     // Cambiar el estado y actualizar los estilos según corresponda
-    const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
+    const nuevoEstado = boton.textContent === 'Suplente' ? 'Titular' : 'Suplente';
     boton.textContent = nuevoEstado;
-    boton.classList.toggle('fondo-verde', nuevoEstado === 'Titular');
-    boton.classList.toggle('fondo-rojo', nuevoEstado === 'Suplente');
 
-    // Si se cambia a Titular y el cronómetro general está activo, iniciar el cronómetro de la fila
-    if (nuevoEstado === 'Titular' && cronometroActivo) {
-        iniciarCronometroFila(fila);
-    } else if (nuevoEstado === 'Suplente') {
-        detenerCronometroFila(fila);
+    if (nuevoEstado === 'Titular') {
+        boton.classList.remove('fondo-rojo');
+        boton.classList.add('fondo-verde');
+    } else {
+        boton.classList.remove('fondo-verde');
+        boton.classList.add('fondo-rojo');
     }
 
     // Actualizar el contador de titulares
