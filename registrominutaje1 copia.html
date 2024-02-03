@@ -73,6 +73,19 @@
 .boton-cronometro i {
     font-size: 20px; /* Tamaño de los íconos */
 }
+#contador-moderno-titulares {
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color de texto */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3); /* Sombra para darle profundidad */
+    display: inline-block; /* Para que adopte el tamaño de su contenido */
+    margin-top: 10px; /* Espacio arriba */
+}
+
+#contador-moderno-titulares span {
+    font-weight: bold; /* Texto en negrita */
+}
 
 .boton-cronometro:hover {
     background-color: #367c39; /* Color más oscuro al pasar el mouse */
@@ -200,6 +213,7 @@ tr:hover {
                 <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
             </div>
         </div>
+
     </div>
      <div id="cronometro">
         <button id="play" class="boton-cronometro" onclick="iniciarCronometro()"><i class="fas fa-play"></i></button>
@@ -207,10 +221,9 @@ tr:hover {
 <button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
         <span id="tiempo">00:00:00.000</span>
     </div>
-    
-        
-    <div id="contador-titulares">Titulares: <span id="numero-titulares">0</span></div>
-    </div>
+    <div id="contador-moderno-titulares">
+    <span>Titulares: </span><span id="numero-titulares-moderno">0</span>
+</div>
     <table id="jugadores-table">
         <thead>
             <tr>
@@ -336,7 +349,7 @@ tr:hover {
 
         function abrirVentanaPop() {
     // Abre la ventana emergente con el HTML anterior
-    const nuevaVentana = window.open('jugadoressporting22.html', 'VentanaFlotante', 'width=800, height=600');
+    const nuevaVentana = window.open('tablajugadores.html', 'VentanaFlotante', 'width=800, height=600');
     nuevaVentana.onload = () => {
         nuevaVentana.actualizarTablaPrincipal = () => {
             location.reload();
@@ -1044,11 +1057,27 @@ window.addEventListener('message', (event) => {
     location.reload();
   }
 });
+function actualizarContadorTitulares() {
+    // Contar cuántos jugadores están marcados como Titular
+    const botonesTitular = document.querySelectorAll('.botonSuplenteTitular');
+    let contadorTitulares = 0;
+
+    botonesTitular.forEach(boton => {
+        if (boton.textContent === 'Titular') {
+            contadorTitulares++;
+        }
+    });
+
+    // Actualizar el contador en el HTML
+    document.getElementById('numero-titulares-moderno').textContent = contadorTitulares;
+}
+
+// Asegúrate de llamar a actualizarContadorTitulares() después de cambiar el estado de un jugador.
+
     </script>
 
 </body>
 </html>
-
 
 
 
