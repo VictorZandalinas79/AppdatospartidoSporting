@@ -69,6 +69,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
+.tactile-button {
+    margin: 0 5px; /* Añade un margen a los lados de cada botón para separarlos del número */
+}
+
+.numero-span {
+    display: inline-block;
+    margin: 0 5px; /* Añade un margen a los lados del número para separarlo de los botones */
+}
 .botonSuplenteTitular {
     padding: 10px 15px;
     border: none;
@@ -358,11 +366,13 @@ tr:hover {
         function abrirVentanaPop() {
     // Abre la ventana emergente con el HTML anterior
     const nuevaVentana = window.open('jugadoressporting22.html', 'VentanaFlotante', 'width=800, height=600');
-    nuevaVentana.onload = () => {
-        nuevaVentana.actualizarTablaPrincipal = () => {
-            location.reload();
-        };
-    };
+    let intervalo = setInterval(function() {
+        if (nuevaVentana.closed) {
+            clearInterval(intervalo); // Detiene el intervalo cuando la ventana se cierra
+            // Aquí puedes recargar la página o llamar a funciones específicas para actualizar datos
+            location.reload(); // O cualquier función que actualice los datos sin recargar la página
+        }
+    }, 1000); // Verifica cada segundo si la ventana se ha cerrado
 }
         function formatoDosDigitos(valor) {
             return valor < 10 ? `0${valor}` : valor;
