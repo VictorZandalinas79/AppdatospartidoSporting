@@ -93,66 +93,82 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const autoguardadoCheckbox = document.getElementById('autoguardado');
-            const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
-            const filtroDorsal = document.getElementById('filtroDorsal');
-            const filtroJugador = document.getElementById('filtroJugador');
-            const filtroEquipo = document.getElementById('filtroEquipo');
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const autoguardadoCheckbox = document.getElementById('autoguardado');
+    const filtroDorsal = document.getElementById('filtroDorsal');
+    const filtroJugador = document.getElementById('filtroJugador');
+    const filtroEquipo = document.getElementById('filtroEquipo');
 
-            const autoguardadoStorage = localStorage.getItem('autoguardado');
-            if (autoguardadoStorage === 'true') {
-                autoguardadoCheckbox.checked = true;
-            }
+    // Configuración inicial del autoguardado y eventos de filtros.
+    configurarAutoguardadoYFiltros();
 
-            const jugadoresGuardados = JSON.parse(localStorage.getItem('jugadores'));
-            if (jugadoresGuardados) {
-                jugadoresGuardados.forEach(jugador => {
-                    agregarJugadorATabla(jugador);
-                });
-            }
-
-            autoguardadoCheckbox.addEventListener('change', () => {
-                if (autoguardadoCheckbox.checked) {
-                    localStorage.setItem('autoguardado', 'true');
-                } else {
-                    localStorage.removeItem('autoguardado');
-                }
-            });
-
-            filtroDorsal.addEventListener('input', () => {
-                filtrarTabla('Dorsal', filtroDorsal.value);
-            });
-
-            filtroJugador.addEventListener('input', () => {
-                filtrarTabla('Jugador', filtroJugador.value);
-            });
-            const filtroEquipo = document.getElementById('filtroEquipo');
-           filtroEquipo.addEventListener('change', () => {
-           filtrarTabla('Equipo', filtroEquipo.value);
-           });
-
-        });
-        // Llama a llenarFiltroEquipo después de cargar/agregar todos los jugadores
-    llenarFiltroEquipo();
+    // Cargar los jugadores y luego llenar el filtro de equipo.
+    cargarJugadores().then(() => {
+        llenarFiltroEquipo();
+    });
 });
+
+function configurarAutoguardadoYFiltros() {
+    const autoguardadoCheckbox = document.getElementById('autoguardado');
+    autoguardadoCheckbox.addEventListener('change', () => {
+        if (autoguardadoCheckbox.checked) {
+            localStorage.setItem('autoguardado', 'true');
+        } else {
+            localStorage.removeItem('autoguardado');
+        }
+    });
+
+    const filtroDorsal = document.getElementById('filtroDorsal');
+    filtroDorsal.addEventListener('input', () => {
+        filtrarTabla('Dorsal', filtroDorsal.value);
+    });
+
+    const filtroJugador = document.getElementById('filtroJugador');
+    filtroJugador.addEventListener('input', () => {
+        filtrarTabla('Jugador', filtroJugador.value);
+    });
+
+    const filtroEquipo = document.getElementById('filtroEquipo');
+    filtroEquipo.addEventListener('change', () => {
+        filtrarTabla('Equipo', filtroEquipo.value);
+    });
+}
+
+function cargarJugadores() {
+    return new Promise((resolve) => {
+        const autoguardadoStorage = localStorage.getItem('autoguardado');
+        if (autoguardadoStorage === 'true') {
+            autoguardadoCheckbox.checked = true;
+        }
+
+        const jugadoresGuardados = JSON.parse(localStorage.getItem('jugadores'));
+        if (jugadoresGuardados) {
+            jugadoresGuardados.forEach(jugador => {
+                agregarJugadorATabla(jugador);
+            });
+        }
+
+        resolve();
+    });
+}
 
 function llenarFiltroEquipo() {
     const equipos = new Set();
     document.querySelectorAll('#jugadores-table tbody tr').forEach(fila => {
-        equipos.add(fila.cells[2].textContent); // Asumiendo que Equipo es la tercera columna
+        equipos.add(fila.cells[2].textContent.trim()); // Asegurar que se elimina el espacio en blanco
     });
 
     const filtroEquipo = document.getElementById('filtroEquipo');
     equipos.forEach(equipo => {
         if (equipo) { // Evitar agregar opciones vacías
-            const opcion = new Option(equipo, equipo);
-            filtroEquipo.add(opcion);
+            const opcion = document.createElement('option');
+            opcion.value = equipo;
+            opcion.text = equipo;
+            filtroEquipo.appendChild(opcion);
         }
     });
 }
-
         
 
 
