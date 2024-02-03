@@ -607,57 +607,54 @@ function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
     const estadoActual = boton.textContent; // Usar directamente buttonTextContent
 
-    // Cambiar el estado y actualizar los estilos y el cronómetro según corresponda
+    // Cambiar el estado y actualizar los estilos según corresponda
     const nuevoEstado = estadoActual === 'Suplente' ? 'Titular' : 'Suplente';
     boton.textContent = nuevoEstado;
     boton.classList.toggle('fondo-verde', nuevoEstado === 'Titular');
     boton.classList.toggle('fondo-rojo', nuevoEstado === 'Suplente');
 
-    if (nuevoEstado === 'Titular') {
-        // Lógica para cuando un jugador cambia a Titular, si es necesario
-    } else {
-        // Lógica para cuando un jugador cambia a Suplente, si es necesario
-    }
+    // Opcional: Lógica adicional según el nuevo estado, por ejemplo, manipulación de cronómetros
 
-    // Actualiza el contador de titulares
+    // Actualizar el contador de titulares
     actualizarContadorTitulares();
+
+    // Reorganizar las filas en la tabla
+    reorganizarFilas();
 }
-           // Reorganizar las filas en la tabla
-    const dorsal = parseInt(fila.cells[0].textContent);
-    const tbody = fila.closest('tbody');
+
+function reorganizarFilas() {
+    const tbody = document.querySelector('#jugadores-table tbody');
     const filas = Array.from(tbody.querySelectorAll('tr'));
 
     filas.sort((filaA, filaB) => {
-        // Primero ordenar por estado (Titular primero)
+        // Extraer los estados y dorsales para la comparación
         const estadoA = filaA.querySelector('.botonSuplenteTitular').textContent;
         const estadoB = filaB.querySelector('.botonSuplenteTitular').textContent;
+        const dorsalA = parseInt(filaA.cells[0].textContent, 10);
+        const dorsalB = parseInt(filaB.cells[0].textContent, 10);
+        const especiales = [1, 13, 25];
 
         if (estadoA !== estadoB) {
-            return estadoB.localeCompare(estadoA); // Ordenar Titular antes que Suplente
+            return estadoA === 'Titular' ? -1 : 1;
         }
 
-        // Luego, dentro de Titular, dar prioridad a los dorsales 1, 13, 25
-        if (estadoA === 'Titular') {
-            const dorsalA = parseInt(filaA.cells[0].textContent);
-            const dorsalB = parseInt(filaB.cells[0].textContent);
-
-            if ([1, 13, 25].includes(dorsalA) && ![1, 13, 25].includes(dorsalB)) {
-                return -1;
-            } else if (![1, 13, 25].includes(dorsalA) && [1, 13, 25].includes(dorsalB)) {
-                return 1;
-            } else {
-                return dorsalA - dorsalB;
-            }
+        // Priorizar dorsales específicos entre los titulares
+        if (estadoA === 'Titular' && (especiales.includes(dorsalA) || especiales.includes(dorsalB))) {
+            if (especiales.includes(dorsalA) && !especiales.includes(dorsalB)) return -1;
+            if (!especiales.includes(dorsalA) && especiales.includes(dorsalB)) return 1;
         }
 
-        return 0; // Si ambos son Suplentes, no cambiar el orden
+        return dorsalA - dorsalB; // Orden natural por dorsal si ambos son titulares sin dorsales especiales
     });
 
     // Limpiar y reinsertar las filas ordenadas
-    filas.forEach(fila => {
-        tbody.appendChild(fila);
-    });
+    filas.forEach(fila => tbody.appendChild(fila));
 }
+
+function actualizarContadorTitulares() {
+    // Implementación de la actualización del contador de titulares...
+}
+
 
 function actualizarContadorTitulares() {
     // Contar cuántos jugadores están marcados como Titular
