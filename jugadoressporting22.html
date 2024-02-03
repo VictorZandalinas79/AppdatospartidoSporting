@@ -171,15 +171,21 @@ function filtrarTabla() {
     });
 }
 function exportarModelo() {
-  const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
-  console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
+    const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
+    console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
 
-  // Almacenar los jugadores seleccionados en localStorage
-  localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+    // Almacenar los jugadores seleccionados en localStorage
+    localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
 
-  // Cerrar la ventana actual
-  window.close();
+    // Si la página principal tiene una función para actualizar la tabla directamente
+    if (window.opener && typeof window.opener.actualizarTablaDesdeSecundaria === 'function') {
+        window.opener.actualizarTablaDesdeSecundaria();
+    }
+
+    // Cerrar la ventana actual
+    window.close();
 }
+
 
 
 
