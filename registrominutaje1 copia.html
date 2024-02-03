@@ -2208,6 +2208,24 @@ function actualizarTablaDesdeSecundaria() {
         cargarJugadoresSeleccionados(jugadoresSeleccionados);
     }
 }
+// Limpiar o verificar localStorage antes de cargar datos
+function limpiarLocalStorage() {
+    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
+    if (jugadoresSeleccionadosStorage) {
+        const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
+        // Aquí podrías implementar lógica para eliminar duplicados si fuera necesario
+        // Por simplicidad, vamos a sobrescribir con los datos ya limpios
+        localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
+    }
+}
+
+// Llamar a limpiarLocalStorage al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    limpiarLocalStorage();
+    // Cargar datos después de limpiar
+    cargarDatosDespuesDeLimpiar();
+});
+
 
     </script>
 
