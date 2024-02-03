@@ -3,367 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Jugadores</title>
+    <title>Tabla de Jugadores - Diseño Moderno</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('https://sportingdecastellocom.files.wordpress.com/2023/10/dsc_0075.jpg?w=4000&h=');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
-            color: #001f3f;
+            padding: 20px;
+            background-color: #f0f0f0;
         }
-
-        h2, label, th, td, input, button {
-            color: #001f3f;
+        h2 {
+            color: #333;
         }
-
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
         }
-
         th, td {
+            padding: 10px;
             border: 1px solid #ddd;
-            padding: 8px;
             text-align: left;
         }
-
         th {
             background-color: #4CAF50;
+            color: white;
         }
-
-        tr:hover {
-            background-color: #f5f5f5;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
-
-        input[type="checkbox"] {
-            cursor: pointer;
+        .filter-input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: calc(100% - 22px); /* Adjust input width to fit container */
+            box-sizing: border-box;
         }
-
-        #importarBtn {
-            margin-top: 10px;
-            padding: 8px;
+        .btn {
+            padding: 10px 15px;
             background-color: #4CAF50;
+            color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin-right: 10px;
         }
-
-        #exportarSeleccionadosBtn {
-            margin-top: 10px;
-            padding: 8px;
-            background-color: #4CAF50;
-            border: none;
-            cursor: pointer;
+        .btn:hover {
+            background-color: #45a049;
         }
-        <input type="file" id="fileInput" style="display: none;">
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .flex-item {
+            flex: 1;
+        }
+        .select-style {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Tabla de Jugadores</h2>
+<h2>Tabla de Jugadores</h2>
 
-    <input type="checkbox" id="autoguardado"> <label for="autoguardado">Autoguardado</label>
+<div class="flex-container">
+    <div class="flex-item">
+        <input type="text" id="filtroDorsal" class="filter-input" placeholder="Filtrar por dorsal...">
+    </div>
+    <div class="flex-item">
+        <input type="text" id="filtroJugador" class="filter-input" placeholder="Filtrar por jugador...">
+    </div>
+    <div class="flex-item">
+        <select id="filtroEquipo" class="select-style">
+            <option value="">Filtrar por equipo...</option>
+            <!-- Las opciones se llenarán dinámicamente -->
+        </select>
+    </div>
+</div>
 
-    <table id="jugadores-table">
-        <thead>
-            <tr>
-                <th>Dorsal <input type="text" id="filtroDorsal"></th>
-                <th>Jugador <input type="text" id="filtroJugador"></th>
-                <th>Equipo 
-                <select id="filtroEquipo">
-                <option value="">Todos</option>
-        <!-- Las opciones se llenarán dinámicamente -->
-    </select>
-                <th style="display: none;">Selecciona</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí se agregarán los jugadores cargados -->
-        </tbody>
-        
-        <button id="exportarSeleccionadosBtn" onclick="exportarModelo()">Exportar Seleccionados</button>
-    </table>
+<button class="btn" onclick="limpiarFiltros()">Limpiar Filtros</button>
+<button class="btn" onclick="exportarModelo()">Exportar Seleccionados</button>
 
-    <button onclick="limpiarTabla()">Limpiar Tabla</button>
+<table id="jugadores-table">
+    <thead>
+        <tr>
+            <th>Dorsal</th>
+            <th>Jugador</th>
+            <th>Equipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Los jugadores se cargarán aquí -->
+    </tbody>
+</table>
 
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+    cargarJugadores();
 
-   <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const autoguardadoCheckbox = document.getElementById('autoguardado');
-    const filtroDorsal = document.getElementById('filtroDorsal');
-    const filtroJugador = document.getElementById('filtroJugador');
-    const filtroEquipo = document.getElementById('filtroEquipo');
-
-    // Configuración inicial del autoguardado y eventos de filtros.
-    configurarAutoguardadoYFiltros();
-
-    // Cargar los jugadores y luego llenar el filtro de equipo.
-    cargarJugadores().then(() => {
-        llenarFiltroEquipo();
-    });
+    // Event listeners para los filtros
+    document.getElementById('filtroDorsal').addEventListener('input', filtrarTabla);
+    document.getElementById('filtroJugador').addEventListener('input', filtrarTabla);
+    document.getElementById('filtroEquipo').addEventListener('change', filtrarTabla);
 });
 
-async function cargarJugadoresYActualizarFiltro() {
+async function cargarJugadores() {
     try {
-        const respuesta = await fetch('URL_A_TU_DATO.json'); // Asegúrate de que la URL es correcta
+        const respuesta = await fetch('https://VictorZandalinas79.github.io/AppdatospartidoSporting/jugadoressporting2.json');
         const jugadores = await respuesta.json();
-        limpiarTabla(); // Asegúrate de que esta función solo limpia los jugadores, no elimina otros elementos necesarios
+        
+        const tbody = document.querySelector('#jugadores-table tbody');
+        tbody.innerHTML = ''; // Limpiar la tabla antes de agregar nuevos datos
+        
         jugadores.forEach(jugador => {
-            agregarJugadorATabla(jugador);
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${jugador.Dorsal || ''}</td>
+                <td>${jugador.Jugador}</td>
+                <td>${jugador.Equipo}</td>
+                <td><input type="checkbox" name="seleccionar"></td>
+            `;
+            tbody.appendChild(fila);
         });
-        llenarFiltroEquipo(); // Esta llamada debe estar aquí, asegurándose de que se ejecute después de que todos los jugadores se han cargado
+
+        actualizarFiltroEquipo(jugadores);
     } catch (error) {
         console.error("Error cargando jugadores: ", error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    cargarJugadoresYActualizarFiltro();
-    // Otros inicializadores aquí
-});
-
-function configurarAutoguardadoYFiltros() {
-    const autoguardadoCheckbox = document.getElementById('autoguardado');
-    autoguardadoCheckbox.addEventListener('change', () => {
-        if (autoguardadoCheckbox.checked) {
-            localStorage.setItem('autoguardado', 'true');
-        } else {
-            localStorage.removeItem('autoguardado');
-        }
-    });
-
-    const filtroDorsal = document.getElementById('filtroDorsal');
-    filtroDorsal.addEventListener('input', () => {
-        filtrarTabla('Dorsal', filtroDorsal.value);
-    });
-
-    const filtroJugador = document.getElementById('filtroJugador');
-    filtroJugador.addEventListener('input', () => {
-        filtrarTabla('Jugador', filtroJugador.value);
-    });
-
+function actualizarFiltroEquipo(jugadores) {
     const filtroEquipo = document.getElementById('filtroEquipo');
-    filtroEquipo.addEventListener('change', () => {
-        filtrarTabla('Equipo', filtroEquipo.value);
-    });
-}
+    const equipos = new Set(jugadores.map(jugador => jugador.Equipo));
 
-function cargarJugadores() {
-    return new Promise((resolve) => {
-        const autoguardadoStorage = localStorage.getItem('autoguardado');
-        if (autoguardadoStorage === 'true') {
-            autoguardadoCheckbox.checked = true;
-        }
-
-        const jugadoresGuardados = JSON.parse(localStorage.getItem('jugadores'));
-        if (jugadoresGuardados) {
-            jugadoresGuardados.forEach(jugador => {
-                agregarJugadorATabla(jugador);
-            });
-        }
-
-        resolve();
-    });
-}
-
-function llenarFiltroEquipo() {
-    const equipos = new Set();
-    document.querySelectorAll('#jugadores-table tbody tr').forEach(fila => {
-        const equipo = fila.cells[2].textContent; // Asegúrate de que la columna es correcta
-        if (equipo && equipo.trim() !== '') {
-            equipos.add(equipo);
-        }
-    });
-
-    const filtroEquipo = document.getElementById('filtroEquipo');
-    filtroEquipo.innerHTML = '<option value="">Todos</option>'; // Limpia opciones existentes
+    filtroEquipo.innerHTML = '<option value="">Filtrar por equipo...</option>';
     equipos.forEach(equipo => {
         filtroEquipo.add(new Option(equipo, equipo));
     });
 }
 
-        
+function filtrarTabla() {
+    const filtroDorsal = document.getElementById('filtroDorsal').value.toLowerCase();
+    const filtroJugador = document.getElementById('filtroJugador').value.toLowerCase();
+    const filtroEquipo = document.getElementById('filtroEquipo').value.toLowerCase();
+    
+    document.querySelectorAll('#jugadores-table tbody tr').forEach(fila => {
+        const dorsal = fila.cells[0].textContent.toLowerCase();
+        const jugador = fila.cells[1].textContent.toLowerCase();
+        const equipo = fila.cells[2].textContent.toLowerCase();
 
+        const coincideDorsal = dorsal.includes(filtroDorsal) || filtroDorsal === '';
+        const coincideJugador = jugador.includes(filtroJugador) || filtroJugador === '';
+        const coincideEquipo = equipo.includes(filtroEquipo) || filtroEquipo === '';
 
-        function handleFile() {
-            fetch('https://VictorZandalinas79.github.io/AppdatospartidoSporting/jugadoressporting2.json')
-        .then(response => response.json())
-        .then(players => {
-            limpiarTabla(); // Limpia la tabla antes de añadir nuevos datos
-            players.forEach(player => {
-                agregarJugadorATabla(player); // Función para añadir cada jugador a la tabla
-            });
-            const autoguardadoCheckbox = document.getElementById('autoguardado');
-            if (autoguardadoCheckbox.checked) {
-                localStorage.setItem('jugadores', JSON.stringify(players)); // Guarda los datos en localStorage si es necesario
-            }
-        })
-        .catch(error => console.log(error)); // Maneja posibles errores
-}
-window.addEventListener('load', handleFile);
-
-        function importarJugadores() {
-            const jugadoresDesdeArchivo = [
-                { Dorsal: 25, Jugador: 'Raúl', Equipo: 'AmtA' },
-                { Dorsal: 1, Jugador: 'Borrego', Equipo: 'AmtA' },
-            ];
-
-            limpiarTabla();
-
-            jugadoresDesdeArchivo.forEach(jugador => {
-                agregarJugadorATabla(jugador);
-            });
-
-            const autoguardadoCheckbox = document.getElementById('autoguardado');
-            if (autoguardadoCheckbox.checked) {
-                localStorage.setItem('jugadores', JSON.stringify(jugadoresDesdeArchivo));
-            }
-        }
-
-        function limpiarTabla() {
-            const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
-            jugadoresTableBody.innerHTML = '';
-
-            const autoguardadoCheckbox = document.getElementById('autoguardado');
-            if (autoguardadoCheckbox.checked) {
-                localStorage.removeItem('jugadores');
-            }
-        }
-
-        function agregarJugadorATabla(jugador) {
-    const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
-    const fila = document.createElement('tr');
-    fila.innerHTML = `
-        <td>${jugador.Dorsal}</td>
-        <td>${jugador.Jugador}</td>
-        <td>${jugador.Equipo ?? 'Sin Equipo'}</td> 
-        <td><input type="checkbox" name="seleccionar"></td>
-    `;
-    jugadoresTableBody.appendChild(fila);
-}
-        function exportarSeleccionados() {
-    // Obtener jugadores seleccionados y cargarlos en la tabla
-    const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
-    if (jugadoresSeleccionadosStorage) {
-        const jugadoresSeleccionados = JSON.parse(jugadoresSeleccionadosStorage);
-        cargarJugadoresSeleccionados(jugadoresSeleccionados);
-    }
-
-    // Resto de la lógica de exportación
-    const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
-    console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
-    // Aquí puedes implementar la lógica para exportar los jugadores seleccionados
-
-    // Emitir evento personalizado para actualizar la página principal
-    const actualizarTablaEvent = new Event('actualizarTablaPrincipal');
-    window.opener.document.dispatchEvent(actualizarTablaEvent);
-}
-
-
-
-function obtenerJugadoresSeleccionados() {
-    const filas = document.querySelectorAll('#jugadores-table tbody tr');
-    const jugadoresSeleccionados = [];
-
-    filas.forEach((fila) => {
-        const seleccionado = fila.querySelector('input[name="seleccionar"]').checked;
-        if (seleccionado) {
-            const jugador = {
-                Dorsal: fila.cells[0].textContent,
-                Jugador: fila.cells[1].textContent,
-                Equipo: fila.cells[2].textContent,
-                Cronometro: fila.querySelector('.cronometro-fila span').textContent,
-                Estado: fila.querySelector('.botonSuplenteTitular').textContent,
-            };
-            jugadoresSeleccionados.push(jugador);
-        }
-    });
-
-    return jugadoresSeleccionados;
-}
-function filtrarTabla(columna, valorFiltro) {
-    const filas = document.querySelectorAll('#jugadores-table tbody tr');
-    filas.forEach(fila => {
-        // Asume que la columna del equipo es la tercera, ajusta según tu estructura de tabla
-        const textoCelda = fila.cells[2].textContent.trim().toLowerCase(); // Ajuste para el equipo
-        const valorFiltroLowerCase = valorFiltro.toLowerCase();
-
-        if (valorFiltro === '' || textoCelda.includes(valorFiltroLowerCase)) {
+        if (coincideDorsal && coincideJugador && coincideEquipo) {
             fila.style.display = '';
         } else {
             fila.style.display = 'none';
         }
     });
 }
-
-        function columnaIndex(columna) {
-            const headers = document.querySelectorAll('#jugadores-table th');
-            for (let i = 0; i < headers.length; i++) {
-                if (headers[i].textContent.trim() === columna) {
-                    return i + 1;
-                }
-            }
-            return -1;
-        }
-       
-        function informarActualizacion() {
-  // Enviar un mensaje al HTML principal indicando que debe actualizarse
-  window.opener.postMessage({ actualizar: true }, '*');
-}
-
-function exportarModelo() {
-  const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
-  console.log('Jugadores Seleccionados:', jugadoresSeleccionados);
-
-  // Almacenar los jugadores seleccionados en localStorage
-  localStorage.setItem('jugadoresSeleccionados', JSON.stringify(jugadoresSeleccionados));
-
-  // Llamar a la función para informar la actualización
-  informarActualizacion();
-
-  // Cerrar la ventana actual
-  window.close();
-}
-
-
-
-function obtenerJugadoresSeleccionados() {
-            const filas = document.querySelectorAll('#jugadores-table tbody tr');
-            const jugadoresSeleccionados = [];
-
-            filas.forEach((fila) => {
-                const seleccionado = fila.querySelector('input[name="seleccionar"]').checked;
-                if (seleccionado) {
-                    const jugador = {
-                        Dorsal: fila.cells[0].textContent,
-                        Jugador: fila.cells[1].textContent,
-                        Equipo: fila.cells[2].textContent,
-                    };
-                    jugadoresSeleccionados.push(jugador);
-                }
-            });
-
-            return jugadoresSeleccionados;
-        }
-
-        function cargarJugadoresSeleccionados(jugadores) {
-            const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
-            jugadores.forEach(jugador => {
-                agregarJugadorATabla(jugador);
-            });
-        }
-
-        function actualizarTablaPrincipal() {
-            const jugadoresSeleccionados = obtenerJugadoresSeleccionados();
-            cargarJugadoresSeleccionados(jugadoresSeleccionados);
-        }
     </script>
+    
 
 </body>
 </html>
