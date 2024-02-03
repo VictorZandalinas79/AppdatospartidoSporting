@@ -109,6 +109,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+async function cargarJugadoresYActualizarFiltro() {
+    try {
+        const respuesta = await fetch('URL_A_TU_DATO.json'); // Asegúrate de que la URL es correcta
+        const jugadores = await respuesta.json();
+        limpiarTabla(); // Asegúrate de que esta función solo limpia los jugadores, no elimina otros elementos necesarios
+        jugadores.forEach(jugador => {
+            agregarJugadorATabla(jugador);
+        });
+        llenarFiltroEquipo(); // Esta llamada debe estar aquí, asegurándose de que se ejecute después de que todos los jugadores se han cargado
+    } catch (error) {
+        console.error("Error cargando jugadores: ", error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarJugadoresYActualizarFiltro();
+    // Otros inicializadores aquí
+});
+
 function configurarAutoguardadoYFiltros() {
     const autoguardadoCheckbox = document.getElementById('autoguardado');
     autoguardadoCheckbox.addEventListener('change', () => {
@@ -156,19 +175,19 @@ function cargarJugadores() {
 function llenarFiltroEquipo() {
     const equipos = new Set();
     document.querySelectorAll('#jugadores-table tbody tr').forEach(fila => {
-        equipos.add(fila.cells[2].textContent.trim()); // Asegurar que se elimina el espacio en blanco
+        const equipo = fila.cells[2].textContent; // Asegúrate de que la columna es correcta
+        if (equipo && equipo.trim() !== '') {
+            equipos.add(equipo);
+        }
     });
 
     const filtroEquipo = document.getElementById('filtroEquipo');
+    filtroEquipo.innerHTML = '<option value="">Todos</option>'; // Limpia opciones existentes
     equipos.forEach(equipo => {
-        if (equipo) { // Evitar agregar opciones vacías
-            const opcion = document.createElement('option');
-            opcion.value = equipo;
-            opcion.text = equipo;
-            filtroEquipo.appendChild(opcion);
-        }
+        filtroEquipo.add(new Option(equipo, equipo));
     });
 }
+
         
 
 
@@ -218,17 +237,16 @@ window.addEventListener('load', handleFile);
         }
 
         function agregarJugadorATabla(jugador) {
-            const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${jugador.Dorsal}</td>
-                <td>${jugador.Jugador}</td>
-                <td>${jugador.Equipo}</td>
-                <td><input type="checkbox" name="seleccionar"></td>
-            `;
-            jugadoresTableBody.appendChild(fila);
-        }
-
+    const jugadoresTableBody = document.querySelector('#jugadores-table tbody');
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+        <td>${jugador.Dorsal}</td>
+        <td>${jugador.Jugador}</td>
+        <td>${jugador.Equipo ?? 'Sin Equipo'}</td> 
+        <td><input type="checkbox" name="seleccionar"></td>
+    `;
+    jugadoresTableBody.appendChild(fila);
+}
         function exportarSeleccionados() {
     // Obtener jugadores seleccionados y cargarlos en la tabla
     const jugadoresSeleccionadosStorage = localStorage.getItem('jugadoresSeleccionados');
@@ -269,22 +287,20 @@ function obtenerJugadoresSeleccionados() {
 
     return jugadoresSeleccionados;
 }
+function filtrarTabla(columna, valorFiltro) {
+    const filas = document.querySelectorAll('#jugadores-table tbody tr');
+    filas.forEach(fila => {
+        // Asume que la columna del equipo es la tercera, ajusta según tu estructura de tabla
+        const textoCelda = fila.cells[2].textContent.trim().toLowerCase(); // Ajuste para el equipo
+        const valorFiltroLowerCase = valorFiltro.toLowerCase();
 
-        function filtrarTabla(columna, valorFiltro) {
-            const filas = document.querySelectorAll('#jugadores-table tbody tr');
-
-            filas.forEach(fila => {
-                const celda = fila.querySelector(`td:nth-child(${columnaIndex(columna)})`);
-                const textoCelda = celda.textContent.trim().toLowerCase();
-                const valorFiltroLowerCase = valorFiltro.toLowerCase();
-
-                if (valorFiltro === '' || textoCelda.includes(valorFiltroLowerCase)) {
-                    fila.style.display = '';
-                } else {
-                    fila.style.display = 'none';
-                }
-            });
+        if (valorFiltro === '' || textoCelda.includes(valorFiltroLowerCase)) {
+            fila.style.display = '';
+        } else {
+            fila.style.display = 'none';
         }
+    });
+}
 
         function columnaIndex(columna) {
             const headers = document.querySelectorAll('#jugadores-table th');
