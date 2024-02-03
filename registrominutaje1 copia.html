@@ -603,6 +603,7 @@ function detenerCronometro() {
     parte = parte === 1 ? 2 : 1;
     document.getElementById('parte').textContent = `${parte}ª parte`;
 }
+        
 function cambiarEstadoSuplenteTitular(boton) {
     const fila = boton.closest('tr');
     const estadoActual = boton.textContent; // Usar directamente buttonTextContent
@@ -613,7 +614,12 @@ function cambiarEstadoSuplenteTitular(boton) {
     boton.classList.toggle('fondo-verde', nuevoEstado === 'Titular');
     boton.classList.toggle('fondo-rojo', nuevoEstado === 'Suplente');
 
-    // Opcional: Lógica adicional según el nuevo estado, por ejemplo, manipulación de cronómetros
+    // Si se cambia a Titular y el cronómetro general está activo, iniciar el cronómetro de la fila
+    if (nuevoEstado === 'Titular' && cronometroActivo) {
+        iniciarCronometroFila(fila);
+    } else if (nuevoEstado === 'Suplente') {
+        detenerCronometroFila(fila);
+    }
 
     // Actualizar el contador de titulares
     actualizarContadorTitulares();
@@ -621,6 +627,17 @@ function cambiarEstadoSuplenteTitular(boton) {
     // Reorganizar las filas en la tabla
     reorganizarFilas();
 }
+// Funciones para iniciar y detener el cronómetro de la fila
+function iniciarCronometroFila(fila) {
+    // Aquí debes implementar la lógica para iniciar el cronómetro de esta fila específica
+    // Esto podría implicar establecer un nuevo intervalo y actualizar el texto del cronómetro en la fila
+}
+
+function detenerCronometroFila(fila) {
+    // Aquí debes implementar la lógica para detener el cronómetro de esta fila específica
+    // Esto podría implicar limpiar el intervalo establecido para esta fila
+}
+
 
 function reorganizarFilas() {
     const tbody = document.querySelector('#jugadores-table tbody');
