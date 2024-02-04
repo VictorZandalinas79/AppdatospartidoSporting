@@ -203,7 +203,7 @@ tr:hover {
 #jugadores-table th:nth-child(2), /* Jugador */
 #jugadores-table th:nth-child(3), /* Equipo */
 #jugadores-table th:nth-child(4) { /* Cronómetro */
-    color: black;
+    color: white;
 }
 <link rel="manifest" href="/manifest.json">
 
@@ -216,35 +216,6 @@ tr:hover {
     <h2 style="font-size: 30px; background-color: #af4c4c; color: white; padding: 10px;">SPORTING DE CASTELLÓ - Fundado en 1970</h2>
 
     <div class="botonera" id="botonera"></div>
-    
-    <div id="formularioExportarPartido" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); max-width: 600px; margin: auto;">
-        <h2 style="color: #000; text-align: center; font-family: 'Roboto', sans-serif;">Datos Partido</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="jornada" style="color: #000; margin-right: 10px;">Jornada:</label>
-                <input type="text" id="jornada" placeholder="Ingrese la jornada" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="fecha" style="color: #000; margin-right: 10px;">Fecha:</label>
-                <input type="date" id="fecha" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="equipo" style="color: #000; margin-right: 10px;">Equipo:</label>
-                <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="rival" style="color: #000; margin-right: 10px;">Rival:</label>
-                <input type="text" id="rival" placeholder="Ingrese el rival" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-    
-            <div style="flex-basis: 45%; margin: 10px;">
-                <label for="resultado" style="color: #000; margin-right: 10px;">Resultado:</label>
-                <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
-            </div>
-        </div>
 
     </div>
      <div id="cronometro">
@@ -279,7 +250,34 @@ tr:hover {
 
     <button class="boton" onclick="limpiarTabla()">Limpiar Tabla</button>
     <button class="boton" onclick="exportarPartido()">Exportar Partido</button>
-
+    <div id="formularioExportarPartido" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); max-width: 600px; margin: auto;">
+        <h2 style="color: #000; text-align: center; font-family: 'Roboto', sans-serif;">Datos Partido</h2>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="jornada" style="color: #000; margin-right: 10px;">Jornada:</label>
+                <input type="text" id="jornada" placeholder="Ingrese la jornada" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="fecha" style="color: #000; margin-right: 10px;">Fecha:</label>
+                <input type="date" id="fecha" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="equipo" style="color: #000; margin-right: 10px;">Equipo:</label>
+                <input type="text" id="equipo" placeholder="Ingrese el equipo del Sporting" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="rival" style="color: #000; margin-right: 10px;">Rival:</label>
+                <input type="text" id="rival" placeholder="Ingrese el rival" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+    
+            <div style="flex-basis: 45%; margin: 10px;">
+                <label for="resultado" style="color: #000; margin-right: 10px;">Resultado:</label>
+                <input type="text" id="resultado" placeholder="Ingrese el resultado" style="background-color: #fff; color: #000; border: 1px solid #000;">
+            </div>
+        </div>
     <table id="registro-table">
         <caption>Registros por tiempos</caption>
         <thead>
