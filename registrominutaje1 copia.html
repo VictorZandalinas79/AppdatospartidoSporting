@@ -127,6 +127,30 @@
 .boton-cronometro:active {
     transform: scale(0.95); /* Efecto de presionado */
 }
+#mensaje-advertencia {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 0px 10px #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fas.fa-exclamation-circle {
+    margin-left: 10px;
+    font-size: 30px;
+}
+
         /* Estilos para tablas */
         table {
     width: 60%; /* Ajusta el ancho de la tabla según tus necesidades */
@@ -223,7 +247,15 @@ tr:hover {
 <button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
 <button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
         <span id="tiempo">00:00:00.000</span>
-    </div>
+        <div>
+    <label for="tipo-futbol">Selecciona el tipo de fútbol:</label>
+    <select id="tipo-futbol" onchange="actualizarContadorTitulares()">
+        <option value="8">Fútbol-8</option>
+        <option value="11">Fútbol-11</option>
+    </select>
+<div id="mensaje-advertencia" style="display: none;">Cuidado, te faltan jugadores <i class="fas fa-exclamation-circle"></i></div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</div>
     <div id="contador-moderno-titulares">
     <span>Titulares: </span><span id="numero-titulares-moderno">0</span>
 </div>
@@ -1088,21 +1120,33 @@ self.onmessage = function(event) {
 });
 
 function actualizarContadorTitulares() {
-    // Contar cuántos jugadores están marcados como Titular
-    const botonesTitular = document.querySelectorAll('.botonSuplenteTitular');
-    let contadorTitulares = 0;
-
-    botonesTitular.forEach(boton => {
-        if (boton.textContent === 'Titular') {
-            contadorTitulares++;
-        }
-    });
-
-    // Actualizar el contador en el HTML
+    const tipoFutbol = document.getElementById('tipo-futbol').value;
+    const contadorTitulares = document.querySelectorAll('.botonSuplenteTitular.fondo-verde').length;
+    const maxTitulares = parseInt(tipoFutbol);
+    
     document.getElementById('numero-titulares-moderno').textContent = contadorTitulares;
+    
+    const mensajeAdvertencia = document.getElementById('mensaje-advertencia');
+    if (contadorTitulares < maxTitulares) {
+        mensajeAdvertencia.innerHTML = 'Cuidado, te faltan jugadores';
+        parpadearMensaje(mensajeAdvertencia);
+    } else if (contadorTitulares > maxTitulares) {
+        mensajeAdvertencia.innerHTML = 'Cuidado, te sobran titulares';
+        parpadearMensaje(mensajeAdvertencia);
+    } else {
+        mensajeAdvertencia.style.display = 'none';
+    }
 }
 
-// Asegúrate de llamar a actualizarContadorTitulares() después de cambiar el estado de un jugador.
+function parpadearMensaje(elemento) {
+    elemento.style.display = 'block';
+    let visible = true;
+    setInterval(() => {
+        elemento.style.visibility = visible ? 'hidden' : 'visible';
+        visible = !visible;
+    }, 500);
+}
+
 median.screen.keepScreenOn();
     </script>
 
