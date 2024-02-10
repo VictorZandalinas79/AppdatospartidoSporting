@@ -9,6 +9,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
     <style>
         /* Estilos generales */
         body {
@@ -41,6 +44,24 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         }
+
+        @font-face {
+    font-family: 'Digital';
+    src: url('ruta/a/tu/fuente/digital.woff') format('woff');
+}
+
+.videomarcador-estilo {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.75) url('https://sportingdecastellocom.files.wordpress.com/2024/02/3b8ffe4e-1bbd-4093-a6f1-8ec77c0639ff.jpg?w=NaN&h=') no-repeat center center;
+    background-size: cover;
+    color: #c0e713;
+    padding: 10px 20px;
+    font-size: 50px;
+    font-family: 'cñas', sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    border: 2px solid #FFF;
+}
 
         .boton:hover {
             background-color: rgb(12, 10, 10);
@@ -253,6 +274,11 @@ tr:hover {
         <option value="8">Fútbol-8</option>
         <option value="11">Fútbol-11</option>
     </select>
+    <id="videomarcador" style="text-align: center; margin-top: 20px;">
+    <div class="videomarcador-estilo">
+        <span id="equipo-local">Sporting de Castelló</span> <span id="goles-local">0</span> - <span id="goles-visitante">0</span> <span id="equipo-visitante">Rival</span>
+    </div>
+</div>
 <div id="mensaje-advertencia" style="display: none;">Cuidado, te faltan jugadores <i class="fas fa-exclamation-circle"></i></div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </div>
@@ -948,18 +974,17 @@ function ordenarTablaPorTitularSuplente() {
 function restarValor(spanNumero) {
     let valorActual = parseInt(spanNumero.textContent) || 0;
     const columna = spanNumero.parentElement.cellIndex;
+    const fila = spanNumero.closest('tr');
 
-    if (columna === 5) {
-        // Permitir números negativos en la sexta columna
+    // Disminuir el valor si es mayor que 0
+    if (valorActual > 0) {
         valorActual--;
-    } else {
-        // Restringir a valores no negativos en las demás columnas
-        valorActual = Math.max(0, valorActual - 1);
+        spanNumero.textContent = valorActual;
+
+        // Actualizar marcador si es necesario
+        actualizarMarcador(columna, false, fila);
     }
 
-    const tiempo = obtenerTiempoGeneral();
-    const jugador = obtenerJugador(spanNumero);
-    registrarEventoTecla(tiempo, columna, jugador, jugador.Dorsal);
 
     spanNumero.textContent = valorActual;
 }
@@ -967,16 +992,15 @@ function restarValor(spanNumero) {
 function sumarValor(spanNumero) {
     let valorActual = parseInt(spanNumero.textContent) || 0;
     const columna = spanNumero.parentElement.cellIndex;
+    const fila = spanNumero.closest('tr');
 
-    if (columna === 8) {
-        // Limitar la octava columna a un máximo de 2
-        valorActual = Math.min(2, valorActual + 1);
-    } else if (columna === 9) {
-        // Limitar la novena columna a un máximo de 1
-        valorActual = Math.min(1, valorActual + 1);
-    } else {
-        valorActual++; // Para las demás columnas
-    }
+    // Aumentar el valor
+    valorActual++;
+    spanNumero.textContent = valorActual;
+
+    // Actualizar marcador si es necesario
+    actualizarMarcador(columna, true, fila);
+
 
     const tiempo = obtenerTiempoGeneral();
     const jugador = obtenerJugador(spanNumero);
@@ -985,6 +1009,20 @@ function sumarValor(spanNumero) {
     spanNumero.textContent = valorActual;
 }
 
+function actualizarMarcador(columna, sumar, fila) {
+    // Identificar si la modificación es para goles a favor o en contra
+    if (columna === 5) { // Asumiendo que la columna 5 es "Goles a favor"
+        const golesLocal = document.getElementById('goles-local');
+        let goles = parseInt(golesLocal.textContent);
+        goles = sumar ? goles + 1 : goles - 1;
+        golesLocal.textContent = goles.toString();
+    } else if (columna === 6) { // Asumiendo que la columna 6 es "Goles en contra"
+        const golesVisitante = document.getElementById('goles-visitante');
+        let goles = parseInt(golesVisitante.textContent);
+        goles = sumar ? goles + 1 : goles - 1;
+        golesVisitante.textContent = goles.toString();
+    }
+}
 
 function obtenerTiempoGeneral() {
     const tiempoGeneral = document.getElementById('tiempo').textContent;
@@ -1001,10 +1039,16 @@ function obtenerJugador(spanNumero) {
     return jugador;
 }
 
-
-
-
 function exportarPartido() {
+    if (confirm("¿Deseas exportar el partido a Excel? Pulsa Cancelar para exportar a PDF.")) {
+        exportarAExcel();
+    } else {
+        exportarAPDF();
+    }
+}
+
+
+function exportarAExcel() {
     // Obtén el nombre del archivo del formulario
     var nombreArchivo = document.getElementById('jornada').value + '.' +
                         document.getElementById('equipo').value + '.' +
@@ -1026,6 +1070,33 @@ function exportarPartido() {
     // Generar el archivo Excel
     XLSX.writeFile(workbook, nombreArchivo + '.xlsx');
 }
+
+function exportarAPDF() {
+    // Usar html2canvas para capturar el contenido de la página
+    html2canvas(document.body).then(canvas => {
+        // Inicializar jsPDF
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        // Calcular el ancho y el alto para mantener la proporción del contenido capturado
+        const imgWidth = 210; // ancho de una página A4 en mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+        // Convertir la imagen del canvas a un DataURL
+        const imgData = canvas.toDataURL('image/png');
+        
+        // Añadir la imagen al documento PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        
+        // Obtener el nombre del archivo de los datos del formulario
+        var nombreArchivo = document.getElementById('jornada').value + '.' +
+                            document.getElementById('equipo').value + '.' +
+                            document.getElementById('rival').value + '.' +
+                            document.getElementById('fecha').value;
+
+        // Guardar el PDF
+        pdf.save(nombreArchivo + '.pdf');
+    });
+}
+
 
 function exportarFormulario(workbook) {
     // Obtener la información del formulario
