@@ -590,21 +590,6 @@ function restarValor(spanNumero) {
     spanNumero.textContent = valorActual;
 }
 
-function sumarValor(spanNumero) {
-    let valorActual = parseInt(spanNumero.textContent) || 0;
-
-    if (spanNumero.parentElement.cellIndex === 7) {
-        // Limitar la octava columna a un máximo de 2
-        valorActual = Math.min(2, valorActual + 1);
-    } else if (spanNumero.parentElement.cellIndex === 8) {
-        // Limitar la novena columna a un máximo de 1
-        valorActual = Math.min(1, valorActual + 1);
-    } else {
-        valorActual++; // Para las demás columnas
-    }
-
-    spanNumero.textContent = valorActual;
-}
 
 function agregarFilaTabla(jugador) {
     console.log('Agregando fila para el jugador:', jugador);
@@ -983,10 +968,10 @@ function sumarValor(spanNumero) {
     let valorActual = parseInt(spanNumero.textContent) || 0;
     const columna = spanNumero.parentElement.cellIndex;
 
-    if (columna === 7) {
+    if (columna === 8) {
         // Limitar la octava columna a un máximo de 2
         valorActual = Math.min(2, valorActual + 1);
-    } else if (columna === 8) {
+    } else if (columna === 9) {
         // Limitar la novena columna a un máximo de 1
         valorActual = Math.min(1, valorActual + 1);
     } else {
