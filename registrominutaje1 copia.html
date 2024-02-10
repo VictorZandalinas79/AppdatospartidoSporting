@@ -54,13 +54,13 @@
     display: inline-block;
     background: rgba(0, 0, 0, 0.75) url('https://www.ayto-sotodelreal.es/wp-content/uploads/2018/02/mantenimiento-cesped-artificial-campos-futbol.jpg') no-repeat center center;
     background-size: cover;
-    color: #c0e713;
+    color: #2813c8;
     padding: 10px 20px;
     font-size: 50px;
     font-family: 'cñas', sans-serif;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    border: 2px solid #FFF;
+    border: 5px solid #53c407;
 }
 
         .boton:hover {
@@ -268,28 +268,29 @@ tr:hover {
 <button id="stop" class="boton-cronometro" onclick="detenerCronometro()"><i class="fas fa-stop"></i></button>
 <button id="reset" class="boton-cronometro" onclick="resetearCronometroGeneral()"><i class="fas fa-redo"></i></button>
         <span id="tiempo">00:00:00.000</span>
-        <div>
+        <id="videomarcador" style="text-align: center; margin-top: 20px;">
+    <div class="videomarcador-estilo">
+        <span id="equipo-local">Sporting de Castelló</span> <span id="goles-local">0</span> - <span id="goles-visitante">0</span> <span id="equipo-visitante">Rival</span>
+    </div>
+</div>
+    <div id="contador-moderno-titulares">
+    <span>Titulares: </span><span id="numero-titulares-moderno">0</span>
+</div>
     <label for="tipo-futbol">Selecciona el tipo de fútbol:</label>
     <select id="tipo-futbol" onchange="actualizarContadorTitulares()">
         <option value="8">Fútbol-8</option>
         <option value="11">Fútbol-11</option>
     </select>
-    <id="videomarcador" style="text-align: center; margin-top: 20px;">
-    <div class="videomarcador-estilo">
-        <span id="equipo-local">Sporting de Castelló</span> <span id="goles-local">0</span> - <span id="goles-visitante">0</span> <span id="equipo-visitante">Rival</span>
-    </div>
+   
 </div>
 <div id="mensaje-advertencia" style="display: none;">Cuidado, te faltan jugadores <i class="fas fa-exclamation-circle"></i></div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</div>
-    <div id="contador-moderno-titulares">
-    <span>Titulares: </span><span id="numero-titulares-moderno">0</span>
-</div>
+
     <table id="jugadores-table">
         <thead>
             <tr>
                 <th>Dorsal</th>
-                <th>Jugador</th>
+                <th>Jugador</th> 
                 <th>Equipo</th>
                 <th>Cronómetro</th>
                 <th>Titular/Suplente</th>
