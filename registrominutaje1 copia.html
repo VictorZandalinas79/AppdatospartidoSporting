@@ -13,8 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
 
     <style>
-        /* Estilos generales */
-        body {
+       /* Estilos generales */
+body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -28,24 +28,24 @@
     text-shadow: 1px 1px 2px black;
 }
 
-        /* Estilos para los botones */
-        .boton {
-            background-color: #4CAF50; /* Verde */
-            border: none;
-            color: rgb(15, 7, 7);
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        }
+/* Estilos para los botones */
+.boton {
+    background-color: #4CAF50; /* Verde */
+    border: none;
+    color: rgb(15, 7, 7);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
 
-        @font-face {
+@font-face {
     font-family: 'Digital';
     src: url('ruta/a/tu/fuente/digital.woff') format('woff');
 }
@@ -63,23 +63,27 @@
     border: 5px solid #53c407;
 }
 
-        .boton:hover {
-            background-color: rgb(12, 10, 10);
-            color: black;
-            border: 2px solid #4CAF50;
-        }
+.boton:hover {
+    background-color: rgb(12, 10, 10);
+    color: black;
+    border: 2px solid #4CAF50;
+}
 
-        /* Ajustes de estilo para móviles */
-        @media screen and (max-width: 768px) {
-            h2 {
-                font-size: 20px;
-            }
-            .boton {
-                padding: 10px;
-                font-size: 16px;
-            }
-        }
-        .boton-cronometro {
+/* Ajustes de estilo para móviles */
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 20px;
+    }
+    .boton {
+        padding: 10px;
+        font-size: 16px;
+    }
+    .videomarcador-estilo {
+        font-size: 30px;
+    }
+}
+
+.boton-cronometro {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -172,8 +176,8 @@
     font-size: 30px;
 }
 
-        /* Estilos para tablas */
-        table {
+/* Estilos para tablas */
+table {
     width: 60%; /* Ajusta el ancho de la tabla según tus necesidades */
     margin-left: auto; /* Centrar la tabla horizontalmente */
     margin-right: auto;
@@ -207,14 +211,20 @@ tr:hover {
          url('digital-7-alternative.woff') format('woff'); /* Añadir una fuente alternativa */
 }
 
-
 @media screen and (max-width: 768px) {
     table {
         width: 100%; /* Ajusta el ancho de la tabla para dispositivos móviles */
     }
+    th, td {
+        padding: 10px 5px; /* Ajusta el padding para dispositivos móviles */
+        font-size: 12px; /* Ajusta el tamaño de la fuente para dispositivos móviles */
+    }
+    .boton {
+        width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+    }
 }
 
-        #contador-titulares {
+#contador-titulares {
     font-size: 1.2em;
     margin-bottom: 10px;
     /* Añade aquí más estilos si lo deseas */
@@ -251,6 +261,7 @@ tr:hover {
     color: white;
 }
 <link rel="manifest" href="/manifest.json">
+
 
     </style>
 </head>
