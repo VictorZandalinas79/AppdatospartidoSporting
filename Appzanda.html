@@ -243,8 +243,8 @@
             </select>
             <span id="titularCount" class="text-xl font-semibold text-white ml-4">Titulares: 0</span>
         </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-custom border border-gray-700">
+        <div class="overflow-x-auto mt-4">
+            <table id="playerTable" class="min-w-full bg-custom border border-gray-700">
                 <thead>
                     <tr>
                         <th class="py-2 px-2 border-b border-gray-700">Nº</th>
@@ -260,7 +260,7 @@
                         <th class="py-2 px-2 border-b border-gray-700">Elim.</th>
                     </tr>
                 </thead>
-                <tbody id="playerTable">
+                <tbody>
                     <!-- Players will be added here dynamically -->
                 </tbody>
             </table>
@@ -287,6 +287,9 @@
                 </select>
                 <button id="addPlayerButton" class="bg-blue-500 text-white p-2">Agregar Jugador</button>
             </div>
+        </div>
+      
+
             <div class="mt-4 flex space-x-4">
                 <input type="text" id="newColumnName" class="border p-2 bg-custom text-white" placeholder="Nombre de la columna">
                 <button id="addColumnButton" class="bg-green-500 text-white p-2">Añadir Columna</button>
@@ -466,50 +469,51 @@
             }
 
             document.getElementById('addPlayerButton').addEventListener('click', () => {
-                const playerName = document.getElementById('newPlayerName').value;
-                const playerDorsal = document.getElementById('newPlayerDorsal').value;
-                const playerPosition = document.getElementById('newPlayerPosition').value;
-                if (playerName && playerDorsal && playerPosition) {
-                    const newRow = document.createElement('tr');
-                    newRow.classList.add('titular-row');
-                    newRow.innerHTML = `
-                        <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
-                        <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
-                        <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
-                        <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                        </td>
-                        <td class="py-2 px-2 border-b border-gray-700">
-                            <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
-                        </td>
-                    `;
-                    document.getElementById('playerTable').appendChild(newRow);
-                    playerTimers.push({
-                        time: 0,
-                        interval: null
-                    });
-                    document.getElementById('newPlayerName').value = '';
-                    document.getElementById('newPlayerDorsal').value = '';
-                    document.getElementById('newPlayerPosition').value = '';
-                    updateTitularCount(); // Asegúrate de contar a los titulares después de agregar un nuevo jugador
-                }
-            });
+    const playerName = document.getElementById('newPlayerName').value;
+    const playerDorsal = document.getElementById('newPlayerDorsal').value;
+    const playerPosition = document.getElementById('newPlayerPosition').value;
+    if (playerName && playerDorsal && playerPosition) {
+        const newRow = document.createElement('tr');
+        newRow.classList.add('titular-row');
+        newRow.innerHTML = `
+            <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
+            <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
+            <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
+            <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
+            </td>
+        `;
+        document.querySelector('#playerTable tbody').appendChild(newRow);
+        playerTimers.push({
+            time: 0,
+            interval: null
+        });
+        document.getElementById('newPlayerName').value = '';
+        document.getElementById('newPlayerDorsal').value = '';
+        document.getElementById('newPlayerPosition').value = '';
+        updateTitularCount(); // Asegúrate de contar a los titulares después de agregar un nuevo jugador
+    }
+});
+
 
             const positionOrder = {
     'PO': 1,
@@ -906,64 +910,72 @@ document.getElementById('addPlayerButton').addEventListener('click', () => {
             }
 
             function processCSVData(csvData) {
-                const lines = csvData.split('\n');
-                for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i];
-                    const [dorsal, name, position] = line.split(',');
-                    if (dorsal && name && position) {
-                        addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
-                    }
-                }
-                sortTable();
-            }
-
-            function addPlayerToTable(dorsal, name, position) {
-                const newRow = document.createElement('tr');
-                newRow.classList.add('titular-row');
-                newRow.innerHTML = `
-                    <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">${name}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">${position}</td>
-                    <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-                    </td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                        <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
-                    </td>
-                `;
-                document.getElementById('playerTable').appendChild(newRow);
-                playerTimers.push({
-                    time: 0,
-                    interval: null
-                });
-            }
-
-            document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
-    const tableData = [];
-    const headers = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
-    tableData.push(headers);
-
-    const rows = document.querySelectorAll('#playerTable tbody tr');
-    rows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => td.textContent.trim());
-        tableData.push(rowData);
+    const lines = csvData.split('\n');
+    lines.forEach((line, index) => {
+        if (index === 0) return; // Omitir la primera línea si es el encabezado
+        const [dorsal, name, position] = line.split(',');
+        if (dorsal && name && position) {
+            addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
+        }
     });
+}
+
+function addPlayerToTable(dorsal, name, position) {
+    const newRow = document.createElement('tr');
+    newRow.classList.add('titular-row');
+    newRow.innerHTML = `
+        <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${name}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${position}</td>
+        <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+        </td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
+        </td>
+    `;
+    document.querySelector('#playerTable tbody').appendChild(newRow);
+    playerTimers.push({
+        time: 0,
+        interval: null
+    });
+}
+
+    document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
+    const playerTableData = [];
+    const playerHeaders = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
+    playerTableData.push(playerHeaders);
+
+    const playerRows = document.querySelectorAll('#playerTable tbody tr');
+    playerRows.forEach(row => {
+        const rowData = Array.from(row.children).map(td => {
+            const button = td.querySelector('button');
+            if (button) {
+                return button.textContent.trim();
+            } else {
+                return td.textContent.trim();
+            }
+        });
+        playerTableData.push(rowData);
+    });
+
+    console.log('Player Table Data:', playerTableData); // Debugging line
 
     const actionLogData = [];
     const actionLogHeaders = Array.from(document.querySelectorAll('#actionLogTable thead th')).map(th => th.textContent);
@@ -971,9 +983,18 @@ document.getElementById('addPlayerButton').addEventListener('click', () => {
 
     const actionLogRows = document.querySelectorAll('#actionLogTable tbody tr');
     actionLogRows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => td.textContent.trim());
+        const rowData = Array.from(row.children).map(td => {
+            const button = td.querySelector('button');
+            if (button) {
+                return button.textContent.trim();
+            } else {
+                return td.textContent.trim();
+            }
+        });
         actionLogData.push(rowData);
     });
+
+    console.log('Action Log Data:', actionLogData); // Debugging line
 
     // Obtener los valores de los campos de entrada
     const teamLocal = document.getElementById('teamLocal').value;
@@ -994,12 +1015,14 @@ document.getElementById('addPlayerButton').addEventListener('click', () => {
         matchDate: matchDate,
         matchTime: matchTime,
         matchRound: matchRound,
-        playerTableData: tableData,
+        playerTableData: playerTableData,
         actionLogData: actionLogData
     };
 
+    console.log('Match Data:', matchData); // Debugging line
+
     // Realiza una solicitud POST al webhook de Make
-    fetch('https://hook.eu2.make.com/2s9n9hvbkx4rjo01p46fcyiqvjepcy4e', {
+    fetch('https://hook.eu2.make.com/kqow4a7hwp4tfm6mwjq2uj353a1mi637', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1024,6 +1047,9 @@ document.getElementById('addPlayerButton').addEventListener('click', () => {
         alert('Error al enviar datos');
     });
 });
+
+
+
 
 
 function removeRow(button) {
@@ -1059,6 +1085,7 @@ function removeRow(button) {
 </body>
 
 </html>
+
 
 
 
