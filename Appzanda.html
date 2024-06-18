@@ -418,8 +418,9 @@
                     <td class="py-2 px-2 border-b border-gray-700">${name}</td>
                     <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
                     <td class="py-2 px-2 border-b border-gray-700">
-                        <button style="background-color: red; color: white;" onclick="removeLogRow(this)">-</button>
+                    <button class="bg-red-500 text-white p-1 text-xs" onclick="removeRow(this)">-</button>
                     </td>
+
                 `;
                 document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
             }
@@ -911,12 +912,19 @@
     });
 });
 
+function removeRow(button) {
+        // Encuentra la fila que contiene el botón y elimínala
+        const row = button.closest('tr');
+        row.remove();
+    }
+
 
 
         </script>
 </body>
 
 </html>
+
 
 
 
