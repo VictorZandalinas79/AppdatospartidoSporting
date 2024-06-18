@@ -7,6 +7,7 @@
     <title>Match Data Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .modal {
             display: none;
@@ -266,18 +267,27 @@
             <div class="mt-4 flex space-x-4">
                 <input type="text" id="newColumnName" class="border p-2 bg-custom text-white" placeholder="Nombre de la columna">
                 <button id="addColumnButton" class="bg-green-500 text-white p-2">Añadir Columna</button>
-            </div>
-            <div class="mt-4 flex space-x-4">
-                <button id="exportButton" class="bg-green-500 text-white p-2">Exportar datos</button>
-                <button id="importButton" class="bg-orange-500 text-white p-2">Importar Equipo</button>
-                <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                <button id="saveButton" class="bg-green-500 text-white p-2">Guardar Equipo</button>
-                <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                <button id="clearDataButton" class="bg-red-500 text-white p-2">Limpiar Datos</button>
-            <!-- Suponiendo que deseas agregarlo cerca de los otros botones -->
-<div class="mt-4 flex space-x-4">
-    <button id="exportToGoogleSheetButton" class="bg-green-500 text-white p-2">Exportar a Google Sheet</button>
-</div>
+                <div class="mt-4 flex space-x-2">
+                    <button id="exportButton" class="bg-blue-500 text-white p-1 text-xs flex items-center space-x-2">
+                        <i class="fas fa-file-export"></i><span>Exportar datos</span>
+                    </button>
+                    <button id="importButton" class="bg-orange-500 text-white p-1 text-xs flex items-center space-x-2">
+                        <i class="fas fa-file-import"></i><span>Importar Equipo</span>
+                    </button>
+                    <input type="file" id="importFileInput" accept=".csv" style="display:none;">
+                    <button id="saveButton" class="bg-green-500 text-white p-1 text-xs flex items-center space-x-2">
+                        <i class="fas fa-save"></i><span>Guardar Equipo</span>
+                    </button>
+                    <input type="file" id="importFileInput" accept=".csv" style="display:none;">
+                    <button id="clearDataButton" class="bg-red-500 text-white p-1 text-xs flex items-center space-x-2">
+                        <i class="fas fa-trash-alt"></i><span>Limpiar Datos</span>
+                    </button>
+                </div>
+                <div class="mt-4 flex space-x-2">
+                    <button id="exportToGoogleSheetButton" class="bg-green-500 text-white p-1 text-xs flex items-center space-x-2">
+                        <i class="fas fa-file-excel"></i><span>Exportar a Google Sheet</span>
+                    </button>
+                </div>
             </div>
             <!-- Tabla de Registro de Acciones -->
             <div class="overflow-x-auto mt-8">
