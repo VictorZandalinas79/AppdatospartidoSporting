@@ -169,6 +169,29 @@
             table-layout: fixed;
             width: 100%;
         }
+        .table-container {
+        overflow-x: auto;
+        max-height: 400px; /* Ajusta esto según sea necesario */
+        position: relative;
+    }
+
+    .table-container thead {
+        position: sticky;
+        top: 0;
+        background-color: #2d3748; /* Asegúrate de que el color de fondo coincide */
+        z-index: 1;
+    }
+
+    .table-container th,
+    .table-container td {
+        padding: 8px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .table-container td {
+        border-bottom: 1px solid #4a5568;
+    }
     </style>
 </head>
 
@@ -279,7 +302,7 @@
                         <i class="fas fa-save"></i><span>Guardar Equipo</span>
                     </button>
                     <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                    <button id="clearDataButton" class="bg-red-500 text-white p-1 text-xs flex items-center space-x-2">
+                    <button id="clearDataButton" class="bg-red-500 text-white p-1 text-xs flex items-center space-x-2" onclick="clearAllTables()">
                         <i class="fas fa-trash-alt"></i><span>Limpiar Datos</span>
                     </button>
                 </div>
@@ -290,11 +313,12 @@
                 </div>
             </div>
             <!-- Tabla de Registro de Acciones -->
-            <div class="overflow-x-auto mt-8">
+            <div class="table-container">
                 <table id="actionLogTable" class="min-w-full bg-custom border border-gray-700">
                     <thead>
                         <tr>
                             <th class="py-2 px-2 border-b border-gray-700">Minuto</th>
+                            <th class="py-2 px-2 border-b border-gray-700">Parte</th> <!-- Nueva columna -->
                             <th class="py-2 px-2 border-b border-gray-700">Evento</th>
                             <th class="py-2 px-2 border-b border-gray-700">Jugador</th>
                             <th class="py-2 px-2 border-b border-gray-700">Dorsal</th>
@@ -312,7 +336,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Ingrese los datos del partido</h2>
-                <form>
+                <form id="matchDataForm">
                     <label for="teamLocal">Equipo Local:</label>
                     <input type="text" id="teamLocal" name="teamLocal"><br><br>
                     <label for="teamVisitor">Equipo Visitante:</label>
@@ -325,6 +349,7 @@
                     <input type="text" id="matchRound" name="matchRound"><br><br>
                     <button type="submit">Guardar Datos</button>
                 </form>
+                
             </div>
         </div>
         <div id="emailModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
@@ -401,29 +426,31 @@
             }
 
             function updateCounter(button, increment) {
-                let currentValue = parseInt(button.textContent);
-                currentValue += increment;
-                button.textContent = currentValue;
-                updateButtonColors();
+    let currentValue = parseInt(button.textContent);
+    currentValue += increment;
+    button.textContent = currentValue;
+    updateButtonColors();
 
-                const row = button.closest('tr');
-                const dorsal = row.children[0].textContent;
-                const name = row.children[1].textContent;
-                const action = document.querySelector('thead').querySelectorAll('th')[button.closest('td').cellIndex].textContent;
+    const row = button.closest('tr');
+    const dorsal = row.children[0].textContent;
+    const name = row.children[1].textContent;
+    const action = document.querySelector('thead').querySelectorAll('th')[button.closest('td').cellIndex].textContent;
+    const partIndicator = document.getElementById('partIndicator').value; // Obtener el valor de "Parte"
 
-                const logRow = document.createElement('tr');
-                logRow.innerHTML = `
-                    <td class="py-2 px-2 border-b border-gray-700">${new Date(generalTime).toISOString().substr(14, 9)}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">${action}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">${name}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
-                    <td class="py-2 px-2 border-b border-gray-700">
-                    <button class="bg-red-500 text-white p-1 text-xs" onclick="removeRow(this)">-</button>
-                    </td>
+    const logRow = document.createElement('tr');
+    logRow.innerHTML = `
+        <td class="py-2 px-2 border-b border-gray-700">${new Date(generalTime).toISOString().substr(14, 9)}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${partIndicator}</td> <!-- Nueva columna -->
+        <td class="py-2 px-2 border-b border-gray-700">${action}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${name}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
+        <td class="py-2 px-2 border-b border-gray-700">
+            <button style="background-color: red; color: white;" onclick="removeLogRow(this)">-</button>
+        </td>
+    `;
+    document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
+}
 
-                `;
-                document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
-            }
 
             function removeLogRow(button) {
                 const row = button.closest('tr');
@@ -484,24 +511,99 @@
                 }
             });
 
-            const positionPriority = {
-                'PO': 1,
-                'LD': 2,
-                'LI': 3,
-                'CD': 4,
-                'CI': 5,
-                'CT': 6,
-                'CAD': 7,
-                'CAI': 8,
-                'MCD': 9,
-                'MC': 10,
-                'MP': 11,
-                'ID': 12,
-                'II': 13,
-                'ED': 14,
-                'EI': 15,
-                'DC': 16
-            };
+            const positionOrder = {
+    'PO': 1,
+    'LD': 2,
+    'LI': 3,
+    'CD': 4,
+    'CI': 5,
+    'CT': 6,
+    'CAD': 7,
+    'CAI': 8,
+    'MCD': 9,
+    'MC': 10,
+    'MP': 11,
+    'ID': 12,
+    'II': 13,
+    'ED': 14,
+    'EI': 15,
+    'DC': 16
+};
+
+function sortTable() {
+    const table = document.getElementById('playerTable');
+    const rows = Array.from(table.rows);
+
+    rows.sort((a, b) => {
+        const aTitular = a.querySelector('.status-button').classList.contains('active') ? 0 : 1;
+        const bTitular = b.querySelector('.status-button').classList.contains('active') ? 0 : 1;
+        const aPos = positionOrder[a.cells[2].textContent.trim()];
+        const bPos = positionOrder[b.cells[2].textContent.trim()];
+
+        if (aTitular !== bTitular) {
+            return aTitular - bTitular;
+        }
+        return aPos - bPos;
+    });
+
+    rows.forEach(row => table.appendChild(row));
+}
+
+function toggleStatus(button) {
+    button.classList.toggle('active');
+    button.textContent = button.classList.contains('active') ? 'Titular' : 'Suplente';
+    updateTitularCount();
+    sortTable();
+}
+
+document.getElementById('addPlayerButton').addEventListener('click', () => {
+    const playerName = document.getElementById('newPlayerName').value;
+    const playerDorsal = document.getElementById('newPlayerDorsal').value;
+    const playerPosition = document.getElementById('newPlayerPosition').value;
+    if (playerName && playerDorsal && playerPosition) {
+        const newRow = document.createElement('tr');
+        newRow.classList.add('titular-row');
+        newRow.innerHTML = `
+            <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
+            <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
+            <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
+            <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+            </td>
+            <td class="py-2 px-2 border-b border-gray-700">
+                <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
+            </td>
+        `;
+        document.getElementById('playerTable').appendChild(newRow);
+        playerTimers.push({
+            time: 0,
+            interval: null
+        });
+        document.getElementById('newPlayerName').value = '';
+        document.getElementById('newPlayerDorsal').value = '';
+        document.getElementById('newPlayerPosition').value = '';
+        updateTitularCount();
+        sortTable(); // Ordenar la tabla después de agregar un nuevo jugador
+    }
+});
+
+
 
             document.querySelectorAll('.status-button').forEach(button => {
                 button.addEventListener('click', function () {
@@ -854,13 +956,23 @@
 
             document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
     const tableData = [];
-    const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent);
+    const headers = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
     tableData.push(headers);
 
-    const rows = document.querySelectorAll('tbody tr');
+    const rows = document.querySelectorAll('#playerTable tbody tr');
     rows.forEach(row => {
         const rowData = Array.from(row.children).map(td => td.textContent.trim());
         tableData.push(rowData);
+    });
+
+    const actionLogData = [];
+    const actionLogHeaders = Array.from(document.querySelectorAll('#actionLogTable thead th')).map(th => th.textContent);
+    actionLogData.push(actionLogHeaders);
+
+    const actionLogRows = document.querySelectorAll('#actionLogTable tbody tr');
+    actionLogRows.forEach(row => {
+        const rowData = Array.from(row.children).map(td => td.textContent.trim());
+        actionLogData.push(rowData);
     });
 
     // Obtener los valores de los campos de entrada
@@ -882,7 +994,8 @@
         matchDate: matchDate,
         matchTime: matchTime,
         matchRound: matchRound,
-        tableData: tableData
+        playerTableData: tableData,
+        actionLogData: actionLogData
     };
 
     // Realiza una solicitud POST al webhook de Make
@@ -912,18 +1025,41 @@
     });
 });
 
+
 function removeRow(button) {
         // Encuentra la fila que contiene el botón y elimínala
         const row = button.closest('tr');
         row.remove();
     }
 
+    function clearAllTables() {
+    // Limpiar datos del almacenamiento local
+    localStorage.clear();
+
+    // Limpiar todas las tablas en el documento
+    const tables = document.querySelectorAll('table tbody');
+    tables.forEach(tbody => {
+        tbody.innerHTML = '';
+    });
+
+    // Limpiar los campos de entrada del formulario
+    const inputs = document.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], select");
+    inputs.forEach(input => {
+        input.value = '';
+    });
+    
+    // Restablecer el valor del selector de parte
+    document.getElementById('partIndicator').value = '1';
+
+    alert('Todos los datos han sido limpiados.');
+}
 
 
         </script>
 </body>
 
 </html>
+
 
 
 
