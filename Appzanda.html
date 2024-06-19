@@ -7,7 +7,6 @@
     <title>Match Data Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .modal {
             display: none;
@@ -169,29 +168,6 @@
             table-layout: fixed;
             width: 100%;
         }
-        .table-container {
-        overflow-x: auto;
-        max-height: 400px; /* Ajusta esto según sea necesario */
-        position: relative;
-    }
-
-    .table-container thead {
-        position: sticky;
-        top: 0;
-        background-color: #2d3748; /* Asegúrate de que el color de fondo coincide */
-        z-index: 1;
-    }
-
-    .table-container th,
-    .table-container td {
-        padding: 8px;
-        text-align: left;
-        white-space: nowrap;
-    }
-
-    .table-container td {
-        border-bottom: 1px solid #4a5568;
-    }
     </style>
 </head>
 
@@ -243,8 +219,8 @@
             </select>
             <span id="titularCount" class="text-xl font-semibold text-white ml-4">Titulares: 0</span>
         </div>
-        <div class="overflow-x-auto mt-4">
-            <table id="playerTable" class="min-w-full bg-custom border border-gray-700">
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-custom border border-gray-700">
                 <thead>
                     <tr>
                         <th class="py-2 px-2 border-b border-gray-700">Nº</th>
@@ -260,7 +236,7 @@
                         <th class="py-2 px-2 border-b border-gray-700">Elim.</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="playerTable">
                     <!-- Players will be added here dynamically -->
                 </tbody>
             </table>
@@ -287,41 +263,31 @@
                 </select>
                 <button id="addPlayerButton" class="bg-blue-500 text-white p-2">Agregar Jugador</button>
             </div>
-        </div>
-      
-
             <div class="mt-4 flex space-x-4">
                 <input type="text" id="newColumnName" class="border p-2 bg-custom text-white" placeholder="Nombre de la columna">
                 <button id="addColumnButton" class="bg-green-500 text-white p-2">Añadir Columna</button>
-                <div class="mt-4 flex space-x-2">
-                    <button id="exportButton" class="bg-blue-500 text-white p-1 text-xs flex items-center space-x-2">
-                        <i class="fas fa-file-export"></i><span>Exportar datos</span>
-                    </button>
-                    <button id="importButton" class="bg-orange-500 text-white p-1 text-xs flex items-center space-x-2">
-                        <i class="fas fa-file-import"></i><span>Importar Equipo</span>
-                    </button>
-                    <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                    <button id="saveButton" class="bg-green-500 text-white p-1 text-xs flex items-center space-x-2">
-                        <i class="fas fa-save"></i><span>Guardar Equipo</span>
-                    </button>
-                    <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                    <button id="clearDataButton" class="bg-red-500 text-white p-1 text-xs flex items-center space-x-2" onclick="clearAllTables()">
-                        <i class="fas fa-trash-alt"></i><span>Limpiar Datos</span>
-                    </button>
-                </div>
-                <div class="mt-4 flex space-x-2">
-                    <button id="exportToGoogleSheetButton" class="bg-green-500 text-white p-1 text-xs flex items-center space-x-2">
-                        <i class="fas fa-file-excel"></i><span>Exportar a Google Sheet</span>
-                    </button>
-                </div>
+            </div>
+            <div class="mt-4 flex space-x-4">
+                <button id="exportButton" class="bg-green-500 text-white p-2">Exportar datos</button>
+                <button id="importButton" class="bg-orange-500 text-white p-2">Importar Equipo</button>
+                <input type="file" id="importFileInput" accept=".csv" style="display:none;">
+                <button id="saveButton" class="bg-green-500 text-white p-2">Guardar Equipo</button>
+                <input type="file" id="importFileInput" accept=".csv" style="display:none;">
+                <button id="clearDataButton" class="bg-red-500 text-white p-2">Limpiar Datos</button>
+            <!-- Suponiendo que deseas agregarlo cerca de los otros botones -->
+<div class="mt-4 flex space-x-4">
+    <button id="exportToGoogleSheetButton" class="bg-green-500 text-white p-2">Exportar a Google Sheet</button>
+</div>
             </div>
             <!-- Tabla de Registro de Acciones -->
-            <div class="table-container">
+            <div class="overflow-x-auto mt-8">
                 <table id="actionLogTable" class="min-w-full bg-custom border border-gray-700">
                     <thead>
                         <tr>
+                            <th class="py-2 px-2 border-b border-gray-700">Fecha</th>
+                            <th class="py-2 px-2 border-b border-gray-700">Jornada</th>
+                            <th class="py-2 px-2 border-b border-gray-700">Periodo</th> <!-- Nueva columna Periodo -->
                             <th class="py-2 px-2 border-b border-gray-700">Minuto</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Parte</th> <!-- Nueva columna -->
                             <th class="py-2 px-2 border-b border-gray-700">Evento</th>
                             <th class="py-2 px-2 border-b border-gray-700">Jugador</th>
                             <th class="py-2 px-2 border-b border-gray-700">Dorsal</th>
@@ -339,7 +305,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Ingrese los datos del partido</h2>
-                <form id="matchDataForm">
+                <form>
                     <label for="teamLocal">Equipo Local:</label>
                     <input type="text" id="teamLocal" name="teamLocal"><br><br>
                     <label for="teamVisitor">Equipo Visitante:</label>
@@ -352,7 +318,6 @@
                     <input type="text" id="matchRound" name="matchRound"><br><br>
                     <button type="submit">Guardar Datos</button>
                 </form>
-                
             </div>
         </div>
         <div id="emailModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
@@ -438,12 +403,18 @@
     const dorsal = row.children[0].textContent;
     const name = row.children[1].textContent;
     const action = document.querySelector('thead').querySelectorAll('th')[button.closest('td').cellIndex].textContent;
-    const partIndicator = document.getElementById('partIndicator').value; // Obtener el valor de "Parte"
+
+    // Obtén los valores de fecha y jornada
+    const matchDate = document.getElementById('matchDate').value;
+    const matchRound = document.getElementById('matchRound').value;
+    const periodo = document.getElementById('partIndicator').options[document.getElementById('partIndicator').selectedIndex].text; // Obtiene el periodo actual
 
     const logRow = document.createElement('tr');
     logRow.innerHTML = `
+        <td class="py-2 px-2 border-b border-gray-700">${matchDate}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${matchRound}</td>
+        <td class="py-2 px-2 border-b border-gray-700">${periodo}</td> <!-- Agrega la columna Periodo -->
         <td class="py-2 px-2 border-b border-gray-700">${new Date(generalTime).toISOString().substr(14, 9)}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${partIndicator}</td> <!-- Nueva columna -->
         <td class="py-2 px-2 border-b border-gray-700">${action}</td>
         <td class="py-2 px-2 border-b border-gray-700">${name}</td>
         <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
@@ -453,6 +424,7 @@
     `;
     document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
 }
+
 
 
             function removeLogRow(button) {
@@ -469,145 +441,69 @@
             }
 
             document.getElementById('addPlayerButton').addEventListener('click', () => {
-    const playerName = document.getElementById('newPlayerName').value;
-    const playerDorsal = document.getElementById('newPlayerDorsal').value;
-    const playerPosition = document.getElementById('newPlayerPosition').value;
-    if (playerName && playerDorsal && playerPosition) {
-        const newRow = document.createElement('tr');
-        newRow.classList.add('titular-row');
-        newRow.innerHTML = `
-            <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
-            <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
-            <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
-            <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
-            </td>
-        `;
-        document.querySelector('#playerTable tbody').appendChild(newRow);
-        playerTimers.push({
-            time: 0,
-            interval: null
-        });
-        document.getElementById('newPlayerName').value = '';
-        document.getElementById('newPlayerDorsal').value = '';
-        document.getElementById('newPlayerPosition').value = '';
-        updateTitularCount(); // Asegúrate de contar a los titulares después de agregar un nuevo jugador
-    }
-});
+                const playerName = document.getElementById('newPlayerName').value;
+                const playerDorsal = document.getElementById('newPlayerDorsal').value;
+                const playerPosition = document.getElementById('newPlayerPosition').value;
+                if (playerName && playerDorsal && playerPosition) {
+                    const newRow = document.createElement('tr');
+                    newRow.classList.add('titular-row');
+                    newRow.innerHTML = `
+                        <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
+                        <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
+                        <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
+                        <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
+                        </td>
+                        <td class="py-2 px-2 border-b border-gray-700">
+                            <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
+                        </td>
+                    `;
+                    document.getElementById('playerTable').appendChild(newRow);
+                    playerTimers.push({
+                        time: 0,
+                        interval: null
+                    });
+                    document.getElementById('newPlayerName').value = '';
+                    document.getElementById('newPlayerDorsal').value = '';
+                    document.getElementById('newPlayerPosition').value = '';
+                    updateTitularCount(); // Asegúrate de contar a los titulares después de agregar un nuevo jugador
+                }
+            });
 
-
-            const positionOrder = {
-    'PO': 1,
-    'LD': 2,
-    'LI': 3,
-    'CD': 4,
-    'CI': 5,
-    'CT': 6,
-    'CAD': 7,
-    'CAI': 8,
-    'MCD': 9,
-    'MC': 10,
-    'MP': 11,
-    'ID': 12,
-    'II': 13,
-    'ED': 14,
-    'EI': 15,
-    'DC': 16
-};
-
-function sortTable() {
-    const table = document.getElementById('playerTable');
-    const rows = Array.from(table.rows);
-
-    rows.sort((a, b) => {
-        const aTitular = a.querySelector('.status-button').classList.contains('active') ? 0 : 1;
-        const bTitular = b.querySelector('.status-button').classList.contains('active') ? 0 : 1;
-        const aPos = positionOrder[a.cells[2].textContent.trim()];
-        const bPos = positionOrder[b.cells[2].textContent.trim()];
-
-        if (aTitular !== bTitular) {
-            return aTitular - bTitular;
-        }
-        return aPos - bPos;
-    });
-
-    rows.forEach(row => table.appendChild(row));
-}
-
-function toggleStatus(button) {
-    button.classList.toggle('active');
-    button.textContent = button.classList.contains('active') ? 'Titular' : 'Suplente';
-    updateTitularCount();
-    sortTable();
-}
-
-document.getElementById('addPlayerButton').addEventListener('click', () => {
-    const playerName = document.getElementById('newPlayerName').value;
-    const playerDorsal = document.getElementById('newPlayerDorsal').value;
-    const playerPosition = document.getElementById('newPlayerPosition').value;
-    if (playerName && playerDorsal && playerPosition) {
-        const newRow = document.createElement('tr');
-        newRow.classList.add('titular-row');
-        newRow.innerHTML = `
-            <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
-            <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
-            <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
-            <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-            </td>
-            <td class="py-2 px-2 border-b border-gray-700">
-                <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
-            </td>
-        `;
-        document.getElementById('playerTable').appendChild(newRow);
-        playerTimers.push({
-            time: 0,
-            interval: null
-        });
-        document.getElementById('newPlayerName').value = '';
-        document.getElementById('newPlayerDorsal').value = '';
-        document.getElementById('newPlayerPosition').value = '';
-        updateTitularCount();
-        sortTable(); // Ordenar la tabla después de agregar un nuevo jugador
-    }
-});
-
-
+            const positionPriority = {
+                'PO': 1,
+                'LD': 2,
+                'LI': 3,
+                'CD': 4,
+                'CI': 5,
+                'CT': 6,
+                'CAD': 7,
+                'CAI': 8,
+                'MCD': 9,
+                'MC': 10,
+                'MP': 11,
+                'ID': 12,
+                'II': 13,
+                'ED': 14,
+                'EI': 15,
+                'DC': 16
+            };
 
             document.querySelectorAll('.status-button').forEach(button => {
                 button.addEventListener('click', function () {
@@ -910,17 +806,18 @@ document.getElementById('addPlayerButton').addEventListener('click', () => {
             }
 
             function processCSVData(csvData) {
-    const lines = csvData.split('\n');
-    lines.forEach((line, index) => {
-        if (index === 0) return; // Omitir la primera línea si es el encabezado
-        const [dorsal, name, position] = line.split(',');
-        if (dorsal && name && position) {
-            addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
-        }
-    });
-}
+                const lines = csvData.split('\n');
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    const [dorsal, name, position] = line.split(',');
+                    if (dorsal && name && position) {
+                        addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
+                    }
+                }
+                sortTable();
+            }
 
-function addPlayerToTable(dorsal, name, position) {
+        function addPlayerToTable(dorsal, name, position) {
     const newRow = document.createElement('tr');
     newRow.classList.add('titular-row');
     newRow.innerHTML = `
@@ -950,32 +847,23 @@ function addPlayerToTable(dorsal, name, position) {
             <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
         </td>
     `;
-    document.querySelector('#playerTable tbody').appendChild(newRow);
+    document.getElementById('playerTable').appendChild(newRow);
     playerTimers.push({
         time: 0,
         interval: null
     });
 }
 
-    document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
+            document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
     const playerTableData = [];
     const playerHeaders = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
     playerTableData.push(playerHeaders);
 
-    const playerRows = document.querySelectorAll('#playerTable tbody tr');
+    const playerRows = document.querySelectorAll('#playerTable tr');
     playerRows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => {
-            const button = td.querySelector('button');
-            if (button) {
-                return button.textContent.trim();
-            } else {
-                return td.textContent.trim();
-            }
-        });
+        const rowData = Array.from(row.children).map(td => td.textContent.trim());
         playerTableData.push(rowData);
     });
-
-    console.log('Player Table Data:', playerTableData); // Debugging line
 
     const actionLogData = [];
     const actionLogHeaders = Array.from(document.querySelectorAll('#actionLogTable thead th')).map(th => th.textContent);
@@ -983,18 +871,9 @@ function addPlayerToTable(dorsal, name, position) {
 
     const actionLogRows = document.querySelectorAll('#actionLogTable tbody tr');
     actionLogRows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => {
-            const button = td.querySelector('button');
-            if (button) {
-                return button.textContent.trim();
-            } else {
-                return td.textContent.trim();
-            }
-        });
+        const rowData = Array.from(row.children).map(td => td.textContent.trim());
         actionLogData.push(rowData);
     });
-
-    console.log('Action Log Data:', actionLogData); // Debugging line
 
     // Obtener los valores de los campos de entrada
     const teamLocal = document.getElementById('teamLocal').value;
@@ -1019,10 +898,8 @@ function addPlayerToTable(dorsal, name, position) {
         actionLogData: actionLogData
     };
 
-    console.log('Match Data:', matchData); // Debugging line
-
     // Realiza una solicitud POST al webhook de Make
-    fetch('https://hook.eu2.make.com/kqow4a7hwp4tfm6mwjq2uj353a1mi637', {
+    fetch('https://hook.eu2.make.com/31bcp3rq026uw527msqhkylhkqq9jd8r', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1051,41 +928,10 @@ function addPlayerToTable(dorsal, name, position) {
 
 
 
-
-function removeRow(button) {
-        // Encuentra la fila que contiene el botón y elimínala
-        const row = button.closest('tr');
-        row.remove();
-    }
-
-    function clearAllTables() {
-    // Limpiar datos del almacenamiento local
-    localStorage.clear();
-
-    // Limpiar todas las tablas en el documento
-    const tables = document.querySelectorAll('table tbody');
-    tables.forEach(tbody => {
-        tbody.innerHTML = '';
-    });
-
-    // Limpiar los campos de entrada del formulario
-    const inputs = document.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], select");
-    inputs.forEach(input => {
-        input.value = '';
-    });
-    
-    // Restablecer el valor del selector de parte
-    document.getElementById('partIndicator').value = '1';
-
-    alert('Todos los datos han sido limpiados.');
-}
-
-
         </script>
 </body>
 
 </html>
-
 
 
 
