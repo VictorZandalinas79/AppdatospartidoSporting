@@ -1005,7 +1005,12 @@ document.getElementById('resetButton').addEventListener('click', function() {
     document.getElementById('generalTimer').textContent = '00:00:000';
 });
 
-        </script>
+function removeRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+}
+            
+</script>
 </body>
 
 </html>
