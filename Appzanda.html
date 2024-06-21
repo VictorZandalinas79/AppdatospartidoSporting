@@ -4,10 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Data Tracker</title>
+    <title>Match Data Tracker Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #2c3e50;
+            --text-color: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -17,35 +31,22 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(238, 231, 231, 0.4);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
-            position: relative;
-            background-color: #1a202c;
+            background-color: var(--background-color);
             margin: 15% auto;
             padding: 20px;
-            border: 1px solid #131414;
-            width: 50%;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            animation-name: animatetop;
-            animation-duration: 0.4s
-        }
-
-        @keyframes animatetop {
-            from {
-                top: -300px;
-                opacity: 0
-            }
-
-            to {
-                top: 0;
-                opacity: 1
-            }
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .close {
-            color: #131415;
+            color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
@@ -53,226 +54,151 @@
 
         .close:hover,
         .close:focus {
-            color: #d63031;
+            color: var(--primary-color);
             text-decoration: none;
             cursor: pointer;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1a202c;
-            color: #07e40b;
-        }
-
         .videomarcador {
-            font-family: 'Merriweather', sans-serif;
-            background-color: #2d3748;
-            color: #48bb78;
+            background-color: #34495e;
+            color: var(--text-color);
             padding: 20px;
             border-radius: 10px;
-            text-align: center;
             margin-bottom: 20px;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        .videomarcador input {
-            background-color: #2d3748;
-            color: #090a09;
-            border: none;
-            border-bottom: 2px solid #e9f2ec;
-            padding: 5px 10px;
-            margin: 0 10px;
-        }
-
         .timer-controls button {
-    background-color: white; /* Fondo blanco */
-    color: black; /* Texto negro para contraste */
-    padding: 5px 10px; /* Padding más pequeño */
-    font-size: 12px; /* Tamaño de fuente más pequeño */
-    border-radius: 5px; /* Bordes redondeados */
-    border: 1px solid #ccc; /* Borde sutil */
-    cursor: pointer; /* Cursor tipo puntero */
-    margin: 0.1px; /* Margen reducido entre botones */
-}
-
-
-.timer-controls {
-    display: flex;
-    justify-content: space-around; /* Distribuye el espacio entre botones */
-    flex-wrap: wrap; /* Permite la adaptación a pantallas pequeñas */
-}
-
-.part-selector select {
-    width: 100%; /* Ajuste de ancho completo para mejorar accesibilidad */
-    max-width: 300px; /* Máximo ancho para evitar un select demasiado grande */
-}
-
-.part-selector {
-    display: flex;
-    flex-direction: column; /* Mejor para móviles */
-}
-
-/* Estilo para los input y select para hacerlos más accesibles en dispositivos móviles */
-input[type="text"], input[type="date"], input[type="time"], select {
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    box-sizing: border-box; /* Incluye padding y border en el ancho total */
-}
-
-.timer-controls button:hover {
-    background-color: #f0f0f0; /* Cambio de color en hover para interactividad */
-}
-
-
-        .status-button {
-            background-color: #2d3748;
-            color: #cbd5e0;
-            border: 1px solid #171519;
-            padding: 3px 5px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .status-button.active {
-            background-color: #0ae96e;
-            color: rgb(5, 4, 4);
-        }
-
-        .titular-row,
-        .suplente-row {
-            padding: 0px;
-            font-size: 0.7rem;
-            line-height: 0.1;
-            height: 5px;
-            white-space: nowrap;
-            text-align: center;
-            background-color: inherit;
-        }
-
-        .titular-row {
-            background-color: #3a473a;
-        }
-
-        .suplente-row {
-            background-color: #bb6873;
+        .timer-controls button:hover {
+            background-color: #2980b9;
         }
 
         .counter-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 30px;
-            height: 10px;
-            background-color: #2d3748;
-            color: #cbd5e0;
-            border: 1px solid #52bb48;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 1rem;
+            transition: background-color 0.3s;
         }
 
         .counter-button:hover {
-            background-color: #4a5568;
-        }
-
-        .bg-custom {
-            background-color: #2d3748;
-        }
-
-        table th,
-        table td {
-            padding: 0px;
-            font-size: 0.7rem;
-            line-height: 0.01;
-            text-align: center;
-            white-space: nowrap;
-            height: 1.5rem;
+            background-color: #27ae60;
         }
 
         table {
-            border-collapse: collapse;
-            table-layout: fixed;
             width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            background-color: #34495e;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .status-button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .status-button.active {
+            background-color: var(--primary-color);
+        }
+
+        #generalTimer {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--primary-color);
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
         }
     </style>
 </head>
 
 <body class="p-6">
-    <div class="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl mx-auto bg-custom p-6 rounded-lg shadow-lg">
-        <button id="toggleButton" class="bg-blue-500 text-white p-2 rounded w-full sm:w-auto">Datos del Partido</button>
+    <div class="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-6 text-center text-primary">Match Data Tracker Pro</h1>
+        
+        <button id="toggleButton" class="bg-primary text-white p-2 rounded w-full mb-4">Datos del Partido</button>
         <div id="matchData" class="hidden">
-            <div class="videomarcador">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-                        <div>
-                            <div class="font-bold text-lg">Datos partido</div>
-                            <div class="flex space-x-4">
-                                <div>
-                                    <input type="text" class="text-lg" placeholder="Local">
-                                    <input type="text" class="text-lg" placeholder="Visitante">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
-                            <div>
-                                <div class="text-lg">Fecha:</div>
-                                <input type="date" class="text-lg">
-                            </div>
-                            <div>
-                                <div class="text-lg">Hora:</div>
-                                <input type="time" class="text-lg">
-                            </div>
-                            <div>
-                                <div class="text-lg">Jornada:</div>
-                                <input type="text" class="text-lg" placeholder="Jornada">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- ... (mantén el contenido existente de matchData) ... -->
         </div>
-    </div>
-    <div id="generalTimer" class="text-6xl font-bold mb-2">00:00:000</div>
-    <div class="timer-controls">
-        <button id="startButton">▶️ Iniciar</button>
-        <button id="stopButton">⏹️ Detener</button>
-        <button id="resetButton">🔄 Reiniciar</button>
-    </div>
-        <div class="part-selector mt-2">
-            <select id="partIndicator" class="text-2xl font-semibold bg-custom text-white p-2 rounded-lg">
+
+        <div id="generalTimer" class="text-6xl font-bold mb-4">00:00:000</div>
+        <div class="timer-controls flex justify-center space-x-4 mb-6">
+            <button id="startButton" class="flex-1">▶️ Iniciar</button>
+            <button id="stopButton" class="flex-1">⏹️ Detener</button>
+            <button id="resetButton" class="flex-1">🔄 Reiniciar</button>
+        </div>
+
+        <div class="part-selector mb-4">
+            <select id="partIndicator" class="w-full p-2 bg-gray-700 text-white rounded">
                 <option value="1">1ª parte</option>
                 <option value="2">2ª parte</option>
                 <option value="3">Prórroga</option>
             </select>
-            <span id="titularCount" class="text-xl font-semibold text-white ml-4">Titulares: 0</span>
         </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-custom border border-gray-700">
+
+        <div class="overflow-x-auto mb-6">
+            <table>
                 <thead>
                     <tr>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center"">Nº</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">Jug</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">Pos</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">Minutos</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">Tit</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">GF</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">GC</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">AS</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">TA</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">TR</th>
-                        <th class="py-2 px-2 border-b border-gray-700 text-center">Elim.</th>
+                        <th>Nº</th>
+                        <th>Jug</th>
+                        <th>Pos</th>
+                        <th>Minutos</th>
+                        <th>Tit</th>
+                        <th>GF</th>
+                        <th>GC</th>
+                        <th>AS</th>
+                        <th>TA</th>
+                        <th>TR</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="playerTable">
                     <!-- Players will be added here dynamically -->
                 </tbody>
             </table>
-            <div class="mt-4 flex space-x-4">
-                <input type="text" id="newPlayerName" class="border p-2 bg-custom text-white" placeholder="Jugador">
-                <input type="text" id="newPlayerDorsal" class="border p-2 bg-custom text-white" placeholder="Dorsal">
-                <select id="newPlayerPosition" class="border p-2 bg-custom text-white">
+        </div>
+
+        <div class="flex flex-wrap -mx-2 mb-4">
+            <div class="w-full md:w-1/3 px-2 mb-4">
+                <input type="text" id="newPlayerName" class="w-full p-2 bg-gray-700 text-white rounded" placeholder="Jugador">
+            </div>
+            <div class="w-full md:w-1/3 px-2 mb-4">
+                <input type="text" id="newPlayerDorsal" class="w-full p-2 bg-gray-700 text-white rounded" placeholder="Dorsal">
+            </div>
+            <div class="w-full md:w-1/3 px-2 mb-4">
+                <select id="newPlayerPosition" class="w-full p-2 bg-gray-700 text-white rounded">
                     <option value="PO">PO</option>
                     <option value="LD">LD</option>
                     <option value="LI">LI</option>
@@ -290,77 +216,95 @@ input[type="text"], input[type="date"], input[type="time"], select {
                     <option value="EI">EI</option>
                     <option value="DC">DC</option>
                 </select>
-                <button id="addPlayerButton" class="bg-blue-500 text-white p-2">Agregar Jugador</button>
             </div>
-            <div class="mt-4 flex space-x-4">
-                <input type="text" id="newColumnName" class="border p-2 bg-custom text-white" placeholder="Nombre de la columna">
-                <button id="addColumnButton" class="bg-green-500 text-white p-2">➕ Añadir Columna</button>
+        </div>
+        <button id="addPlayerButton" class="w-full bg-secondary text-white p-2 rounded mb-6">Agregar Jugador</button>
+
+        <div class="flex flex-wrap -mx-2 mb-6">
+            <div class="w-full md:w-1/2 px-2 mb-4">
+                <input type="text" id="newColumnName" class="w-full p-2 bg-gray-700 text-white rounded" placeholder="Nombre de la columna">
             </div>
-            <div class="mt-4 flex space-x-4">
-                <button id="exportButton" class="bg-green-500 text-white p-2">📤 Exportar datos</button>
-                <button id="importButton" class="bg-orange-500 text-white p-2">📥 Importar Equipo</button>
+            <div class="w-full md:w-1/2 px-2">
+                <button id="addColumnButton" class="w-full bg-primary text-white p-2 rounded">➕ Añadir Columna</button>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap -mx-2 mb-6">
+            <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
+                <button id="exportButton" class="w-full bg-green-500 text-white p-2 rounded">📤 Exportar datos</button>
+            </div>
+            <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
+                <button id="importButton" class="w-full bg-orange-500 text-white p-2 rounded">📥 Importar Equipo</button>
                 <input type="file" id="importFileInput" accept=".csv" style="display:none;">
-                <button id="saveButton" class="bg-green-500 text-white p-2">💾 Guardar Equipo</button>
-                <button id="clearDataButton" class="bg-red-500 text-white p-2">🗑 Limpiar Datos</button>
-            <div class="mt-4 flex space-x-4">
-                <button id="exportToGoogleSheetButton" class="bg-green-500 text-white p-2">📊 Exportar a Google Sheet</button>
             </div>
-            
+            <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
+                <button id="saveButton" class="w-full bg-blue-500 text-white p-2 rounded">💾 Guardar Equipo</button>
             </div>
-            <!-- Tabla de Registro de Acciones -->
-            <div class="overflow-x-auto mt-8">
-                <table id="actionLogTable" class="min-w-full bg-custom border border-gray-700">
-                    <thead>
-                        <tr>
-                            <th class="py-2 px-2 border-b border-gray-700">Fecha</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Jornada</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Periodo</th> <!-- Nueva columna Periodo -->
-                            <th class="py-2 px-2 border-b border-gray-700">Minuto</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Evento</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Jugador</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Dorsal</th>
-                            <th class="py-2 px-2 border-b border-gray-700">Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Las entradas del registro se agregarán aquí dinámicamente -->
-                    </tbody>
-                </table>
+            <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
+                <button id="clearDataButton" class="w-full bg-red-500 text-white p-2 rounded">🗑 Limpiar Datos</button>
             </div>
         </div>
-        <!-- El Modal -->
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Ingrese los datos del partido</h2>
-                <form>
-                    <label for="teamLocal">Equipo Local:</label>
-                    <input type="text" id="teamLocal" name="teamLocal"><br><br>
-                    <label for="teamVisitor">Equipo Visitante:</label>
-                    <input type="text" id="teamVisitor" name="teamVisitor"><br><br>
-                    <label for="matchDate">Fecha:</label>
-                    <input type="date" id="matchDate" name="matchDate"><br><br>
-                    <label for="matchTime">Hora:</label>
-                    <input type="time" id="matchTime" name="matchTime"><br><br>
-                    <label for="matchRound">Jornada:</label>
-                    <input type="text" id="matchRound" name="matchRound"><br><br>
-                    <button type="submit" id="saveDataButton">Guardar Datos</button>
-                </form>
-            </div>
+
+        <button id="exportToGoogleSheetButton" class="w-full bg-yellow-500 text-white p-2 rounded mb-6">📊 Exportar a Google Sheet</button>
+
+        <div class="chart-container">
+            <canvas id="playerStatsChart"></canvas>
         </div>
-        <div id="emailModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-custom p-6 rounded-lg shadow-lg">
+
+        <!-- Tabla de Registro de Acciones -->
+        <h2 class="text-2xl font-bold mt-8 mb-4">Registro de Acciones</h2>
+        <div class="overflow-x-auto">
+            <table id="actionLogTable" class="min-w-full bg-gray-800 border border-gray-700">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Jornada</th>
+                        <th>Periodo</th>
+                        <th>Minuto</th>
+                        <th>Evento</th>
+                        <th>Jugador</th>
+                        <th>Dorsal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las entradas del registro se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Ingrese los datos del partido</h2>
+            <form id="matchDataForm">
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-300">Email: (para enviar confirmación de informe acabado)</label>
-                    <input type="email" id="email" class="border p-2 w-full bg-custom text-white" placeholder="Email">
+                    <label for="teamLocal" class="block mb-2">Equipo Local:</label>
+                    <input type="text" id="teamLocal" name="teamLocal" class="w-full p-2 bg-gray-700 text-white rounded">
                 </div>
                 <div class="mb-4">
-                    <label for="googleAccount" class="block text-gray-300">Elije cuenta google para sincronizar con Google Sheet</label>
-                    <input type="text" id="googleAccount" class="border p-2 w-full bg-custom text-white" placeholder="Cuenta Google">
+                    <label for="teamVisitor" class="block mb-2">Equipo Visitante:</label>
+                    <input type="text" id="teamVisitor" name="teamVisitor" class="w-full p-2 bg-gray-700 text-white rounded">
                 </div>
-                <button id="sendButton" class="bg-green-500 text-white p-2 w-full">Enviar</button>
-            </div>
+                <div class="mb-4">
+                    <label for="matchDate" class="block mb-2">Fecha:</label>
+                    <input type="date" id="matchDate" name="matchDate" class="w-full p-2 bg-gray-700 text-white rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="matchTime" class="block mb-2">Hora:</label>
+                    <input type="time" id="matchTime" name="matchTime" class="w-full p-2 bg-gray-700 text-white rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="matchRound" class="block mb-2">Jornada:</label>
+                    <input type="text" id="matchRound" name="matchRound" class="w-full p-2 bg-gray-700 text-white rounded">
+                </div>
+                <button type="submit" id="saveDataButton" class="w-full bg-primary text-white p-2 rounded">Guardar Datos</button>
+            </form>
         </div>
+    </div>
+
         <script>
             let generalTimer;
             let isRunning = false;
@@ -846,70 +790,57 @@ function removeLogRow(button) {
             });
 
             document.getElementById('importButton').addEventListener('click', () => {
-                document.getElementById('importFileInput').click();
-            });
+    document.getElementById('importFileInput').click();
+});
 
-            document.getElementById('importFileInput').addEventListener('change', handleFileSelect);
+document.getElementById('importFileInput').addEventListener('change', handleFileSelect);
 
-            function handleFileSelect(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const csvData = e.target.result;
-                        processCSVData(csvData);
-                    };
-                    reader.readAsText(file);
-                }
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const csvData = e.target.result;
+            processCSVData(csvData);
+        };
+        reader.readAsText(file);
+    }
+}
+
+function processCSVData(csvData) {
+    const lines = csvData.split('\n');
+    // Asumimos que la primera línea es el encabezado
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line) {  // Asegurarse de que la línea no esté vacía
+            const [dorsal, name, position] = line.split(',');
+            if (dorsal && name && position) {
+                addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
             }
+        }
+    }
+    sortTable();
+    updatePlayerStatsChart();  // Actualiza el gráfico después de importar
+}
 
-            function processCSVData(csvData) {
-                const lines = csvData.split('\n');
-                for (let i = 1; i < lines.length; i++) {
-                    const line = lines[i];
-                    const [dorsal, name, position] = line.split(',');
-                    if (dorsal && name && position) {
-                        addPlayerToTable(dorsal.trim(), name.trim(), position.trim());
-                    }
-                }
-                sortTable();
-            }
-
-        function addPlayerToTable(dorsal, name, position) {
+function addPlayerToTable(dorsal, name, position) {
     const newRow = document.createElement('tr');
-    newRow.classList.add('titular-row');
     newRow.innerHTML = `
-        <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${name}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${position}</td>
-        <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="counter-button" style="background-color: black; color: white;" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="counter-button ta-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button class="counter-button tr-button" onclick="updateCounter(this, 1)" onmousedown="startDecrement(this)" onmouseup="stopDecrement(this)">0</button>
-        </td>
-        <td class="py-2 px-2 border-b border-gray-700">
-            <button style="background-color: orange; color: white; padding: 2px;" onclick="removeRow(this)">-</button>
-        </td>
+        <td>${dorsal}</td>
+        <td>${name}</td>
+        <td>${position}</td>
+        <td class="player-timer">00:00:000</td>
+        <td><button class="status-button active" onclick="toggleStatus(this)">Titular</button></td>
+        <td><button class="counter-button" onclick="updateCounter(this, 1)">0</button></td>
+        <td><button class="counter-button" onclick="updateCounter(this, 1)">0</button></td>
+        <td><button class="counter-button" onclick="updateCounter(this, 1)">0</button></td>
+        <td><button class="counter-button ta-button" onclick="updateCounter(this, 1)">0</button></td>
+        <td><button class="counter-button tr-button" onclick="updateCounter(this, 1)">0</button></td>
+        <td><button onclick="removeRow(this)">🗑️</button></td>
     `;
     document.getElementById('playerTable').appendChild(newRow);
-    playerTimers.push({
-        time: 0,
-        interval: null
-    });
+    playerTimers.push({ time: 0, interval: null });
+    updateTitularCount();
 }
 
             document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
@@ -1044,13 +975,6 @@ function removeRow(button) {
 </body>
 
 </html>
-
-
-
-
-
-
-
 
 
 
