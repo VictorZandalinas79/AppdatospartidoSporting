@@ -430,35 +430,53 @@ input[type="text"], input[type="date"], input[type="time"], select {
     const row = button.closest('tr');
     const dorsal = row.children[0].textContent;
     const name = row.children[1].textContent;
-    const action = document.querySelector('thead').querySelectorAll('th')[button.closest('td').cellIndex].textContent;
+    const actionIndex = button.closest('td').cellIndex; // Obtén el índice de la celda
+    const action = document.querySelector('thead').querySelectorAll('th')[actionIndex].textContent;
 
-    // Obtén los valores de fecha y jornada
     const matchDate = document.getElementById('matchDate').value;
     const matchRound = document.getElementById('matchRound').value;
-    const periodo = document.getElementById('partIndicator').options[document.getElementById('partIndicator').selectedIndex].text; // Obtiene el periodo actual
+    const periodo = document.getElementById('partIndicator').options[document.getElementById('partIndicator').selectedIndex].text;
 
     const logRow = document.createElement('tr');
+    logRow.setAttribute('data-dorsal', dorsal); // Establece atributos para identificación
+    logRow.setAttribute('data-action-index', actionIndex); // Guarda el índice de la acción
     logRow.innerHTML = `
-        <td class="py-2 px-2 border-b border-gray-700">${matchDate}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${matchRound}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${periodo}</td> <!-- Agrega la columna Periodo -->
-        <td class="py-2 px-2 border-b border-gray-700">${new Date(generalTime).toISOString().substr(14, 9)}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${action}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${name}</td>
-        <td class="py-2 px-2 border-b border-gray-700">${dorsal}</td>
-        <td class="py-2 px-2 border-b border-gray-700">
+        <td>${matchDate}</td>
+        <td>${matchRound}</td>
+        <td>${periodo}</td>
+        <td>${new Date(generalTime).toISOString().substr(14, 9)}</td>
+        <td>${action}</td>
+        <td>${name}</td>
+        <td>${dorsal}</td>
+        <td>
             <button style="background-color: red; color: white;" onclick="removeLogRow(this)">-</button>
         </td>
     `;
     document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
 }
 
+function removeLogRow(button) {
+    const logRow = button.closest('tr');
+    const dorsal = logRow.getAttribute('data-dorsal');
+    const actionIndex = logRow.getAttribute('data-action-index');
 
-
-            function removeLogRow(button) {
-                const row = button.closest('tr');
-                row.remove();
+    // Encuentra la fila correspondiente en la tabla de jugadores y actualiza el contador
+    const playerRows = document.querySelectorAll('#playerTable tr');
+    playerRows.forEach(row => {
+        if (row.children[0].textContent === dorsal) { // Compara el dorsal
+            const counterCell = row.children[actionIndex];
+            const counterButton = counterCell.querySelector('button');
+            let count = parseInt(counterButton.textContent);
+            if (count > 0) {
+                counterButton.textContent = --count; // Decrementa el contador
+                updateButtonColors();
             }
+        }
+    });
+
+    logRow.remove(); // Elimina la fila del log
+}
+
 
             function startDecrement(button) {
                 button.holdInterval = setInterval(() => updateCounter(button, -1), 200);
