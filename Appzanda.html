@@ -437,6 +437,13 @@ input[type="text"], input[type="date"], input[type="time"], select {
     const matchRound = document.getElementById('matchRound').value;
     const periodo = document.getElementById('partIndicator').options[document.getElementById('partIndicator').selectedIndex].text;
 
+    // Obtener minutos y segundos de generalTime
+    let minutes = new Date(generalTime).getUTCMinutes();
+    let seconds = new Date(generalTime).getUTCSeconds();
+
+    // Formatear tiempo como "MM:SS"
+    let formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
     const logRow = document.createElement('tr');
     logRow.setAttribute('data-dorsal', dorsal); // Establece atributos para identificación
     logRow.setAttribute('data-action-index', actionIndex); // Guarda el índice de la acción
@@ -444,7 +451,7 @@ input[type="text"], input[type="date"], input[type="time"], select {
         <td>${matchDate}</td>
         <td>${matchRound}</td>
         <td>${periodo}</td>
-        <td>${new Date(generalTime).toISOString().substr(14, 9)}</td>
+        <td>${formattedTime}</td>
         <td>${action}</td>
         <td>${name}</td>
         <td>${dorsal}</td>
@@ -454,6 +461,7 @@ input[type="text"], input[type="date"], input[type="time"], select {
     `;
     document.getElementById('actionLogTable').querySelector('tbody').appendChild(logRow);
 }
+
 
 function removeLogRow(button) {
     const logRow = button.closest('tr');
