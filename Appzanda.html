@@ -571,41 +571,45 @@ input[type="text"], input[type="date"], input[type="time"], select {
                     }
                 });
             });
+
             document.getElementById('exportButton').addEventListener('click', () => {
-    const tableData = [];
-    const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent);
-    tableData.push(headers);
+    const local = document.getElementById('teamLocal').value;
+    const visitante = document.getElementById('teamVisitor').value;
+    const fecha = document.getElementById('matchDate').value;
+    const jornada = document.getElementById('matchRound').value;
 
-    const rows = document.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => td.textContent.trim());
-        tableData.push(rowData);
-    });
+    // Formatear el nombre del archivo con los valores de los campos
+    const fileName = `${local}-${visitante},${jornada},${fecha}.csv`.replace(/\s+/g, '_').replace(/[:\/]/g, '-');
 
-    const csvContent = tableData.map(e => e.join(",")).join("\n");
-    const blob = new Blob([csvContent], {
-        type: 'text/csv;charset=utf-8;'
-    });
+    // Preparar los datos para el CSV
+    const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const rows = Array.from(document.querySelectorAll('tbody tr')).map(row =>
+        Array.from(row.children).map(td => {
+            const button = td.querySelector('button');
+            return button ? button.textContent.trim() : td.textContent.trim();
+        }).join(",")
+    );
+    
+    // Verificar que hay datos para exportar
+    if (rows.length === 0) {
+        alert('No hay datos para exportar.');
+        return;
+    }
+
+    // Unir todo para el contenido del CSV
+    const csvContent = [headers.join(",")].concat(rows).join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
-
-    // Obtener los valores de los campos de entrada
-    const teamLocal = document.getElementById('teamLocal').value;
-    const teamVisitor = document.getElementById('teamVisitor').value;
-    const matchDate = document.getElementById('matchDate').value;
-    const matchTime = document.getElementById('matchTime').value;
-    const matchRound = document.getElementById('matchRound').value;
-
-    // Crear el nombre del archivo con los datos obtenidos
-    const fileName = `${teamLocal}_${teamVisitor}_${matchDate}_${matchTime}_${matchRound}.csv`.replace(/[^a-zA-Z0-9]/g, '_');
-
     const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', fileName);
-    link.style.visibility = 'hidden';
+    link.href = url;
+    link.download = fileName;
+    link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 });
+
+
 
 
             function updateButtonColors() {
@@ -1009,8 +1013,8 @@ function removeRow(button) {
     const row = button.closest('tr');
     row.remove();
 }
-            
-</script>
+
+        </script>
 </body>
 
 </html>
