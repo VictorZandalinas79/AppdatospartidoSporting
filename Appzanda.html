@@ -158,7 +158,10 @@
             <button id="stopButton" class="flex-1">⏹️ Detener</button>
             <button id="resetButton" class="flex-1">🔄 Reiniciar</button>
         </div>
-
+<!-- Contador de Jugadores Titulares -->
+<div id="titularCount" class="text-xl font-bold my-4 text-center">
+    Titulares: 0
+</div>
         <div class="part-selector mb-4">
             <select id="partIndicator" class="w-full p-2 bg-gray-700 text-white rounded">
                 <option value="1">1ª parte</option>
@@ -347,23 +350,36 @@
                 sortTable();
             }
 
+            document.querySelectorAll('#playerTable select').forEach(select => {
+    select.addEventListener('change', () => {
+        sortTable();
+    });
+});
+
             function sortTable() {
-                const table = document.getElementById('playerTable');
-                const rows = Array.from(table.rows);
-                rows.sort((a, b) => {
-                    const aStatus = a.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
-                    const bStatus = b.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
-                    const aPos = positionPriority[a.cells[2].textContent.trim()];
-                    const bPos = positionPriority[b.cells[2].textContent.trim()];
+    const table = document.getElementById('playerTable');
+    let rows = Array.from(table.querySelectorAll('tr'));
 
-                    if (aStatus !== bStatus) {
-                        return aStatus - bStatus;
-                    }
-                    return aPos - bPos;
-                });
+    // Ordenar primero por titular/no titular y luego por posición
+    rows.sort((a, b) => {
+        const aStatus = a.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
+        const bStatus = b.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
 
-                rows.forEach(row => table.appendChild(row));
-            }
+        const aPosition = a.querySelector('select').value;
+        const bPosition = b.querySelector('select').value;
+        const aPosPriority = positionPriority[aPosition];
+        const bPosPriority = positionPriority[bPosition];
+
+        if (aStatus !== bStatus) {
+            return aStatus - bStatus; // Prioriza titulares
+        }
+        return aPosPriority - bPosPriority; // Dentro de los titulares o suplentes, ordenar por posición
+    });
+
+    // Reinsertar filas ordenadas en la tabla
+    rows.forEach(row => table.appendChild(row));
+}
+
 
             function updateCounter(button, increment) {
     let currentValue = parseInt(button.textContent);
@@ -448,7 +464,26 @@ function removeLogRow(button) {
                     newRow.innerHTML = `
                         <td class="py-2 px-2 border-b border-gray-700">${playerDorsal}</td>
                         <td class="py-2 px-2 border-b border-gray-700">${playerName}</td>
-                        <td class="py-2 px-2 border-b border-gray-700">${playerPosition}</td>
+                        <td>
+                <select onchange="updatePlayerPosition(this)" class="bg-gray-700 text-white rounded">
+                    <option value="PO" ${playerPosition === "PO" ? "selected" : ""}>PO</option>
+                    <option value="LD" ${playerPosition === "LD" ? "selected" : ""}>LD</option>
+                    <option value="LI" ${playerPosition === "LI" ? "selected" : ""}>LI</option>
+                    <option value="CD" ${playerPosition === "CD" ? "selected" : ""}>CD</option>
+                    <option value="CI" ${playerPosition === "CI" ? "selected" : ""}>CI</option>
+                    <option value="CT" ${playerPosition === "CT" ? "selected" : ""}>CT</option>
+                    <option value="CAD" ${playerPosition === "CAD" ? "selected" : ""}>CAD</option>
+                    <option value="CAI" ${playerPosition === "CAI" ? "selected" : ""}>CAI</option>
+                    <option value="MCD" ${playerPosition === "MCD" ? "selected" : ""}>MCD</option>
+                    <option value="MC" ${playerPosition === "MC" ? "selected" : ""}>MC</option>
+                    <option value="MP" ${playerPosition === "MP" ? "selected" : ""}>MP</option>
+                    <option value="ID" ${playerPosition === "ID" ? "selected" : ""}>ID</option>
+                    <option value="II" ${playerPosition === "II" ? "selected" : ""}>II</option>
+                    <option value="ED" ${playerPosition === "ED" ? "selected" : ""}>ED</option>
+                    <option value="EI" ${playerPosition === "EI" ? "selected" : ""}>EI</option>
+                    <option value="DC" ${playerPosition === "DC" ? "selected" : ""}>DC</option>
+                </select>
+            </td>
                         <td class="py-2 px-2 border-b border-gray-700 player-timer">00:00:000</td>
                         <td class="py-2 px-2 border-b border-gray-700">
                             <button class="status-button active" onclick="toggleStatus(this)">Titular</button>
@@ -553,13 +588,20 @@ function removeLogRow(button) {
 
     // Preparar los datos para el CSV
     const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent.trim());
-    const rows = Array.from(document.querySelectorAll('tbody tr')).map(row =>
-        Array.from(row.children).map(td => {
+    const rows = Array.from(document.querySelectorAll('tbody tr')).map(row => {
+        return Array.from(row.children).map(td => {
+            const select = td.querySelector('select');
             const button = td.querySelector('button');
-            return button ? button.textContent.trim() : td.textContent.trim();
-        }).join(",")
-    );
-    
+            if (select) {
+                return select.value; // Usa el valor seleccionado del dropdown
+            } else if (button) {
+                return button.textContent.trim(); // Para botones u otros elementos interactivos
+            } else {
+                return td.textContent.trim(); // Para celdas de texto normal
+            }
+        }).join(",");
+    });
+
     // Verificar que hay datos para exportar
     if (rows.length === 0) {
         alert('No hay datos para exportar.');
@@ -578,6 +620,7 @@ function removeLogRow(button) {
     link.click();
     document.body.removeChild(link);
 });
+
 
 
 
@@ -616,28 +659,17 @@ function removeLogRow(button) {
             });
 
             function updateTitularCount() {
-                const titularButtons = document.querySelectorAll('.status-button.active');
-                let titularCount = 0;
-                titularButtons.forEach(button => {
-                    if (button.textContent.includes('Titular')) {
-                        titularCount++;
-                    }
-                });
+    const titularButtons = document.querySelectorAll('.status-button.active');
+    const titularCount = titularButtons.length; // Contar cuántos botones tienen la clase 'active'
+    document.getElementById('titularCount').textContent = `Titulares: ${titularCount}`; // Actualizar el texto del contador
+}
 
-                const titularCountElement = document.getElementById('titularCount');
-                if (!titularCountElement) {
-                    console.error("titularCountElement not found!");
-                    return;
-                }
-                titularCountElement.textContent = `Titulares: ${titularCount}`;
-            }
+  // Aquí añades el manejador de evento para asegurar que la cuenta se actualiza al cargar
+  document.addEventListener('DOMContentLoaded', function() {
+        updateTitularCount(); // Asegúrate de contar los titulares al cargar la página
+    });
 
-            function toggleStatus(button) {
-                button.classList.toggle('active');
-                button.textContent = button.classList.contains('active') ? 'Titular' : 'Suplente';
-                updateTitularCount();
-                sortTable();
-            }
+
 
             document.getElementById('saveButton').addEventListener('click', () => {
                 const teamName = prompt('Ingrese el nombre del equipo:');
@@ -819,8 +851,6 @@ function processCSVData(csvData) {
             }
         }
     }
-    sortTable();
-    updatePlayerStatsChart();  // Actualiza el gráfico después de importar
 }
 
 function addPlayerToTable(dorsal, name, position) {
@@ -828,7 +858,26 @@ function addPlayerToTable(dorsal, name, position) {
     newRow.innerHTML = `
         <td>${dorsal}</td>
         <td>${name}</td>
-        <td>${position}</td>
+        <td>
+            <select onchange="updatePlayerPosition(this)" class="bg-gray-700 text-white rounded">
+                <option value="PO" ${position === "PO" ? "selected" : ""}>PO</option>
+                <option value="LD" ${position === "LD" ? "selected" : ""}>LD</option>
+                <option value="LI" ${position === "LI" ? "selected" : ""}>LI</option>
+                <option value="CD" ${position === "CD" ? "selected" : ""}>CD</option>
+                <option value="CI" ${position === "CI" ? "selected" : ""}>CI</option>
+                <option value="CT" ${position === "CT" ? "selected" : ""}>CT</option>
+                <option value="CAD" ${position === "CAD" ? "selected" : ""}>CAD</option>
+                <option value="CAI" ${position === "CAI" ? "selected" : ""}>CAI</option>
+                <option value="MCD" ${position === "MCD" ? "selected" : ""}>MCD</option>
+                <option value="MC" ${position === "MC" ? "selected" : ""}>MC</option>
+                <option value="MP" ${position === "MP" ? "selected" : ""}>MP</option>
+                <option value="ID" ${position === "ID" ? "selected" : ""}>ID</option>
+                <option value="II" ${position === "II" ? "selected" : ""}>II</option>
+                <option value="ED" ${position === "ED" ? "selected" : ""}>ED</option>
+                <option value="EI" ${position === "EI" ? "selected" : ""}>EI</option>
+                <option value="DC" ${position === "DC" ? "selected" : ""}>DC</option>
+            </select>
+        </td>
         <td class="player-timer">00:00:000</td>
         <td><button class="status-button active" onclick="toggleStatus(this)">Titular</button></td>
         <td><button class="counter-button" onclick="updateCounter(this, 1)">0</button></td>
@@ -969,6 +1018,16 @@ document.getElementById('resetButton').addEventListener('click', function() {
 function removeRow(button) {
     const row = button.closest('tr');
     row.remove();
+}
+
+function updatePlayerPosition(selectElement) {
+    const row = selectElement.closest('tr');
+    const playerDorsal = row.cells[0].textContent;
+    const playerName = row.cells[1].textContent;
+    const newPosition = selectElement.value;
+
+    console.log(`Posición actualizada: ${playerName} (${playerDorsal}) ahora está en la posición ${newPosition}`);
+    // Aquí puedes agregar más lógica si necesitas hacer algo más con el cambio de posición
 }
 
         </script>
