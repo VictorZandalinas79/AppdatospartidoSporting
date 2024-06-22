@@ -145,7 +145,7 @@
 
 <body class="p-6">
     <div class="max-w-4xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold mb-6 text-center text-primary">Match Data Tracker Pro</h1>
+        <h1 class="text-3xl font-bold mb-6 text-center text-primary">AppZanda</h1>
         
         <button id="toggleButton" class="bg-primary text-white p-2 rounded w-full mb-4">Datos del Partido</button>
         <div id="matchData" class="hidden">
@@ -237,7 +237,7 @@
                 <button id="exportButton" class="w-full bg-green-500 text-white p-2 rounded">📤 Exportar datos</button>
             </div>
             <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
-                <button id="importButton" class="w-full bg-orange-500 text-white p-2 rounded">📥 Importar Equipo</button>
+                <button id="importButton" class="w-full bg-orange-500 text-white p-2 rounded">👥 Importar Equipo</button>
                 <input type="file" id="importFileInput" accept=".csv" style="display:none;">
             </div>
             <div class="w-full sm:w-1/2 md:w-1/4 px-2 mb-4">
@@ -315,21 +315,51 @@
             const playerTimers = [];
 
             document.getElementById('startButton').addEventListener('click', () => {
-                if (!isRunning) {
-                    isRunning = true;
-                    generalTimer = setInterval(() => {
-                        generalTime += 10;
-                        document.getElementById('generalTimer').textContent = new Date(generalTime).toISOString().substr(14, 9);
-                        playerTimers.forEach((player, index) => {
-                            const statusButton = document.querySelectorAll('.status-button')[index];
-                            if (statusButton.classList.contains('active')) {
-                                player.time += 10;
-                                document.querySelectorAll('.player-timer')[index].textContent = new Date(player.time).toISOString().substr(14, 9);
-                            }
-                        });
-                    }, 10);
+    if (!isRunning) {
+        // Verifica si el cronómetro está en cero
+        if (generalTime === 0) {
+            const rows = document.querySelectorAll('#playerTable tr');
+            rows.forEach(row => {
+                const statusButton = row.querySelector('.status-button');
+                const isTitular = statusButton.classList.contains('active');
+                const dorsal = row.cells[0].textContent;
+                const name = row.cells[1].textContent;
+                const status = isTitular ? 'Titular' : 'Suplente';  // Determina el estado del jugador
+                logEvent(status, name, dorsal, '00:00:000');
+            });
+        }
+
+        // Iniciar el cronómetro
+        isRunning = true;
+        generalTimer = setInterval(() => {
+            generalTime += 10;
+            document.getElementById('generalTimer').textContent = new Date(generalTime).toISOString().substr(14, 9);
+            playerTimers.forEach((player, index) => {
+                const statusButton = document.querySelectorAll('.status-button')[index];
+                if (statusButton.classList.contains('active')) {
+                    player.time += 10;
+                    document.querySelectorAll('.player-timer')[index].textContent = new Date(player.time).toISOString().substr(14, 9);
                 }
             });
+        }, 10);
+    }
+});
+
+function logEvent(event, playerName, playerDorsal, time) {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>${new Date().toISOString().slice(0, 10)}</td>
+        <td>${document.getElementById('matchRound').value}</td>
+        <td>${document.getElementById('partIndicator').value}</td>
+        <td>${time}</td>
+        <td>${event}</td>
+        <td>${playerName}</td>
+        <td>${playerDorsal}</td>
+        <td><button onclick="removeLogRow(this)">🗑️</button></td>
+    `;
+    document.getElementById('actionLogTable').appendChild(newRow);
+}
+
 
             document.getElementById('stopButton').addEventListener('click', () => {
                 clearInterval(generalTimer);
@@ -892,7 +922,7 @@ function addPlayerToTable(dorsal, name, position) {
     updateTitularCount();
 }
 
-            document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
+document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
     const playerTableData = [];
     const playerHeaders = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
     playerTableData.push(playerHeaders);
@@ -962,6 +992,8 @@ function addPlayerToTable(dorsal, name, position) {
         alert('Error al enviar datos');
     });
 });
+
+
 
 document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Esto evita que el formulario se envíe de la manera tradicional
