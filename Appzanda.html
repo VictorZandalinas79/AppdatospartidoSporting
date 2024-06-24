@@ -931,7 +931,14 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
 
     const playerRows = document.querySelectorAll('#playerTable tr');
     playerRows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => td.textContent.trim());
+        const rowData = Array.from(row.children).map(td => {
+            const selectElement = td.querySelector('select');
+            if (selectElement) {
+                return selectElement.value;
+            } else {
+                return td.textContent.trim();
+            }
+        });
         playerTableData.push(rowData);
     });
 
@@ -941,7 +948,14 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
 
     const actionLogRows = document.querySelectorAll('#actionLogTable tbody tr');
     actionLogRows.forEach(row => {
-        const rowData = Array.from(row.children).map(td => td.textContent.trim());
+        const rowData = Array.from(row.children).map(td => {
+            const selectElement = td.querySelector('select');
+            if (selectElement) {
+                return selectElement.value;
+            } else {
+                return td.textContent.trim();
+            }
+        });
         actionLogData.push(rowData);
     });
 
@@ -969,7 +983,7 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
     };
 
     // Realiza una solicitud POST al webhook de Make
-    fetch('https://hook.eu2.make.com/31bcp3rq026uw527msqhkylhkqq9jd8r', {
+    fetch('https://hook.eu2.make.com/tkk2byoahihf8z2q67r67k5rwleeelzr', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
