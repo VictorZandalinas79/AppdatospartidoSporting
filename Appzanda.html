@@ -374,42 +374,26 @@ function logEvent(event, playerName, playerDorsal, time) {
                 document.getElementById('generalTimer').textContent = '00:00:000';
             });
 
-            function toggleStatus(button) {
-                button.classList.toggle('active');
-                button.textContent = button.classList.contains('active') ? 'Titular' : 'Suplente';
-                updateTitularCount();
-                sortTable();
-            }
+            function toggleStatus(button, index) {
+    console.log(`Toggling status for index ${index}`); // Ayuda a depurar viendo qué índice se está manejando
+    const isActive = button.classList.toggle('active');
+    button.textContent = isActive ? 'Titular' : 'Suplente';
 
-            document.querySelectorAll('#playerTable select').forEach(select => {
-    select.addEventListener('change', () => {
-        sortTable();
-    });
-});
+    // Verificar el manejo correcto del cronómetro del jugador
+    if (isActive) {
+        startPlayerTimer(index);
+    } else {
+        stopPlayerTimer(index);
+    }
 
-            function sortTable() {
-    const table = document.getElementById('playerTable');
-    let rows = Array.from(table.querySelectorAll('tr'));
-
-    // Ordenar primero por titular/no titular y luego por posición
-    rows.sort((a, b) => {
-        const aStatus = a.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
-        const bStatus = b.querySelector('.status-button').textContent.includes('Titular') ? 0 : 1;
-
-        const aPosition = a.querySelector('select').value;
-        const bPosition = b.querySelector('select').value;
-        const aPosPriority = positionPriority[aPosition];
-        const bPosPriority = positionPriority[bPosition];
-
-        if (aStatus !== bStatus) {
-            return aStatus - bStatus; // Prioriza titulares
-        }
-        return aPosPriority - bPosPriority; // Dentro de los titulares o suplentes, ordenar por posición
-    });
-
-    // Reinsertar filas ordenadas en la tabla
-    rows.forEach(row => table.appendChild(row));
+    updateTitularCount(); // Actualizar el conteo de jugadores activos
+    
+    // Asegúrate de que la tabla se actualiza correctamente
+    setTimeout(() => {
+        sortTable(); // Reordenar la tabla después de cambiar el estado
+    }, 10); // Retraso breve para asegurar que el DOM se ha actualizado
 }
+
 
 
             function updateCounter(button, increment) {
@@ -691,9 +675,9 @@ function removeLogRow(button) {
             });
 
             function updateTitularCount() {
-    const titularButtons = document.querySelectorAll('.status-button.active');
-    const titularCount = titularButtons.length; // Contar cuántos botones tienen la clase 'active'
-    document.getElementById('titularCount').textContent = `Titulares: ${titularCount}`; // Actualizar el texto del contador
+    const activeButtons = document.querySelectorAll('.status-button.active');
+    const titularCount = activeButtons.length;
+    document.getElementById('titularCount').textContent = `Titulares: ${titularCount}`;
 }
 
   // Aquí añades el manejador de evento para asegurar que la cuenta se actualiza al cargar
@@ -1077,6 +1061,121 @@ function updatePlayerPosition(selectElement) {
     console.log(`Posición actualizada: ${playerName} (${playerDorsal}) ahora está en la posición ${newPosition}`);
     // Aquí puedes agregar más lógica si necesitas hacer algo más con el cambio de posición
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializePlayerTimers();
+    updateTitularCount(); // Initialize titular count on page load
+    loadTableData(); // Load saved table data
+});
+
+function initializePlayerTimers() {
+    const playerRows = document.querySelectorAll('#playerTable tr');
+    playerRows.forEach((row, index) => {
+        const playerTimerCell = row.querySelector('.player-timer');
+        const statusButton = row.querySelector('.status-button');
+        playerTimers[index] = {
+            time: 0,
+            interval: null,
+            timerCell: playerTimerCell,
+            isActive: statusButton.classList.contains('active')
+        };
+    });
+}
+
+function startPlayerTimer(index) {
+    const player = playerTimers[index];
+    if (!player.isActive || player.interval) return;
+
+    player.interval = setInterval(() => {
+        player.time += 10;
+        player.timerCell.textContent = formatTime(player.time);
+    }, 10);
+}
+
+function stopPlayerTimer(index) {
+    const player = playerTimers[index];
+    if (player.interval) {
+        clearInterval(player.interval);
+        player.interval = null;
+    }
+}
+
+function formatTime(time) {
+    const date = new Date(time);
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
+    const milliseconds = date.getUTCMilliseconds();
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`;
+}
+
+document.querySelectorAll('.status-button').forEach((button, index) => {
+    button.addEventListener('click', function() {
+        toggleStatus(this, index); // Make sure the correct index is passed
+    });
+});
+
+document.getElementById('playerTable').addEventListener('click', function(event) {
+    // Verificar si el elemento clickeado o uno de sus padres tiene la clase `status-button`
+    let target = event.target;
+    while (target != this && !target.classList.contains('status-button')) {
+        target = target.parentNode;
+    }
+
+    if (target.classList.contains('status-button')) {
+        // Encontrar el índice de la fila en la que se encuentra el botón
+        const rowIndex = Array.from(this.rows).indexOf(target.closest('tr'));
+        // Llamar a toggleStatus pasando el botón y el índice correcto
+        toggleStatus(target, rowIndex);
+        // Llamar a sortTable para reordenar las filas después del cambio
+        sortTable();
+    }
+});
+
+
+function sortTable() {
+  var table = document.getElementById("playerTable"); // Asegúrate de que el ID es correcto
+  var switching = true;
+  var rows, i, x, y, shouldSwitch;
+
+  // Repetir hasta que no haya intercambio
+  while (switching) {
+    switching = false; // Comienza suponiendo que no hay intercambio
+    rows = table.rows;
+
+    // Itera a través de todas las filas, excepto la primera que son los encabezados
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      
+      // Obtiene los elementos a comparar, en este caso, columna 'Titular' (index 4 asumido aquí)
+      x = rows[i].getElementsByTagName("TD")[4]; // Ajusta el índice según tu tabla
+      y = rows[i + 1].getElementsByTagName("TD")[4];
+      
+      // Comprueba si las dos filas deben intercambiarse, basado en el texto
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+
+      // Si son iguales, considera la segunda columna 'Posición' (index 2 asumido)
+      if (x.innerHTML.toLowerCase() === y.innerHTML.toLowerCase()) {
+        x = rows[i].getElementsByTagName("TD")[2]; // Ajusta el índice según tu tabla
+        y = rows[i + 1].getElementsByTagName("TD")[2];
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+
+    // Si se determinó que debe hacerse un intercambio, hazlo y marca que el intercambio ha sido hecho
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
+
 
         </script>
 </body>
