@@ -357,8 +357,9 @@ function logEvent(event, playerName, playerDorsal, time) {
         <td>${playerDorsal}</td>
         <td><button onclick="removeLogRow(this)">🗑️</button></td>
     `;
-    document.getElementById('actionLogTable').appendChild(newRow);
+    document.getElementById('actionLogTable').querySelector('tbody').appendChild(newRow);
 }
+
 
 
             document.getElementById('stopButton').addEventListener('click', () => {
@@ -650,6 +651,7 @@ function removeLogRow(button) {
     link.click();
     document.body.removeChild(link);
 });
+
 
 
 
@@ -1066,8 +1068,6 @@ function updatePlayerPosition(selectElement) {
 </body>
 
 </html>
-
-
 
 
 
