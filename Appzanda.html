@@ -83,14 +83,14 @@
         }
 
         .counter-button {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    background-color: var(--secondary-color);
+    color: black;  /* Establece el texto a negro directamente */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
         .counter-button:hover {
             background-color: #27ae60;
@@ -375,28 +375,23 @@ function logEvent(event, playerName, playerDorsal, time) {
             });
 
             function toggleStatus(button, index) {
-    console.log(`Toggling status for index ${index}`); // Ayuda a depurar viendo qué índice se está manejando
     const isActive = button.classList.toggle('active');
     button.textContent = isActive ? 'Titular' : 'Suplente';
 
-    // Verificar el manejo correcto del cronómetro del jugador
     if (isActive) {
         startPlayerTimer(index);
     } else {
         stopPlayerTimer(index);
     }
-
-    updateTitularCount(); // Actualizar el conteo de jugadores activos
-    
-    // Asegúrate de que la tabla se actualiza correctamente
-    setTimeout(() => {
-        sortTable(); // Reordenar la tabla después de cambiar el estado
-    }, 10); // Retraso breve para asegurar que el DOM se ha actualizado
+// Esperar un ciclo del evento para actualizar el conteo.
+setTimeout(() => {
+        updateTitularCount();
+    }, 0); // Un retardo de 0 ms asegura que se ejecuta después de la actualización del DOM.
 }
 
 
 
-            function updateCounter(button, increment) {
+    function updateCounter(button, increment) {
     let currentValue = parseInt(button.textContent);
     currentValue += increment;
     button.textContent = currentValue;
@@ -636,7 +631,29 @@ function removeLogRow(button) {
     document.body.removeChild(link);
 });
 
+let debounceTimer;
+function updateTitularCountDebounced() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        updateTitularCount();
+    }, 100); // Ajusta el tiempo de espera según sea necesario
+}
 
+function updateTitularCount() {
+    const activeButtons = document.querySelectorAll('.status-button.active');
+    console.log("Botones activos:", activeButtons.length); // Depuración
+    const titularCount = activeButtons.length;
+    document.getElementById('titularCount').textContent = `Titulares: ${titularCount}`;
+}
+
+function toggleStatus(button) {
+    button.classList.toggle('active');
+    button.textContent = button.classList.contains('active') ? 'Titular' : 'Suplente';
+    // Disparar el evento para actualizar el conteo
+    document.dispatchEvent(new CustomEvent('updateTitularCount'));
+}
+
+document.addEventListener('updateTitularCount', updateTitularCount);
 
 
 
@@ -675,10 +692,14 @@ function removeLogRow(button) {
             });
 
             function updateTitularCount() {
+    // Seleccionar todos los botones que tienen la clase 'active'.
     const activeButtons = document.querySelectorAll('.status-button.active');
+    // Contar cuántos botones activos existen.
     const titularCount = activeButtons.length;
+    // Actualizar el contenido de algún elemento en tu HTML con el nuevo conteo.
     document.getElementById('titularCount').textContent = `Titulares: ${titularCount}`;
 }
+
 
   // Aquí añades el manejador de evento para asegurar que la cuenta se actualiza al cargar
   document.addEventListener('DOMContentLoaded', function() {
@@ -759,14 +780,26 @@ function removeLogRow(button) {
             });
 
             document.getElementById('clearDataButton').addEventListener('click', function () {
-                localStorage.clear();
-                const inputs = document.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], select");
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-                document.getElementById('partIndicator').value = '1';
-                alert('Todos los datos han sido limpiados.');
-            });
+    // Pregunta al usuario si está seguro de querer limpiar los datos
+    if (confirm('¿Estás seguro de que deseas limpiar todos los datos?')) {
+        localStorage.clear(); // Limpia todo el almacenamiento local
+        const inputs = document.querySelectorAll("input[type='text'], input[type='date'], input[type='time'], select");
+        
+        // Se reinicia el valor de cada input y select
+        inputs.forEach(input => {
+            input.value = '';
+        });
+        document.getElementById('partIndicator').value = '1'; // Restablece este select en particular a un valor predeterminado
+        
+        // Recarga la página para reiniciar completamente cualquier estado o datos
+        window.location.reload();
+    } else {
+        // Si el usuario no confirma, no hacer nada
+        alert('Limpieza cancelada.');
+    }
+});
+
+
 
             function saveTableData() {
                 const table = document.getElementById('playerTable');
@@ -911,6 +944,8 @@ function addPlayerToTable(dorsal, name, position) {
 document.getElementById('exportToGoogleSheetButton').addEventListener('click', function() {
     const playerTableData = [];
     const playerHeaders = Array.from(document.querySelectorAll('#playerTable thead th')).map(th => th.textContent);
+    // Añadir 'Match Round' como primera columna de los encabezados
+    playerHeaders.unshift('Match Round');
     playerTableData.push(playerHeaders);
 
     const playerRows = document.querySelectorAll('#playerTable tr');
@@ -923,6 +958,8 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
                 return td.textContent.trim();
             }
         });
+        // Añadir el valor de matchRound al principio de cada fila de datos
+        rowData.unshift(document.getElementById('matchRound').value);
         playerTableData.push(rowData);
     });
 
@@ -967,7 +1004,7 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
     };
 
     // Realiza una solicitud POST al webhook de Make
-    fetch('https://hook.eu2.make.com/tkk2byoahihf8z2q67r67k5rwleeelzr', {
+    fetch('https://hook.eu2.make.com/kqow4a7hwp4tfm6mwjq2uj353a1mi637', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -975,12 +1012,10 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
         body: JSON.stringify(matchData)
     })
     .then(response => {
-        // Verifica el estado de la respuesta
         if(response.ok) {
             alert('Datos enviados con éxito a Google Sheets!');
             return response.json();
         } else {
-            // Imprime detalles adicionales sobre la respuesta
             response.text().then(text => {
                 console.error('Error en la respuesta:', response.status, text);
                 alert(`Algo salió mal al enviar los datos: ${response.status} - ${text}`);
@@ -992,6 +1027,7 @@ document.getElementById('exportToGoogleSheetButton').addEventListener('click', f
         alert('Error al enviar datos');
     });
 });
+
 
 
 
@@ -1093,12 +1129,14 @@ function startPlayerTimer(index) {
 }
 
 function stopPlayerTimer(index) {
-    const player = playerTimers[index];
-    if (player.interval) {
-        clearInterval(player.interval);
-        player.interval = null;
+    if (playerTimers[index] && playerTimers[index].interval) {
+        clearInterval(playerTimers[index].interval);
+        playerTimers[index].interval = null;
+    } else {
+        console.error('Intento de detener un temporizador no inicializado o ya detenido', index);
     }
 }
+
 
 function formatTime(time) {
     const date = new Date(time);
@@ -1174,7 +1212,6 @@ function sortTable() {
     }
   }
 }
-
 
 
         </script>
