@@ -1213,6 +1213,60 @@ function sortTable() {
   }
 }
 
+let timerWorker;
+
+// Crear el Web Worker
+if (window.Worker) {
+  timerWorker = new Worker('timer-worker.js');
+  timerWorker.onmessage = function(e) {
+    updateDisplay(e.data.time);
+  };
+}
+
+// Función para iniciar el cronómetro
+function startTimer() {
+  if (timerWorker) {
+    timerWorker.postMessage({command: 'start'});
+  }
+}
+
+// Función para detener el cronómetro
+function stopTimer() {
+  if (timerWorker) {
+    timerWorker.postMessage({command: 'stop'});
+  }
+}
+
+// Función para reiniciar el cronómetro
+function resetTimer() {
+  if (timerWorker) {
+    timerWorker.postMessage({command: 'reset'});
+  }
+}
+
+// Función para actualizar la pantalla
+function updateDisplay(time) {
+  let hours = Math.floor(time / 3600000);
+  let minutes = Math.floor((time % 3600000) / 60000);
+  let seconds = Math.floor((time % 60000) / 1000);
+  let milliseconds = time % 1000;
+
+  hours = hours.toString().padStart(2, '0');
+  minutes = minutes.toString().padStart(2, '0');
+  seconds = seconds.toString().padStart(2, '0');
+  milliseconds = milliseconds.toString().padStart(3, '0');
+
+  document.getElementById('generalTimer').textContent = 
+    `${hours}:${minutes}:${seconds}.${milliseconds}`;
+}
+
+// Agregar event listeners a los botones
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('startButton').addEventListener('click', startTimer);
+  document.getElementById('stopButton').addEventListener('click', stopTimer);
+  document.getElementById('resetButton').addEventListener('click', resetTimer);
+});
+
 
         </script>
 </body>
