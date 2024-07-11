@@ -1267,6 +1267,14 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('resetButton').addEventListener('click', resetTimer);
 });
 
+ if (typeof(Worker) !== "undefined") {
+    // El navegador soporta Web Workers
+    console.log("Web Workers están soportados");
+  } else {
+    // El navegador no soporta Web Workers
+    console.log("Web Workers no están soportados");
+  }
+
 
         </script>
 </body>
