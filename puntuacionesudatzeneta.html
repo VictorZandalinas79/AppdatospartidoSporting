@@ -13,6 +13,16 @@
             background-size: cover;
             background-attachment: fixed;
         }
+
+        .pagado-btn {
+    background-color: #2196F3; /* Azul claro */
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
         .contenido {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
@@ -88,6 +98,11 @@
             <button class="multa-btn" onclick="asignarMulta('Tarjeta Roja Agresión - 20€')">Tarjeta Roja Agresión (20€)</button>
             <button class="multa-btn" onclick="asignarMulta('Llegar tarde - 5€')">Llegar tarde (5€)</button>
         </div>
+        <div id="pagados">
+            <h2>Pagados</h2>
+            <!-- Los botones se crearán dinámicamente con JavaScript -->
+        </div>
+        
         
         <button id="enviar-datos">Enviar Datos</button>
         
@@ -108,8 +123,10 @@
         document.addEventListener('DOMContentLoaded', function() {
     crearBotonesJugadores();
     crearBotonesPuntuaciones();
-    crearBotonesMultas(); // Asegura que los botones de multas se creen cuando se cargue la página
+    crearBotonesMultas();
+    crearBotonesPagados(); // Inicia la creación de botones de pagos
 });
+
 
 
         const jugadores = [
@@ -263,6 +280,62 @@ function crearBotonesPuntuaciones() {
             jugadoresSeleccionados = [];
             document.querySelectorAll('.jugador-btn').forEach(btn => btn.classList.remove('seleccionado'));
         }
+
+        function asignarPago(monto) {
+    const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
+    if (!fechaEntrenamiento) {
+        alert('Por favor, selecciona una fecha de entrenamiento.');
+        return;
+    }
+    
+    if (jugadoresSeleccionados.length === 0) {
+        alert('Por favor, selecciona al menos un jugador.');
+        return;
+    }
+
+    const tabla = document.getElementById('tabla-puntuaciones');
+
+    jugadoresSeleccionados.forEach(jugador => {
+        const fila = tabla.insertRow(-1);
+        const celdaFecha = fila.insertCell(0);
+        const celdaJugador = fila.insertCell(1);
+        const celdaMulta = fila.insertCell(2);
+        const celdaAccion = fila.insertCell(3);
+        celdaFecha.textContent = fechaEntrenamiento;
+        celdaJugador.textContent = `${jugador.numero} - ${jugador.nombre}`;
+        celdaMulta.textContent = `Pagado ${monto}€`;
+
+        const dato = {
+            fecha: fechaEntrenamiento,
+            jugador: jugador.nombre,
+            numero: jugador.numero,
+            pago: `Pagado ${monto}€`
+        };
+        datos.push(dato);
+
+        // Agregar icono de papelera
+        celdaAccion.innerHTML = '<i class="fas fa-trash-alt borrar-btn"></i>';
+        celdaAccion.querySelector('.borrar-btn').onclick = () => borrarFila(fila, dato);
+    });
+
+    // Limpiar selección
+    jugadoresSeleccionados = [];
+    document.querySelectorAll('.jugador-btn').forEach(btn => btn.classList.remove('seleccionado'));
+}
+
+function crearBotonesPagados() {
+    const pagadosDiv = document.getElementById('pagados'); // Asegúrate de que este es el ID correcto del div para los botones de pagado
+    const montos = [1, 5, 10, 15, 20, 30, 50]; // Montos para los botones
+
+    montos.forEach(monto => {
+        const boton = document.createElement('button');
+        boton.classList.add('pagado-btn');
+        boton.textContent = `Pagado ${monto}€`;
+        boton.onclick = () => asignarPago(monto);
+        pagadosDiv.appendChild(boton);
+    });
+}
+
         
         function enviarDatos() {
     const datosTabla = [];
@@ -367,7 +440,6 @@ function crearBotonesMultas() {
     </script>
 </body>
 </html>
-
 
 
 
