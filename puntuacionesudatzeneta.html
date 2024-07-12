@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUNTUACION / MULTAS UD ATZENETA 2024/2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url('https://castellonbase.com/wp-content/uploads/2023/05/atzaneta-1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .contenido {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .jugador-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .jugador-btn.seleccionado {
+            background-color: #45a049;
+            border: 2px solid #2e6b34;
+        }
+        .puntuacion-btn {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        #enviar-datos {
+            background-color: #f44336;
+            color: white;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #fecha-entrenamiento {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .borrar-btn {
+            color: #f44336;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenido">
+        <h1>PUNTUACION UD ATZENETA 2024/2025</h1>
+        
+        <input type="date" id="fecha-entrenamiento" required>
+        
+        <div id="jugadores">
+            <h2>Jugadores</h2>
+        </div>
+        
+        <div id="puntuaciones">
+            <h2>Puntuaciones</h2>
+            <button class="multa-btn" onclick="asignarMulta('Tarjeta Amarilla Protesta - 5€')">Tarjeta Amarilla Protesta (5€)</button>
+            <button class="multa-btn" onclick="asignarMulta('Tarjeta Roja Protesta - 10€')">Tarjeta Roja Protesta (10€)</button>
+            <button class="multa-btn" onclick="asignarMulta('Tarjeta Roja Agresión - 20€')">Tarjeta Roja Agresión (20€)</button>
+            <button class="multa-btn" onclick="asignarMulta('Llegar tarde - 5€')">Llegar tarde (5€)</button>
+        </div>
+        
+        <button id="enviar-datos">Enviar Datos</button>
+        
+        <table id="tabla-puntuaciones">
+            <tr>
+                <th>Fecha</th>
+                <th>Jugador</th>
+                <th>Puntuación</th>
+                <th>Acción</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let jugadoresSeleccionados = [];
+        let datos = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+    crearBotonesJugadores();
+    crearBotonesPuntuaciones();
+    crearBotonesMultas(); // Asegura que los botones de multas se creen cuando se cargue la página
+});
+
+
+        const jugadores = [
+    {numero: 1, nombre: "Diego"},
+    {numero: 2, nombre: "Rafa"},
+    {numero: 3, nombre: "Jaume"},
+    {numero: 4, nombre: "Manu"},
+    {numero: 5, nombre: "Xavi"},
+    {numero: 6, nombre: "Mario"},
+    {numero: 7, nombre: "Nacho"},
+    {numero: 8, nombre: "Molés"},
+    {numero: 9, nombre: "Gallén"},
+    {numero: 10, nombre: "Pablo"},
+    {numero: 11, nombre: "Gual"},
+    {numero: 12, nombre: "0"}, // Nota: Verificar si '0' es un error o intencional
+    {numero: 14, nombre: "Sales"},
+    {numero: 15, nombre: "Enric"},
+    {numero: 18, nombre: "Gerard"},
+    {numero: 19, nombre: "D"}, // Nota: Verificar si 'D' es completo o necesita revisión
+    {numero: 20, nombre: "Pau"},
+    {numero: 21, nombre: "Ferran"},
+    {numero: 25, nombre: "Blazquez"},
+    {numero: 28, nombre: "Ian"}
+];
+
+
+function crearBotonesJugadores() {
+    const jugadoresDiv = document.getElementById('jugadores');
+    jugadoresDiv.innerHTML = '';  // Esto limpia previos botones (si es necesario reiniciar)
+    jugadores.forEach(jugador => {
+        const boton = document.createElement('button');
+        boton.textContent = `${jugador.numero} - ${jugador.nombre}`;
+        boton.classList.add('jugador-btn');
+        boton.onclick = () => seleccionarJugador(jugador, boton);
+        jugadoresDiv.appendChild(boton);
+    });
+}
+
+function crearBotonesPuntuaciones() {
+    const puntuacionesDiv = document.getElementById('puntuaciones');
+    puntuacionesDiv.innerHTML = '';  // Esto limpia previos botones
+    for (let i = -5; i <= 5; i++) {
+        const boton = document.createElement('button');
+        boton.textContent = i;
+        boton.classList.add('puntuacion-btn');
+        boton.onclick = () => asignarPuntuacion(i);
+        puntuacionesDiv.appendChild(boton);
+    }
+}
+
+
+
+        function seleccionarJugador(jugador, boton) {
+            const index = jugadoresSeleccionados.findIndex(j => j.numero === jugador.numero);
+            if (index > -1) {
+                jugadoresSeleccionados.splice(index, 1);
+                boton.classList.remove('seleccionado');
+            } else {
+                jugadoresSeleccionados.push(jugador);
+                boton.classList.add('seleccionado');
+            }
+        }
+
+        function asignarPuntuacion(puntuacion) {
+            const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
+            if (!fechaEntrenamiento) {
+                alert('Por favor, selecciona una fecha de entrenamiento.');
+                return;
+            }
+            
+            if (jugadoresSeleccionados.length === 0) {
+                alert('Por favor, selecciona al menos un jugador.');
+                return;
+            }
+            
+            const tabla = document.getElementById('tabla-puntuaciones');
+            
+            jugadoresSeleccionados.forEach(jugador => {
+                const fila = tabla.insertRow(-1);
+                const celdaFecha = fila.insertCell(0);
+                const celdaJugador = fila.insertCell(1);
+                const celdaPuntuacion = fila.insertCell(2);
+                const celdaAccion = fila.insertCell(3);
+                celdaFecha.textContent = fechaEntrenamiento;
+                celdaJugador.textContent = `${jugador.numero} - ${jugador.nombre}`;
+                celdaPuntuacion.textContent = puntuacion;
+                
+                const dato = {
+                    fecha: fechaEntrenamiento,
+                    jugador: jugador.nombre,
+                    numero: jugador.numero,
+                    puntuacion: puntuacion
+                };
+                datos.push(dato);
+
+                // Agregar icono de papelera
+                celdaAccion.innerHTML = '<i class="fas fa-trash-alt borrar-btn"></i>';
+                celdaAccion.querySelector('.borrar-btn').onclick = () => borrarFila(fila, dato);
+            });
+            
+            // Limpiar selección
+            jugadoresSeleccionados = [];
+            document.querySelectorAll('.jugador-btn').forEach(btn => btn.classList.remove('seleccionado'));
+        }
+
+        function borrarFila(fila, dato) {
+            fila.remove();
+            const index = datos.findIndex(d => d === dato);
+            if (index > -1) {
+                datos.splice(index, 1);
+            }
+        }
+        function asignarMulta(multa) {
+            const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
+            if (!fechaEntrenamiento) {
+                alert('Por favor, selecciona una fecha de entrenamiento.');
+                return;
+            }
+
+            if (jugadoresSeleccionados.length === 0) {
+                alert('Por favor, selecciona al menos un jugador.');
+                return;
+            }
+
+            const tabla = document.getElementById('tabla-puntuaciones');
+
+            jugadoresSeleccionados.forEach(jugador => {
+                const fila = tabla.insertRow(-1);
+                const celdaFecha = fila.insertCell(0);
+                const celdaJugador = fila.insertCell(1);
+                const celdaMulta = fila.insertCell(2);
+                const celdaAccion = fila.insertCell(3);
+                celdaFecha.textContent = fechaEntrenamiento;
+                celdaJugador.textContent = `${jugador.numero} - ${jugador.nombre}`;
+                celdaMulta.textContent = multa;
+
+                const dato = {
+                    fecha: fechaEntrenamiento,
+                    jugador: jugador.nombre,
+                    numero: jugador.numero,
+                    multa: multa
+                };
+                datos.push(dato);
+
+                // Agregar icono de papelera
+                celdaAccion.innerHTML = '<i class="fas fa-trash-alt borrar-btn"></i>';
+                celdaAccion.querySelector('.borrar-btn').onclick = () => borrarFila(fila, dato);
+            });
+
+            // Limpiar selección
+            jugadoresSeleccionados = [];
+            document.querySelectorAll('.jugador-btn').forEach(btn => btn.classList.remove('seleccionado'));
+        }
+        
+        function enviarDatos() {
+    const datosTabla = [];
+
+    const tbody = document.querySelector('#tabla-puntuaciones > tbody');
+    const allCells = tbody.querySelectorAll('td');
+    
+    console.log("Número total de celdas encontradas:", allCells.length);
+
+    // Asumimos que cada fila tiene 4 celdas (fecha, jugador, puntuación/multa, acción)
+    const rowSize = 4;
+
+    for (let i = 0; i < allCells.length; i += rowSize) {
+        const rowData = Array.from(allCells).slice(i, i + rowSize).map(td => {
+            const selectElement = td.querySelector('select');
+            if (selectElement) {
+                return selectElement.value;
+            } else {
+                return td.textContent.trim();
+            }
+        });
+        
+        console.log(`Datos de la fila ${i / rowSize + 1}:`, rowData);
+        
+        if (rowData.length >= 3) {
+            datosTabla.push(rowData);
+        } else {
+            console.log(`La fila ${i / rowSize + 1} no tiene suficientes datos.`);
+        }
+    }
+
+    console.log("Datos completos recogidos para enviar:", datosTabla);
+
+    if (datosTabla.length === 0) {  // No hay filas válidas
+        alert('No hay datos válidos para enviar.');
+        return;
+    }
+
+    // Obtener datos adicionales si los tienes
+    // const teamLocal = document.getElementById('teamLocal').value;
+    // const teamVisitor = document.getElementById('teamVisitor').value;
+    // const matchDate = document.getElementById('matchDate').value;
+    // const matchTime = document.getElementById('matchTime').value;
+    // const matchRound = document.getElementById('matchRound').value;
+
+    const matchData = {
+        // teamLocal: teamLocal,
+        // teamVisitor: teamVisitor,
+        // matchDate: matchDate,
+        // matchTime: matchTime,
+        // matchRound: matchRound,
+        datosTabla: datosTabla
+    };
+
+    fetch('https://hook.eu2.make.com/eb31gk8bbzrhrbr4jit7sl62egcrg6rc', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(matchData)
+    })
+    .then(response => {
+        if(response.ok) {
+            alert('Datos enviados con éxito!');
+            return response.json();
+        } else {
+            return response.text().then(text => {
+                console.error('Error en la respuesta:', response.status, text);
+                throw new Error(`Algo salió mal al enviar los datos: ${response.status} - ${text}`);
+            });
+        }
+    })
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Error al enviar los datos: ' + error.message);
+    });
+}
+
+document.getElementById('enviar-datos').addEventListener('click', enviarDatos);
+
+function crearBotonesMultas() {
+    const multasDiv = document.getElementById('puntuaciones');
+    const botonesMultas = [
+        { texto: 'Tarjeta Amarilla Protesta (5€)', multa: 'Tarjeta Amarilla Protesta - 5€' },
+        { texto: 'Tarjeta Roja Protesta (10€)', multa: 'Tarjeta Roja Protesta - 10€' },
+        { texto: 'Tarjeta Roja Agresión (20€)', multa: 'Tarjeta Roja Agresión - 20€' },
+        { texto: 'Llegar tarde (5€)', multa: 'Llegar tarde - 5€' }
+    ];
+
+    botonesMultas.forEach(botonInfo => {
+        const boton = document.createElement('button');
+        boton.classList.add('multa-btn');
+        boton.textContent = botonInfo.texto;
+        boton.onclick = () => asignarMulta(botonInfo.multa);
+        multasDiv.appendChild(boton);
+    });
+}
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
