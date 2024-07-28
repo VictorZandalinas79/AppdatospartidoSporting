@@ -60,12 +60,17 @@
         }
 
         .videomarcador {
-            background-color: #34495e;
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+    background-color: #34495e; /* Fondo oscuro para buen contraste */
+    color: #ecf0f1; /* Color claro para el texto para mejorar la visibilidad */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados para un look moderno */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidad */
+    border: 1px solid #2c3e50; /* Borde sutil */
+    text-shadow: 1px 1px 2px black; /* Sombra en el texto para mejorar la legibilidad */
+    background-image: linear-gradient(to right, #4a69bd, #6a89cc); /* Gradiente para un look más vibrante */
+}
+
 
         .timer-controls button {
             background-color: var(--primary-color);
@@ -128,12 +133,19 @@
         }
 
         #generalTimer {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            text-align: center;
-            margin: 20px 0;
-            color: var(--primary-color);
-        }
+    font-family: 'Roboto Mono', monospace;
+    font-size: 3rem;
+    color: #3498db;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #3498db;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center; /* Asegura que el texto dentro del cronómetro esté centrado */
+    min-width: 250px; /* Ancho mínimo para estabilidad visual */
+}
+
+
 
         .chart-container {
             width: 100%;
@@ -313,6 +325,36 @@
             let isRunning = false;
             let generalTime = 0;
             const playerTimers = [];
+
+            let lastTime = Date.now(); // Almacena la última hora cuando el cronómetro estaba activo
+
+document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === 'hidden') {
+        lastTime = Date.now(); // Guarda el momento cuando la página va a segundo plano
+    } else if (document.visibilityState === 'visible') {
+        const currentTime = Date.now();
+        const timeDifference = currentTime - lastTime; // Calcula la diferencia de tiempo
+
+        // Verifica si los cronómetros deben ser actualizados
+        if (isRunning) {
+            generalTime += timeDifference; // Actualiza el tiempo general
+
+            // Actualiza los cronómetros de cada jugador si están activos
+            playerTimers.forEach((timer, index) => {
+                if (document.querySelectorAll('.status-button')[index].classList.contains('active')) {
+                    timer.time += timeDifference;
+                    // Actualiza el display del cronómetro para cada jugador
+                    const playerTimerDisplay = document.querySelectorAll('.player-timer')[index];
+                    playerTimerDisplay.textContent = new Date(timer.time).toISOString().substr(14, 9);
+                }
+            });
+
+            // Actualiza el cronómetro general
+            document.getElementById('generalTimer').textContent = new Date(generalTime).toISOString().substr(14, 9);
+        }
+    }
+});
+    
 
             document.getElementById('startButton').addEventListener('click', () => {
     if (!isRunning) {
