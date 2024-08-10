@@ -164,7 +164,7 @@
             <!-- ... (mantén el contenido existente de matchData) ... -->
         </div>
 
-        <div id="generalTimer" class="text-6xl font-bold mb-4">00:00:000</div>
+        <div id="generalTimer" class="text-6xl font-bold mb-4">00:00:00</div>
         <div class="timer-controls flex justify-center space-x-4 mb-6">
             <button id="startButton" class="flex-1">▶️ Iniciar</button>
             <button id="stopButton" class="flex-1">⏹️ Detener</button>
@@ -325,7 +325,9 @@
             let isRunning = false;
             let generalTime = 0;
             const playerTimers = [];
-
+            let startTime;
+            let elapsedTime = 0;
+            let timerInterval;
             let lastTime = Date.now(); // Almacena la última hora cuando el cronómetro estaba activo
 
 document.addEventListener("visibilitychange", function() {
@@ -1267,55 +1269,58 @@ if (window.Worker) {
 
 // Función para iniciar el cronómetro
 function startTimer() {
-  if (timerWorker) {
-    timerWorker.postMessage({command: 'start'});
+  if (!startTime) {
+    startTime = Date.now() - elapsedTime;
   }
+  timerInterval = requestAnimationFrame(updateTimer);
 }
 
-// Función para detener el cronómetro
 function stopTimer() {
-  if (timerWorker) {
-    timerWorker.postMessage({command: 'stop'});
+  if (timerInterval) {
+    cancelAnimationFrame(timerInterval);
+    timerInterval = null;
   }
 }
 
-// Función para reiniciar el cronómetro
 function resetTimer() {
-  if (timerWorker) {
-    timerWorker.postMessage({command: 'reset'});
-  }
+  stopTimer();
+  elapsedTime = 0;
+  startTime = null;
+  updateDisplay(0);
+}
+
+function updateTimer() {
+  const currentTime = Date.now();
+  elapsedTime = currentTime - startTime;
+  updateDisplay(elapsedTime);
+  timerInterval = requestAnimationFrame(updateTimer);
 }
 
 // Función para actualizar la pantalla
-function updateDisplay(time) {
-  let hours = Math.floor(time / 3600000);
-  let minutes = Math.floor((time % 3600000) / 60000);
-  let seconds = Math.floor((time % 60000) / 1000);
-  let milliseconds = time % 1000;
+function updateDisplay(timeInMilliseconds) {
+  const totalSeconds = Math.floor(timeInMilliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const milliseconds = timeInMilliseconds % 1000;
 
-  hours = hours.toString().padStart(2, '0');
-  minutes = minutes.toString().padStart(2, '0');
-  seconds = seconds.toString().padStart(2, '0');
-  milliseconds = milliseconds.toString().padStart(3, '0');
-
-  document.getElementById('generalTimer').textContent = 
-    `${hours}:${minutes}:${seconds}.${milliseconds}`;
+  const display = `${padZero(minutes)}:${padZero(seconds)}:${padZero(milliseconds, 3)}`;
+  document.getElementById('generalTimer').textContent = display;
 }
 
-// Agregar event listeners a los botones
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('startButton').addEventListener('click', startTimer);
-  document.getElementById('stopButton').addEventListener('click', stopTimer);
-  document.getElementById('resetButton').addEventListener('click', resetTimer);
-});
+function padZero(num, places = 2) {
+  return String(num).padStart(places, '0');
+}
 
- if (typeof(Worker) !== "undefined") {
-    // El navegador soporta Web Workers
-    console.log("Web Workers están soportados");
-  } else {
-    // El navegador no soporta Web Workers
-    console.log("Web Workers no están soportados");
+// Event listeners
+document.querySelector('.timer-controls').addEventListener('click', (e) => {
+  if (e.target.textContent.includes('Iniciar')) {
+    startTimer();
+  } else if (e.target.textContent.includes('Detener')) {
+    stopTimer();
+  } else if (e.target.textContent.includes('Reiniciar')) {
+    resetTimer();
   }
+});
 
 
         </script>
