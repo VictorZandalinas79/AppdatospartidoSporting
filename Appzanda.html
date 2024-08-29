@@ -1183,13 +1183,12 @@ function stopPlayerTimer(index) {
 
 
 function formatTime(time) {
-        const date = new Date(time);
-        const hours = Math.floor(time / 3600000);
-        const minutes = date.getUTCMinutes();
-        const seconds = date.getUTCSeconds();
-        const milliseconds = date.getUTCMilliseconds();
-        return `${(hours * 60 + minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`;
-    }
+    const date = new Date(time);
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
+    const milliseconds = date.getUTCMilliseconds();
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`;
+}
 
 document.querySelectorAll('.status-button').forEach((button, index) => {
     button.addEventListener('click', function() {
@@ -1299,19 +1298,14 @@ function updateTimer() {
 
 // Función para actualizar la pantalla
 function updateDisplay(timeInMilliseconds) {
-        const totalSeconds = Math.floor(timeInMilliseconds / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        const milliseconds = timeInMilliseconds % 1000;
+  const totalSeconds = Math.floor(timeInMilliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const milliseconds = timeInMilliseconds % 1000;
 
-        const display = `${padZero(hours * 60 + minutes)}:${padZero(seconds)}:${padZero(milliseconds, 3)}`;
-        document.getElementById('generalTimer').textContent = display;
-    }
-
-    function padZero(num, places = 2) {
-        return String(num).padStart(places, '0');
-    }
+  const display = `${padZero(minutes)}:${padZero(seconds)}:${padZero(milliseconds, 3)}`;
+  document.getElementById('generalTimer').textContent = display;
+}
 
 function padZero(num, places = 2) {
   return String(num).padStart(places, '0');
