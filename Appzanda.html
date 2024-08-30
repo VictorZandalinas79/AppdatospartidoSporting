@@ -376,16 +376,17 @@ document.addEventListener("visibilitychange", function() {
         // Iniciar el cronómetro
         isRunning = true;
         generalTimer = setInterval(() => {
-            generalTime += 10;
-            document.getElementById('generalTimer').textContent = new Date(generalTime).toISOString().substr(14, 9);
-            playerTimers.forEach((player, index) => {
-                const statusButton = document.querySelectorAll('.status-button')[index];
-                if (statusButton.classList.contains('active')) {
-                    player.time += 10;
-                    document.querySelectorAll('.player-timer')[index].textContent = new Date(player.time).toISOString().substr(14, 9);
-                }
-            });
-        }, 10);
+    generalTime += 10;
+    document.getElementById('generalTimer').textContent = formatTime(generalTime);
+    playerTimers.forEach((player, index) => {
+        const statusButton = document.querySelectorAll('.status-button')[index];
+        if (statusButton.classList.contains('active')) {
+            player.time += 10;
+            document.querySelectorAll('.player-timer')[index].textContent = formatTime(player.time);
+        }
+    });
+}, 10);
+
     }
 });
 
@@ -1183,12 +1184,13 @@ function stopPlayerTimer(index) {
 
 
 function formatTime(time) {
-    const date = new Date(time);
-    const minutes = date.getUTCMinutes();
-    const seconds = date.getUTCSeconds();
-    const milliseconds = date.getUTCMilliseconds();
+    const totalSeconds = Math.floor(time / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const milliseconds = time % 1000;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`;
 }
+
 
 document.querySelectorAll('.status-button').forEach((button, index) => {
     button.addEventListener('click', function() {
