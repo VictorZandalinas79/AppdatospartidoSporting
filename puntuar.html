@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador de Equipos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .team {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .team-name {
+            width: 200px;
+            margin-right: 10px;
+        }
+        button {
+            margin: 0 5px;
+        }
+        #autosave-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Marcador de Equipos</h1>
+    <div id="autosave-container">
+        <label for="autosave">
+            <input type="checkbox" id="autosave" onchange="toggleAutosave()"> Activar autoguardado
+        </label>
+    </div>
+    <div id="teams-container"></div>
+    <button onclick="addTeam()">Agregar Equipo</button>
+    <button onclick="saveData()">Guardar Datos Manualmente</button>
+    <button onclick="clearData()">Borrar Todos los Datos</button>
+
+    <script>
+        let teams = [];
+        let autosaveEnabled = false;
+
+        function addTeam(name = '', score = 0) {
+            const team = { name, score };
+            teams.push(team);
+            renderTeams();
+            if (autosaveEnabled) saveData();
+        }
+
+        function renderTeams() {
+            const container = document.getElementById('teams-container');
+            container.innerHTML = '';
+            teams.forEach((team, index) => {
+                const teamDiv = document.createElement('div');
+                teamDiv.className = 'team';
+                teamDiv.innerHTML = `
+                    <input type="text" class="team-name" value="${team.name}" ondblclick="this.readOnly=false;" onblur="updateTeamName(${index}, this.value)" readonly>
+                    <span>${team.score}</span>
+                    <button onclick="changeScore(${index}, 1)">+</button>
+                    <button onclick="changeScore(${index}, -1)">-</button>
+                `;
+                container.appendChild(teamDiv);
+            });
+        }
+
+        function updateTeamName(index, newName) {
+            teams[index].name = newName;
+            if (autosaveEnabled) saveData();
+        }
+
+        function changeScore(index, change) {
+            teams[index].score += change;
+            renderTeams();
+            if (autosaveEnabled) saveData();
+        }
+
+        function saveData() {
+            localStorage.setItem('teamsData', JSON.stringify(teams));
+            localStorage.setItem('autosaveEnabled', JSON.stringify(autosaveEnabled));
+        }
+
+        function loadData() {
+            const savedTeams = localStorage.getItem('teamsData');
+            const savedAutosave = localStorage.getItem('autosaveEnabled');
+            if (savedTeams) {
+                teams = JSON.parse(savedTeams);
+                renderTeams();
+            }
+            if (savedAutosave) {
+                autosaveEnabled = JSON.parse(savedAutosave);
+                document.getElementById('autosave').checked = autosaveEnabled;
+            }
+        }
+
+        function toggleAutosave() {
+            autosaveEnabled = document.getElementById('autosave').checked;
+            if (autosaveEnabled) {
+                saveData();
+            }
+        }
+
+        function clearData() {
+            if (confirm('¿Estás seguro de que quieres borrar todos los datos?')) {
+                localStorage.removeItem('teamsData');
+                localStorage.removeItem('autosaveEnabled');
+                teams = [];
+                autosaveEnabled = false;
+                document.getElementById('autosave').checked = false;
+                renderTeams();
+            }
+        }
+
+        // Cargar datos al inicio
+        loadData();
+
+        // Listener para evitar salir de la página accidentalmente
+        window.addEventListener('beforeunload', function (e) {
+            if (autosaveEnabled) {
+                saveData();
+            } else {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
