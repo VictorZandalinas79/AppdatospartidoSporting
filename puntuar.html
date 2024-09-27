@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador de Equipos</title>
+    <title>Marcador de Equipos y Jugadores</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,12 +11,12 @@
             margin: 0 auto;
             padding: 20px;
         }
-        .team {
+        .team, .player {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
-        .team-name {
+        .team-name, .player-name {
             width: 200px;
             margin-right: 10px;
         }
@@ -26,23 +26,36 @@
         #autosave-container {
             margin-bottom: 20px;
         }
+        h2 {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1>Marcador de Equipos</h1>
+    <h1>Marcador de Equipos y Jugadores</h1>
     <div id="autosave-container">
         <label for="autosave">
             <input type="checkbox" id="autosave" onchange="toggleAutosave()"> Activar autoguardado
         </label>
     </div>
+    <h2>Equipos</h2>
     <div id="teams-container"></div>
     <button onclick="addTeam()">Agregar Equipo</button>
+    <h2>Jugadores</h2>
+    <div id="players-container"></div>
     <button onclick="saveData()">Guardar Datos Manualmente</button>
     <button onclick="clearData()">Borrar Todos los Datos</button>
 
     <script>
         let teams = [];
+        let players = [];
         let autosaveEnabled = false;
+
+        const initialPlayers = [
+            "Diego", "Rafa", "Jaume", "Xavi", "Mario", "Nacho", "Moles", "Gallen", "Pablo", "Gual",
+            "Roberto", "Sales", "Enric", "Serrano", "Eric", "Gerard", "Manu", "Pau", "Ferran",
+            "Bartoll", "Carlos", "Ian"
+        ];
 
         function addTeam(name = '', score = 0) {
             const team = { name, score };
@@ -58,12 +71,28 @@
                 const teamDiv = document.createElement('div');
                 teamDiv.className = 'team';
                 teamDiv.innerHTML = `
-                    <input type="text" class="team-name" value="${team.name}" ondblclick="this.readOnly=false;" onblur="updateTeamName(${index}, this.value)" readonly>
+                    <input type="text" class="team-name" value="${team.name}" onclick="this.readOnly=false;" onblur="updateTeamName(${index}, this.value)" readonly>
                     <span>${team.score}</span>
                     <button onclick="changeScore(${index}, 1)">+</button>
                     <button onclick="changeScore(${index}, -1)">-</button>
                 `;
                 container.appendChild(teamDiv);
+            });
+        }
+
+        function renderPlayers() {
+            const container = document.getElementById('players-container');
+            container.innerHTML = '';
+            players.forEach((player, index) => {
+                const playerDiv = document.createElement('div');
+                playerDiv.className = 'player';
+                playerDiv.innerHTML = `
+                    <span class="player-name">${player.name}</span>
+                    <span>${player.score}</span>
+                    <button onclick="changePlayerScore(${index}, 1)">+</button>
+                    <button onclick="changePlayerScore(${index}, -1)">-</button>
+                `;
+                container.appendChild(playerDiv);
             });
         }
 
@@ -78,18 +107,32 @@
             if (autosaveEnabled) saveData();
         }
 
+        function changePlayerScore(index, change) {
+            players[index].score += change;
+            renderPlayers();
+            if (autosaveEnabled) saveData();
+        }
+
         function saveData() {
             localStorage.setItem('teamsData', JSON.stringify(teams));
+            localStorage.setItem('playersData', JSON.stringify(players));
             localStorage.setItem('autosaveEnabled', JSON.stringify(autosaveEnabled));
         }
 
         function loadData() {
             const savedTeams = localStorage.getItem('teamsData');
+            const savedPlayers = localStorage.getItem('playersData');
             const savedAutosave = localStorage.getItem('autosaveEnabled');
             if (savedTeams) {
                 teams = JSON.parse(savedTeams);
                 renderTeams();
             }
+            if (savedPlayers) {
+                players = JSON.parse(savedPlayers);
+            } else {
+                players = initialPlayers.map(name => ({ name, score: 0 }));
+            }
+            renderPlayers();
             if (savedAutosave) {
                 autosaveEnabled = JSON.parse(savedAutosave);
                 document.getElementById('autosave').checked = autosaveEnabled;
@@ -106,11 +149,14 @@
         function clearData() {
             if (confirm('¿Estás seguro de que quieres borrar todos los datos?')) {
                 localStorage.removeItem('teamsData');
+                localStorage.removeItem('playersData');
                 localStorage.removeItem('autosaveEnabled');
                 teams = [];
+                players = initialPlayers.map(name => ({ name, score: 0 }));
                 autosaveEnabled = false;
                 document.getElementById('autosave').checked = false;
                 renderTeams();
+                renderPlayers();
             }
         }
 
@@ -129,7 +175,6 @@
     </script>
 </body>
 </html>
-
 
 
 
