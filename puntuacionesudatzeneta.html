@@ -8,35 +8,39 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-image: url('https://castellonbase.com/wp-content/uploads/2023/05/atzaneta-1.jpg');
+            margin: 0;
+            padding: 20px;
+            background-image: url('/api/placeholder/1920/1080');
             background-size: cover;
             background-attachment: fixed;
         }
-        .pagado-btn, .jugador-btn, .puntuacion-btn, .multa-btn {
-            background-color: #008CBA; /* Azul */
-            color: white;
+        .contenido {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .btn {
             padding: 10px;
             margin: 5px;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .contenido {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .jugador-btn.seleccionado {
-            background-color: #45a049; /* Verde Oscuro */
-        }
+        .jugador-btn { background-color: #008CBA; color: white; }
+        .jugador-btn.seleccionado { background-color: #45a049; }
+        .puntuacion-btn { background-color: #4CAF50; color: white; }
+        .multa-btn { background-color: #f44336; color: white; }
+        .pagado-btn { background-color: #FF9800; color: white; }
         #enviar-datos {
-            background-color: #f44336; /* Rojo */
+            background-color: #2196F3;
             color: white;
             padding: 15px 20px;
             margin: 20px 0;
-            border: none;
-            cursor: pointer;
             font-size: 16px;
+            width: 100%;
         }
         table {
             border-collapse: collapse;
@@ -45,20 +49,30 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
         }
-        th {
-            background-color: #f2f2f2;
-        }
+        th { background-color: #f2f2f2; }
         #fecha-entrenamiento {
             margin: 20px 0;
             padding: 10px;
             font-size: 16px;
+            width: 100%;
         }
         .borrar-btn {
-            color: #f44336; /* Rojo */
+            color: #f44336;
             cursor: pointer;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
     </style>
 </head>
@@ -67,22 +81,24 @@
         <h1>PUNTUACION UD ATZENETA 2024/2025</h1>
         <input type="date" id="fecha-entrenamiento" required>
 
-        <div id="jugadores">
+        <div id="jugadores" class="section">
             <h2>Jugadores</h2>
+            <div class="btn-container"></div>
         </div>
 
-        <div id="puntuaciones">
+        <div id="puntuaciones" class="section">
             <h2>Puntuaciones</h2>
-            <div id="puntuaciones-botonera"></div>
+            <div id="puntuaciones-botonera" class="btn-container"></div>
             <h2>Multas</h2>
-            <div id="multas-botonera"></div>
+            <div id="multas-botonera" class="btn-container"></div>
         </div>
 
-        <div id="pagados">
+        <div id="pagados" class="section">
             <h2>Pagados</h2>
+            <div class="btn-container"></div>
         </div>
 
-        <button id="enviar-datos">Enviar Datos</button>
+        <button id="enviar-datos" class="btn">Enviar Datos</button>
 
         <table id="tabla-puntuaciones">
             <thead>
@@ -98,15 +114,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            crearBotonesJugadores();
-            crearBotonesPuntuaciones();
-            crearBotonesMultas();
-            crearBotonesPagados();
-        });
-
-        let jugadoresSeleccionados = [];
-
         const jugadores = [
             { numero: 1, nombre: "Diego" },
             { numero: 2, nombre: "Rafa" },
@@ -130,22 +137,48 @@
             { numero: 22, nombre: "Bartoll" },
             { numero: 25, nombre: "Carlos" },
             { numero: 28, nombre: "Ian" },
-            { numero: 00, nombre: "Ruben" }, 
-            { numero: 00, nombre: "Miguel" },
-            { numero: 00, nombre: "Amadeo" },
-            { numero: 00, nombre: "Juanjo" },
-            { numero: 00, nombre: "Isidro" },
-            { numero: 00, nombre: "Zanda" }
+            { numero: 0, nombre: "Ruben" }, 
+            { numero: 0, nombre: "Miguel" },
+            { numero: 0, nombre: "Amadeo" },
+            { numero: 0, nombre: "Juanjo" },
+            { numero: 0, nombre: "Isidro" },
+            { numero: 0, nombre: "Zanda" }
         ];
 
-        function crearBotonesJugadores() {
-            const jugadoresDiv = document.getElementById('jugadores');
-            jugadores.forEach(jugador => {
+        const multasInfo = [
+            { texto: 'No Avisar Asistencia (3€)', multa: 'Incumplimiento Aviso No Asistencia Entrenamiento - 3€' },
+            { texto: 'Retraso sin Aviso (1€ por minuto)', multa: 'Incumplimiento horario - 1€' },
+            { texto: 'Ropa Inadecuada (5€)', multa: 'Ropa deportiva no adecuada - 5€' },
+            { texto: 'Olvido Camiseta Partido (10€)', multa: 'Olvido Camiseta Partido - 10€' },
+            { texto: 'Olvido Pantalón Partido (5€)', multa: 'Olvido Pantalón Partido - 5€' },
+            { texto: 'Olvido Accesorios (1€ por prenda)', multa: 'Olvido Accesorios - 1€' },
+            { texto: 'Tarjeta Amarilla (10€)', multa: 'Tarjeta Amarilla - 10€' },
+            { texto: 'Tarjeta Roja (30€)', multa: 'Tarjeta Roja - 30€' },
+            { texto: 'Chat Inapropiado (1€)', multa: 'Intervención Fuera de Contexto - 1€' },
+            { texto: 'No Contestar Forms (2€)', multa: 'Responsabilidad Individual: No Contestar Forms - 2€' },
+            { texto: 'No Visualizar Partido (1€)', multa: 'No Visualizar Partido - 1€' },
+            { texto: 'Apuesta CT (10€)', multa: 'Apuesta CT - 10€' },
+            { texto: 'Apuesta con CT perdida (10€)', multa: 'Apuesta con CT perdida - 10€' }
+        ];
+
+        let jugadoresSeleccionados = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            crearBotones('#jugadores .btn-container', jugadores, 'jugador-btn', (jugador, boton) => seleccionarJugador(jugador, boton));
+            crearBotonesPuntuaciones();
+            crearBotones('#multas-botonera', multasInfo, 'multa-btn', (info) => asignarMulta(info.multa));
+            crearBotonesPagados();
+            document.getElementById('enviar-datos').addEventListener('click', enviarDatos);
+        });
+
+        function crearBotones(containerId, items, className, onClick) {
+            const container = document.querySelector(containerId);
+            items.forEach(item => {
                 const boton = document.createElement('button');
-                boton.textContent = `${jugador.numero} - ${jugador.nombre}`;
-                boton.classList.add('jugador-btn');
-                boton.onclick = () => seleccionarJugador(jugador, boton);
-                jugadoresDiv.appendChild(boton);
+                boton.textContent = item.texto || `${item.numero} - ${item.nombre}`;
+                boton.classList.add('btn', className);
+                boton.onclick = () => onClick(item, boton);
+                container.appendChild(boton);
             });
         }
 
@@ -165,62 +198,52 @@
             for (let i = -5; i <= 5; i++) {
                 const boton = document.createElement('button');
                 boton.textContent = i;
-                boton.classList.add('puntuacion-btn');
+                boton.classList.add('btn', 'puntuacion-btn');
                 boton.onclick = () => asignarPuntuacion(i);
                 puntuacionesDiv.appendChild(boton);
             }
         }
 
-        function crearBotonesMultas() {
-            const multasDiv = document.getElementById('multas-botonera');
-            const botonesMultas = [
-                { texto: 'No Avisar Asistencia (3€)', multa: 'Incumplimiento Aviso No Asistencia Entrenamiento - 3€' },
-                { texto: 'Retraso sin Aviso (1€ por minuto)', multa: 'Incumplimiento horario - 1€' },
-                { texto: 'Ropa Inadecuada (5€)', multa: 'Ropa deportiva no adecuada - 5€' },
-                { texto: 'Olvido Camiseta Partido (10€)', multa: 'Olvido Camiseta Partido - 10€' },
-                { texto: 'Olvido Pantalón Partido (5€)', multa: 'Olvido Pantalón Partido - 5€' },
-                { texto: 'Olvido Accesorios (1€ por prenda)', multa: 'Olvido Accesorios - 1€' },
-                { texto: 'Tarjeta Amarilla (10€)', multa: 'Tarjeta Amarilla - 10€' },
-                { texto: 'Tarjeta Roja (30€)', multa: 'Tarjeta Roja - 30€' },
-                { texto: 'Chat Inapropiado (1€)', multa: 'Intervención Fuera de Contexto - 1€' },
-                { texto: 'No Contestar Forms (2€)', multa: 'Responsabilidad Individual: No Contestar Forms - 2€' },
-                { texto: 'No Visualizar Partido (1€)', multa: 'No Visualizar Partido - 1€' }
-                { texto: 'Apuesta CT (10€)', multa: 'Apuesta CT - 10€' }
-                { texto: 'Apuesta con CT perdida (10€)', multa: 'Apuesta con CT perdida - 10€' }
-            ];
-            botonesMultas.forEach(botonInfo => {
+        function crearBotonesPagados() {
+            const pagadosDiv = document.querySelector('#pagados .btn-container');
+            [1, 5, 10, 15, 20, 30, 50].forEach(monto => {
                 const boton = document.createElement('button');
-                boton.classList.add('multa-btn');
-                boton.textContent = botonInfo.texto;
-                boton.onclick = () => asignarMulta(botonInfo.multa);
-                multasDiv.appendChild(boton);
+                boton.classList.add('btn', 'pagado-btn');
+                boton.textContent = `Pagado ${monto}€`;
+                boton.onclick = () => asignarPago(monto);
+                pagadosDiv.appendChild(boton);
             });
         }
 
-        function asignarPuntuacion(puntuacion) {
+        function validarSeleccion() {
             const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
             if (!fechaEntrenamiento) {
                 alert('Por favor, selecciona una fecha de entrenamiento.');
-                return;
+                return false;
             }
             if (jugadoresSeleccionados.length === 0) {
                 alert('Por favor, selecciona al menos un jugador.');
-                return;
+                return false;
             }
-            agregarEntradaTabla(fechaEntrenamiento, puntuacion);
+            return true;
+        }
+
+        function asignarPuntuacion(puntuacion) {
+            if (validarSeleccion()) {
+                agregarEntradaTabla(document.getElementById('fecha-entrenamiento').value, puntuacion);
+            }
         }
 
         function asignarMulta(multa) {
-            const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
-            if (!fechaEntrenamiento) {
-                alert('Por favor, selecciona una fecha de entrenamiento.');
-                return;
+            if (validarSeleccion()) {
+                agregarEntradaTabla(document.getElementById('fecha-entrenamiento').value, multa);
             }
-            if (jugadoresSeleccionados.length === 0) {
-                alert('Por favor, selecciona al menos un jugador.');
-                return;
+        }
+
+        function asignarPago(monto) {
+            if (validarSeleccion()) {
+                agregarEntradaTabla(document.getElementById('fecha-entrenamiento').value, `Pagado ${monto}€`);
             }
-            agregarEntradaTabla(fechaEntrenamiento, multa);
         }
 
         function agregarEntradaTabla(fecha, valor) {
@@ -238,87 +261,38 @@
             document.querySelectorAll('.jugador-btn').forEach(btn => btn.classList.remove('seleccionado'));
         }
 
-        function crearBotonesPagados() {
-            const pagadosDiv = document.getElementById('pagados');
-            const montos = [1, 5, 10, 15, 20, 30, 50];
-            montos.forEach(monto => {
-                const boton = document.createElement('button');
-                boton.classList.add('pagado-btn');
-                boton.textContent = `Pagado ${monto}€`;
-                boton.onclick = () => asignarPago(monto);
-                pagadosDiv.appendChild(boton);
+        function enviarDatos() {
+            const datosTabla = Array.from(document.querySelectorAll('#tabla-puntuaciones > tbody > tr')).map(fila => {
+                const celdas = fila.querySelectorAll('td');
+                return [celdas[0].textContent.trim(), celdas[1].textContent.trim(), celdas[2].textContent.trim()];
+            }).filter(datos => datos.every(dato => dato));
+
+            if (datosTabla.length === 0) {
+                alert('No hay datos válidos para enviar.');
+                return;
+            }
+
+            const matchData = { datosTabla: datosTabla };
+
+            console.log('Datos enviados:', JSON.stringify(matchData));
+
+            fetch('https://hook.eu2.make.com/eb31gk8bbzrhrbr4jit7sl62egcrg6rc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(matchData)
+            })
+            .then(response => {
+                if(response.ok) {
+                    alert('Datos enviados con éxito!');
+                    // Opcionalmente, limpiar la tabla después de enviar
+                    document.querySelector('#tabla-puntuaciones tbody').innerHTML = '';
+                }
+            })
+            .catch((error) => {
+                console.log('Error:', error);
+                alert('Hubo un error al enviar los datos. Por favor, inténtalo de nuevo.');
             });
         }
-
-        function asignarPago(monto) {
-            const fechaEntrenamiento = document.getElementById('fecha-entrenamiento').value;
-            if (!fechaEntrenamiento) {
-                alert('Por favor, selecciona una fecha de entrenamiento.');
-                return;
-            }
-            if (jugadoresSeleccionados.length === 0) {
-                alert('Por favor, selecciona al menos un jugador.');
-                return;
-            }
-            agregarEntradaTabla(fechaEntrenamiento, `Pagado ${monto}€`);
-        }
-
-function enviarDatos() {
-    const datosTabla = [];
-    const tbody = document.querySelector('#tabla-puntuaciones > tbody');
-    const filas = tbody.querySelectorAll('tr');
-
-    filas.forEach(fila => {
-        const celdas = fila.querySelectorAll('td');
-        const fecha = celdas[0].textContent.trim();
-        const jugador = celdas[1].textContent.trim();
-        const valor = celdas[2].textContent.trim();
-
-        if (fecha && jugador && valor) {
-            datosTabla.push([fecha, jugador, valor]);
-        }
-    });
-
-    if (datosTabla.length === 0) {
-        alert('No hay datos válidos para enviar.');
-        return;
-    }
-
-    const matchData = {
-        datosTabla: datosTabla
-    };
-
-    console.log('Datos enviados:', JSON.stringify(matchData));
-
-    fetch('https://hook.eu2.make.com/eb31gk8bbzrhrbr4jit7sl62egcrg6rc', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(matchData)
-    })
-    .then(response => {
-        if(response.ok) {
-            alert('Datos enviados con éxito!');
-        }
-        // Si la respuesta no es OK, simplemente ignoramos el error y seguimos adelante
-    })
-    .catch((error) => {
-        console.log('Error ignorado:', error); // Registro del error, pero sin mostrar alerta ni interrumpir el flujo
-    });
-}
-
-        document.getElementById('enviar-datos').addEventListener('click', enviarDatos);
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
