@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros - Objetivos Individuales - UD Atzeneta</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(to bottom right, #ff0000, #000000);
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .jugadores-container, .registros-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .jugador-btn {
+            background-color: #4a4a4a;
+            color: white;
+        }
+        .jugador-btn.seleccionado {
+            background-color: #ff0000;
+        }
+        .registro-btn {
+            color: black;
+        }
+        .registro-btn.seleccionado {
+            outline: 2px solid #ffff00;
+        }
+        .blanco {
+            background-color: white;
+        }
+        .negro {
+            background-color: black;
+            color: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+        #enviar-datos {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+        #fecha-selector {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registros - Objetivos Individuales - UD Atzeneta</h1>
+
+        <input type="date" id="fecha-selector">
+
+        <h2>Jugadores</h2>
+        <div id="jugadores-container" class="jugadores-container"></div>
+
+        <h2>Registros</h2>
+        <div id="registros-container" class="registros-container"></div>
+
+        <table id="tabla-registros">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Jugador</th>
+                    <th>Registro</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <button id="enviar-datos">Enviar Datos</button>
+    </div>
+
+    <script>
+        const jugadores = [
+            { numero: 1, nombre: "Diego" },
+            { numero: 2, nombre: "Rafa" },
+            { numero: 3, nombre: "Jaume" },
+            { numero: 4, nombre: "Manu" },
+            { numero: 5, nombre: "Xavi" },
+            { numero: 6, nombre: "Mario" },
+            { numero: 7, nombre: "Nacho" },
+            { numero: 8, nombre: "Molés" },
+            { numero: 9, nombre: "Gallén" },
+            { numero: 10, nombre: "Pablo" },
+            { numero: 11, nombre: "Gual" },
+            { numero: 12, nombre: "Robert" }, 
+            { numero: 14, nombre: "Sales" },
+            { numero: 15, nombre: "Enric" },
+            { numero: 16, nombre: "Serrano" },
+            { numero: 17, nombre: "Eric" },
+            { numero: 18, nombre: "Gerard" },
+            { numero: 20, nombre: "Pau" },
+            { numero: 21, nombre: "Ferran" },
+            { numero: 22, nombre: "Bartoll" },
+            { numero: 25, nombre: "Carlos" },
+            { numero: 28, nombre: "Ian" },
+            { numero: 0, nombre: "Ruben" }, 
+            { numero: 0, nombre: "Miguel" },
+            { numero: 0, nombre: "Amadeo" },
+            { numero: 0, nombre: "Juanjo" },
+            { numero: 0, nombre: "Isidro" },
+            { numero: 0, nombre: "Zanda" }
+        ];
+
+        const registros = [
+            { texto: "Obligado - Hecho ✅", clase: "blanco" },
+            { texto: "Obligado - No Hecho ❌", clase: "blanco" },
+            { texto: "No Obligado - Hecho ✅", clase: "negro" },
+            { texto: "No Obligado - No Hecho ❌", clase: "negro" }
+        ];
+
+        let jugadorSeleccionado = null;
+        let registroSeleccionado = null;
+
+        function crearBotones(containerID, items, className, onClick) {
+            const container = document.getElementById(containerID);
+            items.forEach(item => {
+                const boton = document.createElement('button');
+                boton.textContent = item.numero ? `${item.numero} - ${item.nombre}` : item.texto;
+                boton.classList.add(className);
+                if (item.clase) boton.classList.add(item.clase);
+                boton.onclick = () => onClick(item, boton);
+                container.appendChild(boton);
+            });
+        }
+
+        function seleccionarJugador(jugador, boton) {
+            if (jugadorSeleccionado) {
+                document.querySelector('.jugador-btn.seleccionado').classList.remove('seleccionado');
+            }
+            jugadorSeleccionado = jugador === jugadorSeleccionado ? null : jugador;
+            if (jugadorSeleccionado) {
+                boton.classList.add('seleccionado');
+            }
+        }
+
+        function seleccionarRegistro(registro, boton) {
+            if (registroSeleccionado) {
+                document.querySelector('.registro-btn.seleccionado').classList.remove('seleccionado');
+            }
+            registroSeleccionado = registro === registroSeleccionado ? null : registro;
+            if (registroSeleccionado) {
+                boton.classList.add('seleccionado');
+            }
+            if (jugadorSeleccionado && registroSeleccionado) {
+                agregarRegistro();
+            }
+        }
+
+        function agregarRegistro() {
+            const fechaSeleccionada = document.getElementById('fecha-selector').value;
+            if (!fechaSeleccionada) {
+                alert('Por favor, selecciona una fecha');
+                return;
+            }
+
+            const tabla = document.querySelector('#tabla-registros tbody');
+            const fila = tabla.insertRow();
+            fila.insertCell().textContent = fechaSeleccionada;
+            fila.insertCell().textContent = `${jugadorSeleccionado.numero} - ${jugadorSeleccionado.nombre}`;
+            fila.insertCell().textContent = registroSeleccionado.texto;
+
+            jugadorSeleccionado = null;
+            registroSeleccionado = null;
+            document.querySelector('.jugador-btn.seleccionado').classList.remove('seleccionado');
+            document.querySelector('.registro-btn.seleccionado').classList.remove('seleccionado');
+        }
+
+        function enviarDatos() {
+            const filas = document.querySelectorAll('#tabla-registros tbody tr');
+            const datosTabla = Array.from(filas).map(fila => ({
+                fecha: fila.cells[0].textContent,
+                jugador: fila.cells[1].textContent,
+                registro: fila.cells[2].textContent
+            }));
+
+            if (datosTabla.length === 0) {
+                alert('No hay datos para enviar');
+                return;
+            }
+
+            fetch('https://hook.eu2.make.com/yjbms4w6y8fos7qso5kksgx3t3lgljeb', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ datosTabla })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Datos enviados con éxito');
+                    document.querySelector('#tabla-registros tbody').innerHTML = '';
+                } else {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+            })
+            .catch(error => {
+                console.error('Error al enviar datos:', error);
+                alert('Error al enviar los datos. Por favor, inténtalo de nuevo.');
+            });
+        }
+
+        crearBotones('jugadores-container', jugadores, 'jugador-btn', seleccionarJugador);
+        crearBotones('registros-container', registros, 'registro-btn', seleccionarRegistro);
+        document.getElementById('enviar-datos').addEventListener('click', enviarDatos);
+
+        // Establecer la fecha de hoy como valor predeterminado
+        const hoy = new Date().toISOString().split('T')[0];
+        document.getElementById('fecha-selector').value = hoy;
+    </script>
+</body>
+</html>
