@@ -59,6 +59,10 @@
             background-color: black;
             color: white;
         }
+        .gris {
+            background-color: #808080;
+            color: white;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -83,6 +87,11 @@
             padding: 10px;
             font-size: 16px;
         }
+        .borrar-btn {
+            background-color: #ff4444;
+            color: white;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +112,7 @@
                     <th>Fecha</th>
                     <th>Jugador</th>
                     <th>Registro</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -147,7 +157,7 @@
             { texto: "Obligado - Hecho ✅", clase: "blanco" },
             { texto: "Obligado - No Hecho ❌", clase: "blanco" },
             { texto: "No Obligado - Hecho ✅", clase: "negro" },
-            { texto: "No Obligado - No Hecho ❌", clase: "negro" }
+            { texto: "No Obligado - No Hecho ❌", clase: "negro" },
             { texto: "No Participa - No Juega ❌", clase: "gris" }
         ];
 
@@ -189,6 +199,10 @@
             }
         }
 
+        function borrarFila(fila) {
+            fila.remove();
+        }
+
         function agregarRegistro() {
             const fechaSeleccionada = document.getElementById('fecha-selector').value;
             if (!fechaSeleccionada) {
@@ -201,6 +215,13 @@
             fila.insertCell().textContent = fechaSeleccionada;
             fila.insertCell().textContent = `${jugadorSeleccionado.numero} - ${jugadorSeleccionado.nombre}`;
             fila.insertCell().textContent = registroSeleccionado.texto;
+            
+            const celdaAcciones = fila.insertCell();
+            const botonBorrar = document.createElement('button');
+            botonBorrar.textContent = '🗑️ Borrar';
+            botonBorrar.classList.add('borrar-btn');
+            botonBorrar.onclick = () => borrarFila(fila);
+            celdaAcciones.appendChild(botonBorrar);
 
             jugadorSeleccionado = null;
             registroSeleccionado = null;
