@@ -1,177 +1,247 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcador de Equipos y Jugadores</title>
+    <title>Training Record</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .team, .player {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .team-name, .player-name {
-            width: 200px;
-            margin-right: 10px;
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        button {
-            margin: 0 5px;
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        #autosave-container {
-            margin-bottom: 20px;
+
+        .goalkeeper-card {
+            background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+            border: 2px solid #ffd700;
         }
-        h2 {
-            margin-top: 30px;
+        
+        .neon-button {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(79, 172, 254, 0.5);
+        }
+        
+        .neon-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.7);
+        }
+        
+        input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.3);
+        }
+        
+        .add-team-button {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            padding: 1rem;
+            color: white;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+        
+        .player-number {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .goalkeeper-number {
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .stats-label {
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body>
-    <h1>Marcador de Equipos y Jugadores</h1>
-    <div id="autosave-container">
-        <label for="autosave">
-            <input type="checkbox" id="autosave" onchange="toggleAutosave()"> Activar autoguardado
-        </label>
+<body class="min-h-screen p-8">
+    <div class="max-w-6xl mx-auto glass-card p-8">
+        <h1 class="text-4xl font-bold mb-8 text-white text-center">Registro de Entrenamiento</h1>
+        <div id="teams-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+        </div>
+        <button onclick="addTeam()" class="add-team-button w-full flex items-center justify-center gap-2 mb-8">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Agregar Equipo
+        </button>
+        <div id="players-container" class="players-grid">
+        </div>
     </div>
-    <h2>Equipos</h2>
-    <div id="teams-container"></div>
-    <button onclick="addTeam()">Agregar Equipo</button>
-    <h2>Jugadores</h2>
-    <div id="players-container"></div>
-    <button onclick="saveData()">Guardar Datos Manualmente</button>
-    <button onclick="clearData()">Borrar Todos los Datos</button>
 
     <script>
-        let teams = [];
-        let players = [];
-        let autosaveEnabled = false;
-
-        const initialPlayers = [
-            "Diego", "Rafa", "Jaume", "Xavi", "Mario", "Nacho", "Moles", "Gallen", "Pablo", "Gual",
-            "Roberto", "Sales", "Enric", "Serrano", "Eric", "Gerard", "Manu", "Pau", "Ferran",
-            "Bartoll", "Carlos", "Ian"
+        let teams = [
+            { nombre: 'Equipo A', puntos: 0 },
+            { nombre: 'Equipo B', puntos: 0 },
+            { nombre: 'Equipo C', puntos: 0 },
+            { nombre: 'Equipo D', puntos: 0 }
         ];
 
-        function addTeam(name = '', score = 0) {
-            const team = { name, score };
-            teams.push(team);
-            renderTeams();
-            if (autosaveEnabled) saveData();
-        }
+        let players = [
+            { dorsal: 1, nombre: 'Diego', goles: 0 },
+            { dorsal: 13, nombre: 'Carlos', goles: 0 },
+            { dorsal: 2, nombre: 'Rafa', goles: 0 },
+            { dorsal: 3, nombre: 'Jaume', goles: 0 },
+            { dorsal: 5, nombre: 'Xavi', goles: 0 },
+            { dorsal: 6, nombre: 'Mario', goles: 0 },
+            { dorsal: 7, nombre: 'Nacho', goles: 0 },
+            { dorsal: 8, nombre: 'Moles', goles: 0 },
+            { dorsal: 9, nombre: 'Gallen', goles: 0 },
+            { dorsal: 10, nombre: 'Pablo', goles: 0 },
+            { dorsal: 11, nombre: 'Gual', goles: 0 },
+            { dorsal: 12, nombre: 'Roberto', goles: 0 },
+            { dorsal: 14, nombre: 'Sales', goles: 0 },
+            { dorsal: 15, nombre: 'Enric', goles: 0 },
+            { dorsal: 16, nombre: 'Serrano', goles: 0 },
+            { dorsal: 17, nombre: 'Eric', goles: 0 },
+            { dorsal: 18, nombre: 'Gerard', goles: 0 },
+            { dorsal: 19, nombre: 'Manu', goles: 0 },
+            { dorsal: 20, nombre: 'Pau', goles: 0 },
+            { dorsal: 21, nombre: 'Ferran', goles: 0 },
+            { dorsal: 22, nombre: 'Bartoll', goles: 0 },
+            { dorsal: 28, nombre: 'Ian', goles: 0 }
+        ];
 
         function renderTeams() {
             const container = document.getElementById('teams-container');
-            container.innerHTML = '';
-            teams.forEach((team, index) => {
-                const teamDiv = document.createElement('div');
-                teamDiv.className = 'team';
-                teamDiv.innerHTML = `
-                    <input type="text" class="team-name" value="${team.name}" onclick="this.readOnly=false;" onblur="updateTeamName(${index}, this.value)" readonly>
-                    <span>${team.score}</span>
-                    <button onclick="changeScore(${index}, 1)">+</button>
-                    <button onclick="changeScore(${index}, -1)">-</button>
-                `;
-                container.appendChild(teamDiv);
-            });
+            container.innerHTML = teams.map((team, index) => `
+                <div class="content-card p-6">
+                    <div class="flex flex-col gap-4">
+                        <input value="${team.nombre}"
+                               onchange="updateTeam(${index}, 'nombre', this.value)"
+                               class="text-xl font-semibold p-2 w-full">
+                        <div class="flex items-center justify-between">
+                            <span class="stats-label">Puntos:</span>
+                            <div class="flex items-center gap-2">
+                                <input type="number"
+                                       value="${team.puntos}"
+                                       onchange="updateTeam(${index}, 'puntos', this.value)"
+                                       class="w-20 text-right p-2">
+                                <button onclick="incrementTeamPoints(${index})"
+                                        class="neon-button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function renderPlayers() {
             const container = document.getElementById('players-container');
-            container.innerHTML = '';
-            players.forEach((player, index) => {
-                const playerDiv = document.createElement('div');
-                playerDiv.className = 'player';
-                playerDiv.innerHTML = `
-                    <span class="player-name">${player.name}</span>
-                    <span>${player.score}</span>
-                    <button onclick="changePlayerScore(${index}, 1)">+</button>
-                    <button onclick="changePlayerScore(${index}, -1)">-</button>
-                `;
-                container.appendChild(playerDiv);
-            });
+            container.innerHTML = players.map(player => `
+                <div class="content-card p-6 ${player.dorsal === 1 || player.dorsal === 13 ? 'goalkeeper-card' : ''}">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <span class="${player.dorsal === 1 || player.dorsal === 13 ? 'goalkeeper-number' : 'player-number'} text-2xl">#${player.dorsal}</span>
+                            <input value="${player.nombre}"
+                                   onchange="updatePlayer(${player.dorsal}, 'nombre', this.value)"
+                                   class="w-2/3 text-right p-2">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="stats-label">Goles:</span>
+                            <div class="flex items-center gap-2">
+                                <input type="number"
+                                       value="${player.goles}"
+                                       onchange="updatePlayer(${player.dorsal}, 'goles', this.value)"
+                                       class="w-20 text-right p-2">
+                                <button onclick="incrementPlayerGoals(${player.dorsal})"
+                                        class="neon-button">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function updateTeamName(index, newName) {
-            teams[index].name = newName;
-            if (autosaveEnabled) saveData();
-        }
-
-        function changeScore(index, change) {
-            teams[index].score += change;
+        function updateTeam(index, field, value) {
+            if (field === 'puntos') value = parseInt(value) || 0;
+            teams[index][field] = value;
             renderTeams();
-            if (autosaveEnabled) saveData();
         }
 
-        function changePlayerScore(index, change) {
-            players[index].score += change;
-            renderPlayers();
-            if (autosaveEnabled) saveData();
-        }
-
-        function saveData() {
-            localStorage.setItem('teamsData', JSON.stringify(teams));
-            localStorage.setItem('playersData', JSON.stringify(players));
-            localStorage.setItem('autosaveEnabled', JSON.stringify(autosaveEnabled));
-        }
-
-        function loadData() {
-            const savedTeams = localStorage.getItem('teamsData');
-            const savedPlayers = localStorage.getItem('playersData');
-            const savedAutosave = localStorage.getItem('autosaveEnabled');
-            if (savedTeams) {
-                teams = JSON.parse(savedTeams);
-                renderTeams();
-            }
-            if (savedPlayers) {
-                players = JSON.parse(savedPlayers);
-            } else {
-                players = initialPlayers.map(name => ({ name, score: 0 }));
-            }
-            renderPlayers();
-            if (savedAutosave) {
-                autosaveEnabled = JSON.parse(savedAutosave);
-                document.getElementById('autosave').checked = autosaveEnabled;
-            }
-        }
-
-        function toggleAutosave() {
-            autosaveEnabled = document.getElementById('autosave').checked;
-            if (autosaveEnabled) {
-                saveData();
-            }
-        }
-
-        function clearData() {
-            if (confirm('¿Estás seguro de que quieres borrar todos los datos?')) {
-                localStorage.removeItem('teamsData');
-                localStorage.removeItem('playersData');
-                localStorage.removeItem('autosaveEnabled');
-                teams = [];
-                players = initialPlayers.map(name => ({ name, score: 0 }));
-                autosaveEnabled = false;
-                document.getElementById('autosave').checked = false;
-                renderTeams();
+        function updatePlayer(dorsal, field, value) {
+            if (field === 'goles') value = parseInt(value) || 0;
+            const playerIndex = players.findIndex(p => p.dorsal === dorsal);
+            if (playerIndex !== -1) {
+                players[playerIndex][field] = value;
                 renderPlayers();
             }
         }
 
-        // Cargar datos al inicio
-        loadData();
+        function incrementTeamPoints(index) {
+            teams[index].puntos++;
+            renderTeams();
+        }
 
-        // Listener para evitar salir de la página accidentalmente
-        window.addEventListener('beforeunload', function (e) {
-            if (autosaveEnabled) {
-                saveData();
-            } else {
-                e.preventDefault();
-                e.returnValue = '';
+        function incrementPlayerGoals(dorsal) {
+            const playerIndex = players.findIndex(p => p.dorsal === dorsal);
+            if (playerIndex !== -1) {
+                players[playerIndex].goles++;
+                renderPlayers();
             }
-        });
+        }
+
+        function addTeam() {
+            teams.push({ nombre: `Equipo ${teams.length + 1}`, puntos: 0 });
+            renderTeams();
+        }
+
+        // Initial render
+        renderTeams();
+        renderPlayers();
     </script>
 </body>
 </html>
