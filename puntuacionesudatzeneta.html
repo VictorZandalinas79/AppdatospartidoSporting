@@ -206,7 +206,7 @@
 
         function crearBotonesPagados() {
             const pagadosDiv = document.querySelector('#pagados .btn-container');
-            [1, 5, 10, 15, 20, 30, 50].forEach(monto => {
+            [1, 2, 3, 4, 5, 10, 15, 20, 30, 50].forEach(monto => {
                 const boton = document.createElement('button');
                 boton.classList.add('btn', 'pagado-btn');
                 boton.textContent = `Pagado ${monto}€`;
